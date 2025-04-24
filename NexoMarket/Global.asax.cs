@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AutoMapper;
+using NexoMarket.Data.Mapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -16,6 +18,7 @@ namespace NexoMarket
             // Código que se ejecuta al iniciar la aplicación
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            MapperConfig.Init();
         }
     }
 }

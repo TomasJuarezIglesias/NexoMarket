@@ -1,4 +1,6 @@
-﻿using System;
+﻿using NexoMarket.Data.Dtos;
+using NexoMarket.Data.Mapper;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -9,13 +11,12 @@ namespace NexoMarket.Data.Repository
 {
     public class UserRepository
     {
-
-        public async Task<List<Usuarios>> GetUsuariosAsync()
+        public async Task<List<UserDto>> GetUsuariosAsync()
         {
             using (var context = new NexoMarketEntities())
             {
                 var users = await context.Usuarios.ToListAsync();
-                return users;
+                return MapperConfig.Mapper.Map<List<UserDto>>(users);
             }
         }
 
