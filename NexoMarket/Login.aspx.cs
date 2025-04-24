@@ -31,19 +31,23 @@ namespace NexoMarket.NexoMarket
         protected async void btnLogin_Click(object sender, EventArgs e)
         {
             string username = txtUsuario.Text.Trim();
-            string password = txtPassword.Text;
+            string password = txtPassword.Text.Trim();
+
+            lblError.Visible = false;
 
             if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
             {
                 lblError.Text = "Usuario o contraseña incorrectos.";
+                lblError.Visible = true;
                 return;
             }
 
             var user = await _userRepository.Login(username, password);
 
-            // Mostrar error
             if (user is null)
             {
+                lblError.Text = "Credenciales Incorrectas";
+                lblError.Visible = true;
                 return;
             }
 
