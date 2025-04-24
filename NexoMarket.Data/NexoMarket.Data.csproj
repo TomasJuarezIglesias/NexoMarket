@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Dtos\UserDto.cs" />
+    <Compile Include="Helpers\CryptoManager.cs" />
     <Compile Include="Mapper\MapperConfig.cs" />
     <Compile Include="Mapper\MapperProfle.cs" />
     <Compile Include="NexoMarketModel.Context.cs">
@@ -94,9 +95,7 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Helpers\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="NexoMarketModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
