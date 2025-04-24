@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Login" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="NexoMarket.NexoMarket.Login" %>
+﻿<%@ Page Title="Login" Async="true" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="NexoMarket.NexoMarket.Login" %>
 
 <asp:Content ID="Login" ContentPlaceHolderID="MainContent" runat="server">
     <div class="container mt-5" style="max-width: 400px;">
