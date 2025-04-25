@@ -12,19 +12,13 @@ namespace NexoMarket.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class Usuarios
+    public partial class UsuarioMenu
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Usuarios()
-        {
-            this.UsuarioMenu = new HashSet<UsuarioMenu>();
-        }
-    
         public int Id { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
+        public int IdUsuario { get; set; }
+        public int IdMenu { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UsuarioMenu> UsuarioMenu { get; set; }
+        public virtual Menu Menu { get; set; }
+        public virtual Usuarios Usuarios { get; set; }
     }
 }
