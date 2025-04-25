@@ -22,6 +22,8 @@
 
     <!-- Ícono -->
     <link href="<%= ResolveUrl("~/favicon.ico") %>" rel="shortcut icon" type="image/x-icon" />
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 <body>
     <form runat="server">
@@ -53,6 +55,16 @@
                 <!-- Menú de navegación -->
                 <nav class="nav flex-column mb-auto">
                     <a class="nav-link px-3 py-2 rounded text-white" href="Inicio.aspx">Inicio</a>
+                    <%
+                        foreach (var menu in MenusList)
+                        {
+                            %>
+                            <a class="nav-link px-3 py-2 rounded text-white" href="<%= menu.Url %>"><%= menu.Title %></a>
+                            <%
+                        }
+                    %>
+
+
                 </nav>
 
                 <!-- Logout -->
