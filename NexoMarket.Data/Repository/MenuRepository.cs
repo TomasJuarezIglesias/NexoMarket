@@ -12,15 +12,15 @@ namespace NexoMarket.Data.Repository
     public class MenuRepository
     {
 
-        public async Task<List<MenuDto>> GetMenusByUser(int userId)
+        public List<MenuDto> GetMenusByUser(int userId)
         {
             using (var context = new NexoMarketEntities())
             {
-                var menus = await context.UsuarioMenu
+                var menus = context.UsuarioMenu
                         .Include(m => m.Menu)
                         .Where(m => m.IdUsuario == userId)
                         .Select(m => m.Menu)
-                        .ToListAsync();
+                        .ToList();
 
                 return MapperConfig.Mapper.Map<List<MenuDto>>(menus);
             }

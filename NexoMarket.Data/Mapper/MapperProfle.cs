@@ -14,7 +14,7 @@ namespace NexoMarket.Data.Mapper
         public MapperProfle()
         {
             CreateMap<Usuarios, UserDto>().ReverseMap();
-            CreateMap<Usuarios, MenuDto>();
+            CreateMap<Menu, MenuDto>();
         }
 
 
