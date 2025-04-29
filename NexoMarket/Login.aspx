@@ -4,6 +4,7 @@
 
     <div class="d-flex justify-content-center align-items-center w-100" style="min-height: 95vh;">
         <div class="card shadow-lg p-4" style="width: 100%; max-width: 380px; border-radius: 0.75rem;">
+            <img src="../Assets/Images/LogoNexoMarket.png" style="height: 150px;margin-bottom: 10px;"/>
             <h2 class="mb-4 text-center fw-semibold">Iniciar sesión</h2>
 
             <!-- Usuario -->
