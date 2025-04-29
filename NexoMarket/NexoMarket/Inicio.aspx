@@ -5,6 +5,6 @@
         <h1>Nexo Market</h1>
     </div>
     <div style="display: flex; justify-content: center" >
-         <img src="../Assets/Images/LogoNexoMarket.png" style="height: 500px; width:500px"/>
+         <img src="../Assets/Images/LogoNexoMarket.jpg" style="height: 500px; width:500px"/>
     </div>
 </asp:Content>

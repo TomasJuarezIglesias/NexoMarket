@@ -21,15 +21,29 @@ textarea {
 }
 
 .sidebar {
-    background-color: #548c91;
+    background-color: #0c427e;
 }
 
 h1 {
-    font-size: 2.5rem; 
-    font-weight: bold; 
-    color: #2c3e50; 
-    text-align: center; 
-    margin-bottom: 30px; 
-    margin-top: 20px; 
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #001b37;
+    text-align: center;
+    margin-bottom: 30px;
+    margin-top: 20px;
 }
 
+.btn-primary {
+    background-color: #0c427e !important;
+    border-color: #0c427e !important;
+    color: #fff !important;
+    font-weight: 600;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active {
+    background-color: #09325f !important; /* un poco más oscuro */
+    border-color: #09325f !important;
+    color: #fff !important;
+}
