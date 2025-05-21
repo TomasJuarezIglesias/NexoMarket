@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="Inicio" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Inicio.aspx.cs" Inherits="NexoMarket.Forms.Inicio" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <div style="display: flex; justify-content: center; margin-bottom:100px">
+    <div style="display: flex; justify-content: center; margin-bottom:80px">
         <h1>Nexo Market</h1>
     </div>
     <div style="display: flex; justify-content: center" >

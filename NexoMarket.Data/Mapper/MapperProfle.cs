@@ -15,6 +15,8 @@ namespace NexoMarket.Data.Mapper
         {
             CreateMap<Usuarios, UserDto>().ReverseMap();
             CreateMap<Menu, MenuDto>();
+            CreateMap<Rol, RolDto>();
+            CreateMap<Permiso, PermisoDTO>();
         }
 
 

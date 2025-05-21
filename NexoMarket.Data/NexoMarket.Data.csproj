@@ -57,7 +57,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Dtos\MenuDto.cs" />
+    <Compile Include="Dtos\PermisoDTO.cs" />
+    <Compile Include="Dtos\RolDto.cs" />
     <Compile Include="Dtos\UserDto.cs" />
+    <Compile Include="FamiliaPermiso.cs">
+      <DependentUpon>NexoMarketModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Helpers\CryptoManager.cs" />
     <Compile Include="Mapper\MapperConfig.cs" />
     <Compile Include="Mapper\MapperProfle.cs" />
@@ -79,10 +84,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>NexoMarketModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Permiso.cs">
+      <DependentUpon>NexoMarketModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\MenuRepository.cs" />
     <Compile Include="Repository\UserRepository.cs" />
-    <Compile Include="UsuarioMenu.cs">
+    <Compile Include="Rol.cs">
       <DependentUpon>NexoMarketModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Usuarios.cs">

@@ -14,19 +14,25 @@ namespace NexoMarket.Data.Repository
 
         public List<MenuDto> GetMenusByUser(int userId)
         {
-            using (var context = new NexoMarketEntities())
+            try
             {
-                var menus = context.UsuarioMenu
-                        .Include(m => m.Menu)
-                        .Where(m => m.IdUsuario == userId)
-                        .Select(m => m.Menu)
-                        .ToList();
-
-                return MapperConfig.Mapper.Map<List<MenuDto>>(menus);
+                using (var context = new NexoMarketEntities())
+                {
+                    var menus = context.Usuarios
+                            .Where(u => u.Id == userId)
+                            .SelectMany(u => u.Rol.Permiso)
+                            .SelectMany(m => m.Menu)
+                            .ToList();
+                    
+                    return MapperConfig.Mapper.Map<List<MenuDto>>(menus);
+                }
+            }
+            catch (Exception ex)
+            {
+                // Manejo de excepciones
+                throw new Exception("Error al obtener los menús del usuario", ex);
             }
 
         }
-
-
     }
 }

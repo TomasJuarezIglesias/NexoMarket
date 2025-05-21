@@ -5,21 +5,46 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="NexoMarketModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="FamiliaPermiso">
+          <Key>
+            <PropertyRef Name="IdFamilia" />
+            <PropertyRef Name="Id_Permiso" />
+          </Key>
+          <Property Name="IdFamilia" Type="int" Nullable="false" />
+          <Property Name="Id_Permiso" Type="int" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="Menu">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdPermiso" Type="int" Nullable="false" />
           <Property Name="Title" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="Url" Type="nvarchar" MaxLength="100" Nullable="false" />
         </EntityType>
-        <EntityType Name="UsuarioMenu">
+        <EntityType Name="Permiso">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="Id_Permiso" />
           </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="IdUsuario" Type="int" Nullable="false" />
-          <Property Name="IdMenu" Type="int" Nullable="false" />
+          <Property Name="Id_Permiso" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Is_Familia" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Rol">
+          <Key>
+            <PropertyRef Name="Id_Rol" />
+          </Key>
+          <Property Name="Id_Rol" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Rol_Permiso">
+          <Key>
+            <PropertyRef Name="Id_Rol" />
+            <PropertyRef Name="Id_Permiso" />
+          </Key>
+          <Property Name="Id_Rol" Type="int" Nullable="false" />
+          <Property Name="Id_Permiso" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Usuarios">
           <Key>
@@ -28,42 +53,100 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Username" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Password" Type="char" MaxLength="64" Nullable="false" />
+          <Property Name="IdRol" Type="int" Nullable="false" />
         </EntityType>
-        <Association Name="FK_UsuarioMenu_Menu">
-          <End Role="Menu" Type="Self.Menu" Multiplicity="1" />
-          <End Role="UsuarioMenu" Type="Self.UsuarioMenu" Multiplicity="*" />
+        <Association Name="FK_FamiliaPermiso_Permiso">
+          <End Role="Permiso" Type="Self.Permiso" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="FamiliaPermiso" Type="Self.FamiliaPermiso" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Menu">
-              <PropertyRef Name="Id" />
+            <Principal Role="Permiso">
+              <PropertyRef Name="Id_Permiso" />
             </Principal>
-            <Dependent Role="UsuarioMenu">
-              <PropertyRef Name="IdMenu" />
+            <Dependent Role="FamiliaPermiso">
+              <PropertyRef Name="Id_Permiso" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_UsuarioMenu_Usuarios">
-          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="1" />
-          <End Role="UsuarioMenu" Type="Self.UsuarioMenu" Multiplicity="*" />
+        <Association Name="FK_Menu_Permiso">
+          <End Role="Permiso" Type="Self.Permiso" Multiplicity="1" />
+          <End Role="Menu" Type="Self.Menu" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Usuarios">
-              <PropertyRef Name="Id" />
+            <Principal Role="Permiso">
+              <PropertyRef Name="Id_Permiso" />
             </Principal>
-            <Dependent Role="UsuarioMenu">
-              <PropertyRef Name="IdUsuario" />
+            <Dependent Role="Menu">
+              <PropertyRef Name="IdPermiso" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rol_Permiso_Permiso">
+          <End Role="Permiso" Type="Self.Permiso" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Rol_Permiso" Type="Self.Rol_Permiso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Permiso">
+              <PropertyRef Name="Id_Permiso" />
+            </Principal>
+            <Dependent Role="Rol_Permiso">
+              <PropertyRef Name="Id_Permiso" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rol_Permiso_Rol">
+          <End Role="Rol" Type="Self.Rol" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Rol_Permiso" Type="Self.Rol_Permiso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rol">
+              <PropertyRef Name="Id_Rol" />
+            </Principal>
+            <Dependent Role="Rol_Permiso">
+              <PropertyRef Name="Id_Rol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuarios_Rol">
+          <End Role="Rol" Type="Self.Rol" Multiplicity="1" />
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rol">
+              <PropertyRef Name="Id_Rol" />
+            </Principal>
+            <Dependent Role="Usuarios">
+              <PropertyRef Name="IdRol" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="NexoMarketModelStoreContainer">
+          <EntitySet Name="FamiliaPermiso" EntityType="Self.FamiliaPermiso" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Menu" EntityType="Self.Menu" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="UsuarioMenu" EntityType="Self.UsuarioMenu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Permiso" EntityType="Self.Permiso" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rol" EntityType="Self.Rol" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rol_Permiso" EntityType="Self.Rol_Permiso" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Usuarios" EntityType="Self.Usuarios" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_UsuarioMenu_Menu" Association="Self.FK_UsuarioMenu_Menu">
-            <End Role="Menu" EntitySet="Menu" />
-            <End Role="UsuarioMenu" EntitySet="UsuarioMenu" />
+          <AssociationSet Name="FK_FamiliaPermiso_Permiso" Association="Self.FK_FamiliaPermiso_Permiso">
+            <End Role="Permiso" EntitySet="Permiso" />
+            <End Role="FamiliaPermiso" EntitySet="FamiliaPermiso" />
           </AssociationSet>
-          <AssociationSet Name="FK_UsuarioMenu_Usuarios" Association="Self.FK_UsuarioMenu_Usuarios">
+          <AssociationSet Name="FK_Menu_Permiso" Association="Self.FK_Menu_Permiso">
+            <End Role="Permiso" EntitySet="Permiso" />
+            <End Role="Menu" EntitySet="Menu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rol_Permiso_Permiso" Association="Self.FK_Rol_Permiso_Permiso">
+            <End Role="Permiso" EntitySet="Permiso" />
+            <End Role="Rol_Permiso" EntitySet="Rol_Permiso" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rol_Permiso_Rol" Association="Self.FK_Rol_Permiso_Rol">
+            <End Role="Rol" EntitySet="Rol" />
+            <End Role="Rol_Permiso" EntitySet="Rol_Permiso" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuarios_Rol" Association="Self.FK_Usuarios_Rol">
+            <End Role="Rol" EntitySet="Rol" />
             <End Role="Usuarios" EntitySet="Usuarios" />
-            <End Role="UsuarioMenu" EntitySet="UsuarioMenu" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -77,21 +160,32 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Password" Type="String" MaxLength="64" FixedLength="true" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="UsuarioMenu" Relationship="NexoMarketModel.FK_UsuarioMenu_Usuarios" FromRole="Usuarios" ToRole="UsuarioMenu" />
+          <Property Name="IdRol" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Rol" Relationship="NexoMarketModel.FK_Usuarios_Rol" FromRole="Usuarios" ToRole="Rol" />
         </EntityType>
         <EntityContainer Name="NexoMarketEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Usuarios" EntityType="Self.Usuarios" />
           <EntitySet Name="Menu" EntityType="NexoMarketModel.Menu" />
-          <EntitySet Name="UsuarioMenu" EntityType="NexoMarketModel.UsuarioMenu" />
-          <AssociationSet Name="FK_UsuarioMenu_Menu" Association="NexoMarketModel.FK_UsuarioMenu_Menu">
+          <EntitySet Name="FamiliaPermiso" EntityType="NexoMarketModel.FamiliaPermiso" />
+          <EntitySet Name="Permiso" EntityType="NexoMarketModel.Permiso" />
+          <EntitySet Name="Rol" EntityType="NexoMarketModel.Rol" />
+          <AssociationSet Name="FK_FamiliaPermiso_Permiso" Association="NexoMarketModel.FK_FamiliaPermiso_Permiso">
+            <End Role="Permiso" EntitySet="Permiso" />
+            <End Role="FamiliaPermiso" EntitySet="FamiliaPermiso" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Menu_Permiso" Association="NexoMarketModel.FK_Menu_Permiso">
+            <End Role="Permiso" EntitySet="Permiso" />
             <End Role="Menu" EntitySet="Menu" />
-            <End Role="UsuarioMenu" EntitySet="UsuarioMenu" />
           </AssociationSet>
-          <AssociationSet Name="FK_UsuarioMenu_Usuarios" Association="NexoMarketModel.FK_UsuarioMenu_Usuarios">
+          <AssociationSet Name="FK_Usuarios_Rol" Association="NexoMarketModel.FK_Usuarios_Rol">
+            <End Role="Rol" EntitySet="Rol" />
             <End Role="Usuarios" EntitySet="Usuarios" />
-            <End Role="UsuarioMenu" EntitySet="UsuarioMenu" />
           </AssociationSet>
-        </EntityContainer>
+          <AssociationSet Name="Rol_Permiso" Association="NexoMarketModel.Rol_Permiso">
+            <End Role="Permiso" EntitySet="Permiso" />
+            <End Role="Rol" EntitySet="Rol" />
+          </AssociationSet>
+          </EntityContainer>
         <EntityType Name="Menu">
           <Key>
             <PropertyRef Name="Id" />
@@ -99,43 +193,82 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Title" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="Url" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="UsuarioMenu" Relationship="NexoMarketModel.FK_UsuarioMenu_Menu" FromRole="Menu" ToRole="UsuarioMenu" />
+          <Property Name="IdPermiso" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Permiso" Relationship="NexoMarketModel.FK_Menu_Permiso" FromRole="Menu" ToRole="Permiso" />
         </EntityType>
-        <EntityType Name="UsuarioMenu">
+        <EntityType Name="FamiliaPermiso">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="IdFamilia" />
+            <PropertyRef Name="Id_Permiso" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdUsuario" Type="Int32" Nullable="false" />
-          <Property Name="IdMenu" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Menu" Relationship="NexoMarketModel.FK_UsuarioMenu_Menu" FromRole="UsuarioMenu" ToRole="Menu" />
-          <NavigationProperty Name="Usuarios" Relationship="NexoMarketModel.FK_UsuarioMenu_Usuarios" FromRole="UsuarioMenu" ToRole="Usuarios" />
+          <Property Name="IdFamilia" Type="Int32" Nullable="false" />
+          <Property Name="Id_Permiso" Type="Int32" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Permiso" Relationship="NexoMarketModel.FK_FamiliaPermiso_Permiso" FromRole="FamiliaPermiso" ToRole="Permiso" />
         </EntityType>
-        <Association Name="FK_UsuarioMenu_Menu">
-          <End Type="NexoMarketModel.Menu" Role="Menu" Multiplicity="1" />
-          <End Type="NexoMarketModel.UsuarioMenu" Role="UsuarioMenu" Multiplicity="*" />
+        <EntityType Name="Permiso">
+          <Key>
+            <PropertyRef Name="Id_Permiso" />
+          </Key>
+          <Property Name="Id_Permiso" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Is_Familia" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="FamiliaPermiso" Relationship="NexoMarketModel.FK_FamiliaPermiso_Permiso" FromRole="Permiso" ToRole="FamiliaPermiso" />
+          <NavigationProperty Name="Menu" Relationship="NexoMarketModel.FK_Menu_Permiso" FromRole="Permiso" ToRole="Menu" />
+          <NavigationProperty Name="Rol" Relationship="NexoMarketModel.Rol_Permiso" FromRole="Permiso" ToRole="Rol" />
+        </EntityType>
+        <EntityType Name="Rol">
+          <Key>
+            <PropertyRef Name="Id_Rol" />
+          </Key>
+          <Property Name="Id_Rol" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Usuarios" Relationship="NexoMarketModel.FK_Usuarios_Rol" FromRole="Rol" ToRole="Usuarios" />
+          <NavigationProperty Name="Permiso" Relationship="NexoMarketModel.Rol_Permiso" FromRole="Rol" ToRole="Permiso" />
+        </EntityType>
+        <Association Name="FK_FamiliaPermiso_Permiso">
+          <End Type="NexoMarketModel.Permiso" Role="Permiso" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="NexoMarketModel.FamiliaPermiso" Role="FamiliaPermiso" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Menu">
-              <PropertyRef Name="Id" />
+            <Principal Role="Permiso">
+              <PropertyRef Name="Id_Permiso" />
             </Principal>
-            <Dependent Role="UsuarioMenu">
-              <PropertyRef Name="IdMenu" />
+            <Dependent Role="FamiliaPermiso">
+              <PropertyRef Name="Id_Permiso" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_UsuarioMenu_Usuarios">
-          <End Type="NexoMarketModel.Usuarios" Role="Usuarios" Multiplicity="1" />
-          <End Type="NexoMarketModel.UsuarioMenu" Role="UsuarioMenu" Multiplicity="*" />
+        <Association Name="FK_Menu_Permiso">
+          <End Type="NexoMarketModel.Permiso" Role="Permiso" Multiplicity="1" />
+          <End Type="NexoMarketModel.Menu" Role="Menu" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Usuarios">
-              <PropertyRef Name="Id" />
+            <Principal Role="Permiso">
+              <PropertyRef Name="Id_Permiso" />
             </Principal>
-            <Dependent Role="UsuarioMenu">
-              <PropertyRef Name="IdUsuario" />
+            <Dependent Role="Menu">
+              <PropertyRef Name="IdPermiso" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        <Association Name="FK_Usuarios_Rol">
+          <End Type="NexoMarketModel.Rol" Role="Rol" Multiplicity="1" />
+          <End Type="NexoMarketModel.Usuarios" Role="Usuarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rol">
+              <PropertyRef Name="Id_Rol" />
+            </Principal>
+            <Dependent Role="Usuarios">
+              <PropertyRef Name="IdRol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Rol_Permiso">
+          <End Type="NexoMarketModel.Permiso" Role="Permiso" Multiplicity="*" />
+          <End Type="NexoMarketModel.Rol" Role="Rol" Multiplicity="*" />
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -144,6 +277,7 @@
           <EntitySetMapping Name="Usuarios">
             <EntityTypeMapping TypeName="NexoMarketModel.Usuarios">
               <MappingFragment StoreEntitySet="Usuarios">
+                <ScalarProperty Name="IdRol" ColumnName="IdRol" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Username" ColumnName="Username" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
@@ -153,21 +287,47 @@
           <EntitySetMapping Name="Menu">
             <EntityTypeMapping TypeName="NexoMarketModel.Menu">
               <MappingFragment StoreEntitySet="Menu">
+                <ScalarProperty Name="IdPermiso" ColumnName="IdPermiso" />
                 <ScalarProperty Name="Url" ColumnName="Url" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="UsuarioMenu">
-            <EntityTypeMapping TypeName="NexoMarketModel.UsuarioMenu">
-              <MappingFragment StoreEntitySet="UsuarioMenu">
-                <ScalarProperty Name="IdMenu" ColumnName="IdMenu" />
-                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
+          <EntitySetMapping Name="FamiliaPermiso">
+            <EntityTypeMapping TypeName="NexoMarketModel.FamiliaPermiso">
+              <MappingFragment StoreEntitySet="FamiliaPermiso">
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Id_Permiso" ColumnName="Id_Permiso" />
+                <ScalarProperty Name="IdFamilia" ColumnName="IdFamilia" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Permiso">
+            <EntityTypeMapping TypeName="NexoMarketModel.Permiso">
+              <MappingFragment StoreEntitySet="Permiso">
+                <ScalarProperty Name="Is_Familia" ColumnName="Is_Familia" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Id_Permiso" ColumnName="Id_Permiso" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rol">
+            <EntityTypeMapping TypeName="NexoMarketModel.Rol">
+              <MappingFragment StoreEntitySet="Rol">
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Id_Rol" ColumnName="Id_Rol" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="Rol_Permiso" TypeName="NexoMarketModel.Rol_Permiso" StoreEntitySet="Rol_Permiso">
+            <EndProperty Name="Rol">
+              <ScalarProperty Name="Id_Rol" ColumnName="Id_Rol" />
+            </EndProperty>
+            <EndProperty Name="Permiso">
+              <ScalarProperty Name="Id_Permiso" ColumnName="Id_Permiso" />
+            </EndProperty>
+          </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
