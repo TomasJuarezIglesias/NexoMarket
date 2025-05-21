@@ -54,7 +54,8 @@ namespace NexoMarket.NexoMarket
             var userData = JsonConvert.SerializeObject(new
             {
                 user.Id,
-                user.Username
+                user.Username,
+                user.Rol
             });
 
 
@@ -76,6 +77,7 @@ namespace NexoMarket.NexoMarket
             };
 
             Response.Cookies.Add(authCookie);
+            //Guardar en LS para mostrar msj
 
             Response.Redirect("~/NexoMarket/Inicio.aspx");
         }

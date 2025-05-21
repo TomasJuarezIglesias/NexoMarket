@@ -14,17 +14,11 @@ namespace NexoMarket.Data
     
     public partial class Menu
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Menu()
-        {
-            this.UsuarioMenu = new HashSet<UsuarioMenu>();
-        }
-    
         public int Id { get; set; }
         public string Title { get; set; }
         public string Url { get; set; }
+        public int IdPermiso { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UsuarioMenu> UsuarioMenu { get; set; }
+        public virtual Permiso Permiso { get; set; }
     }
 }

@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace NexoMarket.Data.Dtos
 {
-    public class UserDto
+    public class RolDto
     {
-        public int Id { get; set; }
-        public string Username { get; set; }
-
-        public RolDto Rol { get; set; }
+        public string Nombre { get; set; }
+        public List<PermisoDTO> Permisos { get; set; }
     }
 }

@@ -7,10 +7,11 @@
       <Diagram DiagramId="1ac9c60fd3df4ef2bb64a2996437dc69" Name="Diagram1">
         <EntityTypeShape EntityType="NexoMarketModel.Usuarios" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="NexoMarketModel.Menu" Width="1.5" PointX="3.75" PointY="0.75" />
-        <EntityTypeShape EntityType="NexoMarketModel.UsuarioMenu" Width="1.5" PointX="0.75" PointY="3.75" />
-        <AssociationConnector Association="NexoMarketModel.FK_UsuarioMenu_Menu" />
-        <AssociationConnector Association="NexoMarketModel.FK_UsuarioMenu_Usuarios" />
-      </Diagram>
+        <AssociationConnector Association="NexoMarketModel.FK_FamiliaPermiso_Permiso" />
+        <AssociationConnector Association="NexoMarketModel.FK_Menu_Permiso" />
+        <AssociationConnector Association="NexoMarketModel.FK_Usuarios_Rol" />
+        <AssociationConnector Association="NexoMarketModel.Rol_Permiso" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

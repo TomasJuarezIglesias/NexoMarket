@@ -27,6 +27,8 @@ namespace NexoMarket.Data
     
         public virtual DbSet<Usuarios> Usuarios { get; set; }
         public virtual DbSet<Menu> Menu { get; set; }
-        public virtual DbSet<UsuarioMenu> UsuarioMenu { get; set; }
+        public virtual DbSet<FamiliaPermiso> FamiliaPermiso { get; set; }
+        public virtual DbSet<Permiso> Permiso { get; set; }
+        public virtual DbSet<Rol> Rol { get; set; }
     }
 }

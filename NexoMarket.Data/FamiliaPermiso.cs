@@ -12,13 +12,12 @@ namespace NexoMarket.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class UsuarioMenu
+    public partial class FamiliaPermiso
     {
-        public int Id { get; set; }
-        public int IdUsuario { get; set; }
-        public int IdMenu { get; set; }
+        public int IdFamilia { get; set; }
+        public int Id_Permiso { get; set; }
+        public string Nombre { get; set; }
     
-        public virtual Menu Menu { get; set; }
-        public virtual Usuarios Usuarios { get; set; }
+        public virtual Permiso Permiso { get; set; }
     }
 }

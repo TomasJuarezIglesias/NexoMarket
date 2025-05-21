@@ -2,7 +2,7 @@
 
 <asp:Content ID="Login" ContentPlaceHolderID="MainContent" runat="server">
 
-    <div class="d-flex justify-content-center align-items-center w-100" style="min-height: 95vh;">
+    <div class="d-flex justify-content-center align-items-center w-100" style="min-height: 93vh;">
         <div class="card shadow-lg p-4" style="width: 100%; max-width: 380px; border-radius: 0.75rem;">
             <h2 class="mb-4 text-center fw-semibold">Iniciar sesión</h2>
 
