@@ -12,7 +12,7 @@
     <link href="<%= ResolveUrl("~/Content/bootstrap.min.css") %>" rel="stylesheet" />
 
     <!-- Tu CSS personalizado -->
-    <link href="<%= ResolveUrl("~/Content/Site.css") %>" rel="stylesheet" />
+    <link href="<%= ResolveUrl("/Content/Site.css") %>" rel="stylesheet" />
 
     <!-- jQuery -->
     <script src="<%= ResolveUrl("~/Scripts/jquery.min.js") %>"></script>
@@ -48,18 +48,18 @@
 
         <div class="d-flex">
             <!-- SIDENAV -->
-            <div id="sidebar" runat="server" class="bg-dark text-white d-flex flex-column p-3" style="width: 200px; min-height: 100vh;">
+            <div id="sidebar" runat="server" class="sidebar text-white d-flex flex-column p-3" style="width: 200px; min-height: 100vh;">
 
-                <h5 class="mb-4">Menú</h5>
+                <h5 style="text-align:center" class="mb-4">Menú</h5>
 
                 <!-- Menú de navegación -->
                 <nav class="nav flex-column mb-auto">
-                    <a class="nav-link px-3 py-2 rounded text-white" href="Inicio.aspx">Inicio</a>
+                    <button class="nav-link px-3 py-2 rounded text-white" href="Inicio.aspx">Inicio</button>
                     <%
                         foreach (var menu in MenusList)
                         {
                             %>
-                            <a class="nav-link px-3 py-2 rounded text-white" href="<%= menu.Url %>"><%= menu.Title %></a>
+                            <button class="nav-link px-3 py-2 rounded text-white" href="<%= menu.Url %>"><%= menu.Title %></button>
                             <%
                         }
                     %>
