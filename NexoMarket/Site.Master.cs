@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using NexoMarket.Business;
 using NexoMarket.Entity.Dtos;
+using NexoMarket.Entity.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,7 +36,7 @@ namespace NexoMarket
                 FormsIdentity identity = (FormsIdentity)HttpContext.Current.User.Identity;
                 FormsAuthenticationTicket ticket = identity.Ticket;
 
-                var userData = JsonConvert.DeserializeObject<UserDto>(ticket.UserData);
+                var userData = JsonConvert.DeserializeObject<UserAuth>(ticket.UserData);
                 int userId = userData.Id;
 
                 MenusList = _businessMenu.GetMenusByUser(userId);

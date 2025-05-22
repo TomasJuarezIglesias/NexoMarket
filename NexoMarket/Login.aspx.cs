@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using NexoMarket.Business;
+using NexoMarket.Entity.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,11 +51,11 @@ namespace NexoMarket.NexoMarket
                 return;
             }
 
-            var userData = JsonConvert.SerializeObject(new
+            var userData = JsonConvert.SerializeObject(new UserAuth
             {
-                user.Id,
-                user.Username,
-                user.Rol
+                Id = user.Id,
+                Username = user.Username,
+                Rol = user.Rol.Nombre
             });
 
 
@@ -76,7 +77,6 @@ namespace NexoMarket.NexoMarket
             };
 
             Response.Cookies.Add(authCookie);
-            //Guardar en LS para mostrar msj
 
             Response.Redirect("~/NexoMarket/Inicio.aspx");
         }

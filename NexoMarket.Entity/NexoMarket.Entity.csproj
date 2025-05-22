@@ -45,6 +45,7 @@
     <Compile Include="Dtos\PermisoDTO.cs" />
     <Compile Include="Dtos\RolDto.cs" />
     <Compile Include="Dtos\UserDto.cs" />
+    <Compile Include="Entities\UserAuth.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
