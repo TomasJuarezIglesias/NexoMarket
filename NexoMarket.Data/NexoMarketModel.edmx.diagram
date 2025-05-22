@@ -5,12 +5,17 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="1ac9c60fd3df4ef2bb64a2996437dc69" Name="Diagram1">
-        <EntityTypeShape EntityType="NexoMarketModel.Usuarios" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="NexoMarketModel.Menu" Width="1.5" PointX="3.75" PointY="0.75" />
-        <AssociationConnector Association="NexoMarketModel.FK_FamiliaPermiso_Permiso" />
-        <AssociationConnector Association="NexoMarketModel.FK_Menu_Permiso" />
-        <AssociationConnector Association="NexoMarketModel.FK_Usuarios_Rol" />
-        <AssociationConnector Association="NexoMarketModel.Rol_Permiso" />
+        <EntityTypeShape EntityType="NexoMarketModel.Usuarios" Width="1.5" PointX="9.875" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="NexoMarketModel.Menu" Width="1.5" PointX="4" PointY="1" />
+        <EntityTypeShape EntityType="NexoMarketModel.BitacoraEvento" Width="1.5" PointX="12.5" PointY="4.5" />
+        <EntityTypeShape EntityType="NexoMarketModel.FamiliaPermiso" Width="1.5" PointX="3.875" PointY="6.5" />
+        <EntityTypeShape EntityType="NexoMarketModel.Permiso" Width="1.5" PointX="3.875" PointY="3.75" />
+        <EntityTypeShape EntityType="NexoMarketModel.Rol" Width="1.5" PointX="6.875" PointY="5" />
+        <AssociationConnector Association="NexoMarketModel.FK_FamiliaPermiso_Permiso1" />
+        <AssociationConnector Association="NexoMarketModel.FK_Menu_Permiso1" />
+        <AssociationConnector Association="NexoMarketModel.FK_Usuarios_Rol1" />
+        <AssociationConnector Association="NexoMarketModel.Rol_Permiso1" />
+        <AssociationConnector Association="NexoMarketModel.FK_BitacoraEvento_Usuarios" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

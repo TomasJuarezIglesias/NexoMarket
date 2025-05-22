@@ -125,6 +125,7 @@
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\Site.css" />
     <Content Include="favicon.ico" />
+    <Content Include="NexoMarket\BitacoraEventos.aspx" />
     <Content Include="NexoMarket\Inicio.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Login.aspx" />
@@ -170,6 +171,13 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="NexoMarket\BitacoraEventos.aspx.cs">
+      <DependentUpon>BitacoraEventos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="NexoMarket\BitacoraEventos.aspx.designer.cs">
+      <DependentUpon>BitacoraEventos.aspx</DependentUpon>
+    </Compile>
     <Compile Include="NexoMarket\Inicio.aspx.cs">
       <DependentUpon>Inicio.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
