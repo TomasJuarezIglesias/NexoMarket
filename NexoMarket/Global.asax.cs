@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using NexoMarket.Data;
 using NexoMarket.Data.Mapper;
 using System;
 using System.Collections.Generic;

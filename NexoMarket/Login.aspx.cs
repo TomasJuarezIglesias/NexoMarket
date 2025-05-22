@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-using NexoMarket.Data.Repository;
+using NexoMarket.Business;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,12 +13,11 @@ namespace NexoMarket.NexoMarket
 {
     public partial class Login : System.Web.UI.Page
     {
-        private readonly UserRepository _userRepository;
+        private readonly BusinessUser _businessUser;
         public Login()
         {
-            _userRepository = new UserRepository();
+            _businessUser = new BusinessUser();
         }
-
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -42,7 +41,7 @@ namespace NexoMarket.NexoMarket
                 return;
             }
 
-            var user = await _userRepository.Login(username, password);
+            var user = await _businessUser.Login(username, password);
 
             if (user is null)
             {

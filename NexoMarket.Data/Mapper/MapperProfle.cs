@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using NexoMarket.Data.Dtos;
+using NexoMarket.Entity.Dtos;
 using System;
 using System.CodeDom;
 using System.Collections.Generic;

@@ -247,13 +247,25 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NexoMarket.Data\NexoMarket.Data.csproj">
-      <Project>{c43141a8-201b-4a48-b3a2-76dcbeb5ae82}</Project>
-      <Name>NexoMarket.Data</Name>
-    </ProjectReference>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+    <ProjectReference Include="..\NexoMarket.Business\NexoMarket.Business.csproj">
+      <Project>{23d3fdac-d1d8-424e-bf1a-6ad2f75f759b}</Project>
+      <Name>NexoMarket.Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NexoMarket.Data\NexoMarket.Data.csproj">
+      <Project>{C43141A8-201B-4A48-B3A2-76DCBEB5AE82}</Project>
+      <Name>NexoMarket.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NexoMarket.Entity\NexoMarket.Entity.csproj">
+      <Project>{24ddd4ba-0df4-4b3d-8572-bc8abb39b5a2}</Project>
+      <Name>NexoMarket.Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NexoMarket.Service\NexoMarket.Service.csproj">
+      <Project>{bb03383e-a7f3-43c2-afbe-906d6b2aec6f}</Project>
+      <Name>NexoMarket.Service</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
-using NexoMarket.Data.Dtos;
-using NexoMarket.Data.Repository;
+using NexoMarket.Business;
+using NexoMarket.Entity.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,11 +14,11 @@ namespace NexoMarket
     public partial class SiteMaster : MasterPage
     {
         public List<MenuDto> MenusList = new List<MenuDto>();
-        private readonly MenuRepository _menuRepository;
+        private readonly BusinessMenu _businessMenu;
 
         public SiteMaster()
         {
-            _menuRepository = new MenuRepository();
+            _businessMenu = new BusinessMenu();
         }
 
 
@@ -38,7 +38,7 @@ namespace NexoMarket
                 var userData = JsonConvert.DeserializeObject<UserDto>(ticket.UserData);
                 int userId = userData.Id;
 
-                MenusList = _menuRepository.GetMenusByUser(userId);
+                MenusList = _businessMenu.GetMenusByUser(userId);
             }
         }
 

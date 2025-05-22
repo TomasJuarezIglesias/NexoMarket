@@ -5,9 +5,9 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NexoMarket.Data.Helpers
+namespace NexoMarket.Service.Helpers
 {
-    internal class CryptoManager
+    public class CryptoManager
     {
         public static string EncryptString(string text)
         {

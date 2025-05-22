@@ -56,14 +56,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Dtos\MenuDto.cs" />
-    <Compile Include="Dtos\PermisoDTO.cs" />
-    <Compile Include="Dtos\RolDto.cs" />
-    <Compile Include="Dtos\UserDto.cs" />
     <Compile Include="FamiliaPermiso.cs">
       <DependentUpon>NexoMarketModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\CryptoManager.cs" />
     <Compile Include="Mapper\MapperConfig.cs" />
     <Compile Include="Mapper\MapperProfle.cs" />
     <Compile Include="Menu.cs">
@@ -111,7 +106,16 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\NexoMarket.Entity\NexoMarket.Entity.csproj">
+      <Project>{24ddd4ba-0df4-4b3d-8572-bc8abb39b5a2}</Project>
+      <Name>NexoMarket.Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NexoMarket.Service\NexoMarket.Service.csproj">
+      <Project>{bb03383e-a7f3-43c2-afbe-906d6b2aec6f}</Project>
+      <Name>NexoMarket.Service</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <Content Include="NexoMarketModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

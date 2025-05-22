@@ -1,5 +1,5 @@
-﻿using NexoMarket.Data.Dtos;
-using NexoMarket.Data.Mapper;
+﻿using NexoMarket.Data.Mapper;
+using NexoMarket.Entity.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
