@@ -15,9 +15,12 @@ namespace NexoMarket.NexoMarket
     public partial class Login : System.Web.UI.Page
     {
         private readonly BusinessUser _businessUser;
+        private readonly BusinessBitacora _businessBitacora;
+
         public Login()
         {
             _businessUser = new BusinessUser();
+            _businessBitacora = new BusinessBitacora();
         }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -77,7 +80,8 @@ namespace NexoMarket.NexoMarket
             };
 
             Response.Cookies.Add(authCookie);
-
+            //Guardar en LS para mostrar msj
+            await _businessBitacora.GuardarEventoBitacora("Inicio de Sesion", user.Id);
             Response.Redirect("~/NexoMarket/Inicio.aspx");
         }
     }

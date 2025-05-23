@@ -14,11 +14,19 @@ namespace NexoMarket.Data
     
     public partial class Usuarios
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Usuarios()
+        {
+            this.BitacoraEvento = new HashSet<BitacoraEvento>();
+        }
+    
         public int Id { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
         public int IdRol { get; set; }
     
         public virtual Rol Rol { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BitacoraEvento> BitacoraEvento { get; set; }
     }
 }

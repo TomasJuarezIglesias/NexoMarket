@@ -40,10 +40,39 @@ h1 {
     font-weight: 600;
 }
 
-.btn-primary:hover,
-.btn-primary:focus,
-.btn-primary:active {
-    background-color: #09325f !important; /* un poco más oscuro */
-    border-color: #09325f !important;
-    color: #fff !important;
+    .btn-primary:hover,
+    .btn-primary:focus,
+    .btn-primary:active {
+        background-color: #09325f !important; /* un poco más oscuro */
+        border-color: #09325f !important;
+        color: #fff !important;
+    }
+
+.modern-gridview {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Segoe UI', sans-serif;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    margin-inline: auto;
 }
+
+    .modern-gridview th {
+        background-color: #0c427e;
+        color: white;
+        padding: 10px;
+        text-align: center;
+    }
+
+    .modern-gridview td {
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+        text-align: center;
+    }
+
+    .modern-gridview tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    .modern-gridview tr:hover {
+        background-color: #eef6ff;
+    }

@@ -32,6 +32,5 @@ namespace NexoMarket.Data.Repository
                 return MapperConfig.Mapper.Map<UserDto>(user);
             }
         }
-
     }
 }

@@ -15,6 +15,12 @@
     <!-- Bootstrap CSS -->
     <link href="<%= ResolveUrl("~/Content/bootstrap.min.css") %>" rel="stylesheet" />
 
+    <!-- Tu CSS personalizado -->
+    <link href="<%= ResolveUrl("/Content/Site.css") %>" rel="stylesheet" />
+
+    <!-- jQuery -->
+    <script src="<%= ResolveUrl("~/Scripts/jquery.min.js") %>"></script>
+
     <!-- Bootstrap JS -->
     <script src="<%= ResolveUrl("~/Scripts/bootstrap.bundle.min.js") %>"></script>
 
@@ -58,12 +64,12 @@
 
                 <!-- Menú de navegación -->
                 <nav class="nav flex-column mb-auto">
-                    <button class="nav-link px-3 py-2 rounded text-white" href="Inicio.aspx">Inicio</button>
+                    <a class="nav-link px-3 py-2 rounded text-white" href="/NexoMarket/Inicio.aspx">Inicio</a>
                     <%
                         foreach (var menu in MenusList)
                         {
                             %>
-                            <button class="nav-link px-3 py-2 rounded text-white" href="<%= menu.Url %>"><%= menu.Title %></button>
+                            <a class="nav-link px-3 py-2 rounded text-white" href="<%= menu.Url %>"><%= menu.Title %></a>
                             <%
                         }
                     %>
