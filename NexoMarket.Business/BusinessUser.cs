@@ -43,5 +43,11 @@ namespace NexoMarket.Business
             
             return  new BusinessResponse<UserDto>( data : user, mensaje: "Usuario Logueado", ok: true);
         }
+
+
+        public async Task BlockUser(string username)
+        {
+            await _userRepository.BlockUser(username);
+        } 
     }
 }

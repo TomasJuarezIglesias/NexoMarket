@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Ajax.Utilities;
+using Newtonsoft.Json;
 using NexoMarket.Business;
 using NexoMarket.Entity.Dtos;
 using NexoMarket.Entity.Entities;
@@ -49,9 +50,35 @@ namespace NexoMarket.NexoMarket
             var response = await _businessUser.Login(username, password);
 
             //Si escribio erroneamente la contraseña
-            if(response.Mensaje == "Credenciales Incorrectas")
+            if (response.Mensaje == "Credenciales Incorrectas")
             {
-                Session["Intentos"] = 
+                // Crear el diccionario si no existe
+                if (Session["Intentos"] == null)
+                {
+                    Dictionary<string, int> intentos = new Dictionary<string, int>();
+                    intentos.Add(username, 1);
+                    Session["Intentos"] = intentos;
+                }
+                else
+                {
+                    // Recuperar y actualizar el diccionario
+                    var intentos = (Dictionary<string, int>)Session["Intentos"];
+
+                    if (intentos.ContainsKey(username))
+                        intentos[username]++;
+                    else
+                        intentos[username] = 1;
+
+                    Session["Intentos"] = intentos;
+
+                    if (intentos[username] >= 3)
+                    {
+                        await _businessUser.BlockUser(username);
+                        lblError.Text = "Usuario Bloqueado";
+                        lblError.Visible = true;
+                        return;
+                    }
+                }
             }
 
             if (!response.Ok)
@@ -61,14 +88,15 @@ namespace NexoMarket.NexoMarket
                 return;
             }
 
+            // Limpio los intentos almacenados
+            Session.Remove("Intentos");
+
             var userData = JsonConvert.SerializeObject(new UserAuth
             {
                 Id = response.Data.Id,
                 Username = response.Data.Username,
                 Rol = response.Data.Rol.Nombre
             });
-
-            Session.Remove("Intentos");
 
             var ticket = new FormsAuthenticationTicket(
                 1,
@@ -88,7 +116,9 @@ namespace NexoMarket.NexoMarket
             };
 
             Response.Cookies.Add(authCookie);
+
             await _businessBitacora.GuardarEventoBitacora("Inicio de Sesion", response.Data.Id);
+
             Response.Redirect("~/NexoMarket/Inicio.aspx");
         }
     }
