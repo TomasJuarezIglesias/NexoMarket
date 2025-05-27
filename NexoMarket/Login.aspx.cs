@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using NexoMarket.Business;
+using NexoMarket.Entity.Dtos;
 using NexoMarket.Entity.Entities;
 using System;
 using System.Collections.Generic;
@@ -45,22 +46,29 @@ namespace NexoMarket.NexoMarket
                 return;
             }
 
-            var user = await _businessUser.Login(username, password);
+            var response = await _businessUser.Login(username, password);
 
-            if (user is null)
+            //Si escribio erroneamente la contraseña
+            if(response.Mensaje == "Credenciales Incorrectas")
             {
-                lblError.Text = "Credenciales Incorrectas";
+                Session["Intentos"] = 
+            }
+
+            if (!response.Ok)
+            {
+                lblError.Text = response.Mensaje;
                 lblError.Visible = true;
                 return;
             }
 
             var userData = JsonConvert.SerializeObject(new UserAuth
             {
-                Id = user.Id,
-                Username = user.Username,
-                Rol = user.Rol.Nombre
+                Id = response.Data.Id,
+                Username = response.Data.Username,
+                Rol = response.Data.Rol.Nombre
             });
 
+            Session.Remove("Intentos");
 
             var ticket = new FormsAuthenticationTicket(
                 1,
@@ -80,8 +88,7 @@ namespace NexoMarket.NexoMarket
             };
 
             Response.Cookies.Add(authCookie);
-            //Guardar en LS para mostrar msj
-            await _businessBitacora.GuardarEventoBitacora("Inicio de Sesion", user.Id);
+            await _businessBitacora.GuardarEventoBitacora("Inicio de Sesion", response.Data.Id);
             Response.Redirect("~/NexoMarket/Inicio.aspx");
         }
     }

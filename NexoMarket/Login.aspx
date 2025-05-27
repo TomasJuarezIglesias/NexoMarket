@@ -41,8 +41,8 @@
 
             <!-- Botón -->
             <div class="d-flex justify-content-center">
-                <asp:Button ID="btnLogin" runat="server" Text="Ingresar"
-                    CssClass="btn btn-primary mt-4 w-100" OnClick="btnLogin_Click" />
+                <asp:Button ID="btnLogin" runat="server" Text="Ingresar" 
+                    CssClass="btn btn-primary mt-4 w-100" OnClick="btnLogin_Click" type="button" />
             </div>
         </div>
     </div>

@@ -63,6 +63,7 @@
           <Property Name="Username" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Password" Type="char" MaxLength="64" Nullable="false" />
           <Property Name="IdRol" Type="int" Nullable="false" />
+          <Property Name="IsBlocked" Type="bit" />
         </EntityType>
         <Association Name="FK_BitacoraEvento_Usuarios">
           <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="1" />
@@ -189,6 +190,7 @@
           <Property Name="IdRol" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Rol" Relationship="NexoMarketModel.FK_Usuarios_Rol1" FromRole="Usuarios" ToRole="Rol1" />
           <NavigationProperty Name="BitacoraEvento" Relationship="NexoMarketModel.FK_BitacoraEvento_Usuarios" FromRole="Usuarios" ToRole="BitacoraEvento" />
+          <Property Name="IsBlocked" Type="Boolean" />
         </EntityType>
         <EntityContainer Name="NexoMarketEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Usuarios" EntityType="Self.Usuarios" />
@@ -331,6 +333,7 @@
           <EntitySetMapping Name="Usuarios">
             <EntityTypeMapping TypeName="NexoMarketModel.Usuarios">
               <MappingFragment StoreEntitySet="Usuarios">
+                <ScalarProperty Name="IsBlocked" ColumnName="IsBlocked" />
                 <ScalarProperty Name="IdRol" ColumnName="IdRol" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Username" ColumnName="Username" />
