@@ -13,10 +13,10 @@ namespace NexoMarket.Data.Mapper
     {
         public MapperProfle()
         {
-            CreateMap<Usuarios, UserDto>().ReverseMap();
-            CreateMap<Menu, MenuDto>();
-            CreateMap<Rol, RolDto>();
-            CreateMap<Permiso, PermisoDTO>();
+            CreateMap<Usuarios, UserEntity>().ReverseMap();
+            CreateMap<Menu, MenuEntity>();
+            CreateMap<Rol, RolEntity>();
+            CreateMap<Permiso, PermisoEntity>();
         }
 
 

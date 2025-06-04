@@ -91,7 +91,7 @@ namespace NexoMarket.NexoMarket
             // Limpio los intentos almacenados
             Session.Remove("Intentos");
 
-            var userData = JsonConvert.SerializeObject(new UserAuth
+            var userData = JsonConvert.SerializeObject(new UserAuthEntity
             {
                 Id = response.Data.Id,
                 Username = response.Data.Username,

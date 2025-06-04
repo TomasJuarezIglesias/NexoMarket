@@ -15,13 +15,13 @@ namespace NexoMarket.Data.Repository
 {
     public class UserRepository
     {
-        public async Task<UserDto> Login(string username, string password)
+        public async Task<UserEntity> Login(string username, string password)
         {
             using (var context = new NexoMarketEntities())
             {
                 var user = await context.Usuarios.FirstOrDefaultAsync(u => u.Username == username && u.Password == password );
 
-                return MapperConfig.Mapper.Map<UserDto>(user);
+                return MapperConfig.Mapper.Map<UserEntity>(user);
             }
         }
 

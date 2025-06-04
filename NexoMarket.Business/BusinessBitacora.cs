@@ -29,7 +29,7 @@ namespace NexoMarket.Business
             return await _eventoBitacoraRepository.GuardarEventoBitacora(evento);
         }
 
-        public async Task<List<BitacoraEventoDTO>> BuscarEventosBitacora()
+        public async Task<List<BitacoraEventoEntity>> BuscarEventosBitacora()
         {
             return await _eventoBitacoraRepository.BuscarEventosBitacora();
 

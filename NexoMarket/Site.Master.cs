@@ -14,7 +14,7 @@ namespace NexoMarket
 {
     public partial class SiteMaster : MasterPage
     {
-        public List<MenuDto> MenusList = new List<MenuDto>();
+        public List<MenuEntity> MenusList = new List<MenuEntity>();
         private readonly BusinessMenu _businessMenu;
 
         public SiteMaster()
@@ -36,7 +36,7 @@ namespace NexoMarket
                 FormsIdentity identity = (FormsIdentity)HttpContext.Current.User.Identity;
                 FormsAuthenticationTicket ticket = identity.Ticket;
 
-                var userData = JsonConvert.DeserializeObject<UserAuth>(ticket.UserData);
+                var userData = JsonConvert.DeserializeObject<UserAuthEntity>(ticket.UserData);
                 int userId = userData.Id;
 
                 MenusList = _businessMenu.GetMenusByUser(userId);

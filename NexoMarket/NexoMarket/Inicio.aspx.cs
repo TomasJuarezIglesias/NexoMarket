@@ -22,13 +22,13 @@ namespace NexoMarket.Forms
 
         [WebMethod]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-        public static UserAuth GetRolUsuario()
+        public static UserAuthEntity GetRolUsuario()
         {
             HttpCookie authCookie = HttpContext.Current.Request.Cookies[FormsAuthentication.FormsCookieName];
 
             FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(authCookie.Value);
 
-            UserAuth user = JsonConvert.DeserializeObject<UserAuth>(ticket.UserData);
+            UserAuthEntity user = JsonConvert.DeserializeObject<UserAuthEntity>(ticket.UserData);
             return user;                
         }
     }

@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace NexoMarket.Entity.Dtos
 {
-    public class PermisoDTO
+    public class PermisoEntity
     {
         public string Nombre { get; set; }
         public bool Is_Familia { get; set; }
-        public List<PermisoDTO> Permisos { get; set; }
+        public List<PermisoEntity> Permisos { get; set; }
     }
 }

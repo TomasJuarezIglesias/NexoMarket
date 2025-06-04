@@ -15,17 +15,16 @@ namespace NexoMarket.Business
     public class BusinessUser
     {
         private readonly UserRepository _userRepository;
-        private Dictionary<string, int> usuarios_intentos = new Dictionary<string, int>();
         public BusinessUser()
         {
             _userRepository = new UserRepository();
         }
 
-        public async Task<BusinessResponse<UserDto>> Login(string username, string password)
+        public async Task<BusinessResponse<UserEntity>> Login(string username, string password)
         {
             if (!await _userRepository.ExistByUsername(username))
             {
-                return new BusinessResponse<UserDto>(mensaje: "Usuario no existe");
+                return new BusinessResponse<UserEntity>(mensaje: "Usuario no existe");
             }
 
             var passwordEncrypted = CryptoManager.EncryptString(password);
@@ -33,15 +32,15 @@ namespace NexoMarket.Business
 
             if (user != null && user.IsBlocked)
             {
-                return new BusinessResponse<UserDto>(mensaje: "Usuario Bloqueado");
+                return new BusinessResponse<UserEntity>(mensaje: "Usuario Bloqueado");
             }
 
             if (user == null)
             { 
-                return new BusinessResponse<UserDto>(mensaje: "Credenciales Incorrectas");
+                return new BusinessResponse<UserEntity>(mensaje: "Credenciales Incorrectas");
             }
             
-            return  new BusinessResponse<UserDto>( data : user, mensaje: "Usuario Logueado", ok: true);
+            return  new BusinessResponse<UserEntity>( data : user, mensaje: "Usuario Logueado", ok: true);
         }
 
 

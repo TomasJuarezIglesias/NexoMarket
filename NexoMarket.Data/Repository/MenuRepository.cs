@@ -12,7 +12,7 @@ namespace NexoMarket.Data.Repository
     public class MenuRepository
     {
 
-        public List<MenuDto> GetMenusByUser(int userId)
+        public List<MenuEntity> GetMenusByUser(int userId)
         {
             try
             {
@@ -24,7 +24,7 @@ namespace NexoMarket.Data.Repository
                             .SelectMany(m => m.Menu)
                             .ToList();
                     
-                    return MapperConfig.Mapper.Map<List<MenuDto>>(menus);
+                    return MapperConfig.Mapper.Map<List<MenuEntity>>(menus);
                 }
             }
             catch (Exception ex)

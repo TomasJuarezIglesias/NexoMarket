@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NexoMarket.Entity.Entities
 {
-    public class UserAuth
+    public class UserAuthEntity
     {
         public int Id { get; set; }
         public string Username { get; set; }

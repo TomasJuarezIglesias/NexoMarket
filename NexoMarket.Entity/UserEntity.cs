@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 
 namespace NexoMarket.Entity.Dtos
 {
-    public class MenuDto
+    public class UserEntity
     {
         public int Id { get; set; }
-        public string Title { get; set; }
-        public string Url { get; set; }
+        public string Username { get; set; }
+        public bool IsBlocked { get; set; }
+
+        public RolEntity Rol { get; set; }
     }
 }

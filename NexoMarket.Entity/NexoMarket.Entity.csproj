@@ -41,13 +41,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Dtos\BitacoraEventoDTO.cs" />
-    <Compile Include="Dtos\MenuDto.cs" />
-    <Compile Include="Dtos\PermisoDTO.cs" />
-    <Compile Include="Dtos\RolDto.cs" />
-    <Compile Include="Dtos\UserDto.cs" />
-    <Compile Include="Entities\BusinessResponse.cs" />
-    <Compile Include="Entities\UserAuth.cs" />
+    <Compile Include="BitacoraEventoEntity.cs" />
+    <Compile Include="MenuEntity.cs" />
+    <Compile Include="PermisoEntity.cs" />
+    <Compile Include="RolEntity.cs" />
+    <Compile Include="UserEntity.cs" />
+    <Compile Include="BusinessResponse.cs" />
+    <Compile Include="UserAuthEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

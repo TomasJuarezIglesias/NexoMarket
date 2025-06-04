@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace NexoMarket.Entity.Dtos
 {
-    public class RolDto
+    public class RolEntity
     {
         public string Nombre { get; set; }
-        public List<PermisoDTO> Permisos { get; set; }
+        public List<PermisoEntity> Permisos { get; set; }
     }
 }

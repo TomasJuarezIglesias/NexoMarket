@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NexoMarket.Entity.Dtos
 {
-    public class BitacoraEventoDTO
+    public class BitacoraEventoEntity
     {
         public DateTime Fecha { get; set; }
 

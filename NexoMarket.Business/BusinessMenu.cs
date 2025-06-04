@@ -18,7 +18,7 @@ namespace NexoMarket.Business
             _menuRepository = new MenuRepository();
         }
 
-        public List<MenuDto> GetMenusByUser(int userId)
+        public List<MenuEntity> GetMenusByUser(int userId)
         {
             return _menuRepository.GetMenusByUser(userId);
         }
