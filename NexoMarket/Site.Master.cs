@@ -1,54 +1,51 @@
 ﻿using Newtonsoft.Json;
 using NexoMarket.Business;
-using NexoMarket.Entity.Dtos;
-using NexoMarket.Entity.Entities;
+using NexoMarket.Entity;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using System.Web.Security;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace NexoMarket
 {
     public partial class SiteMaster : MasterPage
     {
-        public List<MenuEntity> MenusList = new List<MenuEntity>();
-        private readonly BusinessMenu _businessMenu;
-
-        public SiteMaster()
-        {
-            _businessMenu = new BusinessMenu();
-        }
-
+        public List<MenuEntity> MenusList;
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            var url = Request.Url.AbsolutePath.Replace("/NexoMarket/", "").ToLower();
 
-            if (Request.Url.AbsolutePath.ToLower().Contains("login"))
+            if (url.Contains("login"))
             {
                 sidebar.Visible = false;
             }
 
+            // Armado de sideBar
             if (Request.IsAuthenticated)
             {
                 FormsIdentity identity = (FormsIdentity)HttpContext.Current.User.Identity;
                 FormsAuthenticationTicket ticket = identity.Ticket;
 
                 var userData = JsonConvert.DeserializeObject<UserAuthEntity>(ticket.UserData);
-                int userId = userData.Id;
+                MenusList = userData.AllowedMenues ?? new List<MenuEntity>();
+            }
 
-                MenusList = _businessMenu.GetMenusByUser(userId);
+            // Validación Ruta
+            if (!url.Contains("inicio") && MenusList != null && !MenusList.Exists(m => m.Url.ToLower() == url))
+            {
+                Response.Redirect("Inicio.aspx");
             }
         }
 
         protected void btnLogout_Click(object sender, EventArgs e)
         {
-            FormsAuthentication.SignOut();   
-            Session.Abandon();               
+            FormsAuthentication.SignOut();
+            Session.Abandon();
             Response.Redirect("Login.aspx");
         }
+
 
     }
 }

@@ -1,14 +1,7 @@
-﻿using NexoMarket.Data.Mapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NexoMarket.Entity.Dtos;
+﻿using NexoMarket.Data.Repository;
+using NexoMarket.Entity;
 using NexoMarket.Service.Helpers;
-using NexoMarket.Data;
-using NexoMarket.Data.Repository;
-using NexoMarket.Entity.Entities;
+using System.Threading.Tasks;
 
 namespace NexoMarket.Business
 {

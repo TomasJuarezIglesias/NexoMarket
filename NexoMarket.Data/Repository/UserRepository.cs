@@ -1,14 +1,6 @@
 ﻿using NexoMarket.Data.Mapper;
-using NexoMarket.Entity.Dtos;
-using NexoMarket.Service.Helpers;
-using System;
-using System.Collections.Generic;
+using NexoMarket.Entity;
 using System.Data.Entity;
-using System.Data.Entity.Migrations;
-using System.Linq;
-using System.Runtime.Remoting.Contexts;
-using System.Security.Policy;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace NexoMarket.Data.Repository

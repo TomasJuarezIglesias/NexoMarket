@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NexoMarket.Entity.Dtos
+namespace NexoMarket.Entity
 {
     public class MenuEntity
     {

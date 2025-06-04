@@ -1,16 +1,10 @@
-﻿using Microsoft.Ajax.Utilities;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using NexoMarket.Business;
-using NexoMarket.Entity.Dtos;
-using NexoMarket.Entity.Entities;
+using NexoMarket.Entity;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Web;
 using System.Web.Security;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace NexoMarket.NexoMarket
 {
@@ -18,11 +12,13 @@ namespace NexoMarket.NexoMarket
     {
         private readonly BusinessUser _businessUser;
         private readonly BusinessBitacora _businessBitacora;
+        private readonly BusinessMenu _businessMenu;
 
         public Login()
         {
             _businessUser = new BusinessUser();
             _businessBitacora = new BusinessBitacora();
+            _businessMenu = new BusinessMenu();
         }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -91,11 +87,14 @@ namespace NexoMarket.NexoMarket
             // Limpio los intentos almacenados
             Session.Remove("Intentos");
 
+            var allowedMenues = _businessMenu.GetMenusByUser(response.Data.Id);
+
             var userData = JsonConvert.SerializeObject(new UserAuthEntity
             {
                 Id = response.Data.Id,
                 Username = response.Data.Username,
-                Rol = response.Data.Rol.Nombre
+                Rol = response.Data.Rol.Nombre,
+                AllowedMenues = allowedMenues
             });
 
             var ticket = new FormsAuthenticationTicket(

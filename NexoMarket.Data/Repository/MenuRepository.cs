@@ -1,17 +1,13 @@
 ﻿using NexoMarket.Data.Mapper;
-using NexoMarket.Entity.Dtos;
+using NexoMarket.Entity;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NexoMarket.Data.Repository
 {
     public class MenuRepository
     {
-
         public List<MenuEntity> GetMenusByUser(int userId)
         {
             try

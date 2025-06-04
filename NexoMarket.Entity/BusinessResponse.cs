@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NexoMarket.Entity.Entities
+namespace NexoMarket.Entity
 {   
     public class BusinessResponse<T> where T :class
     {

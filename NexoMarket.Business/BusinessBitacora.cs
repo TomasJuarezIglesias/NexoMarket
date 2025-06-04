@@ -1,10 +1,8 @@
 ﻿using NexoMarket.Data;
 using NexoMarket.Data.Repository;
-using NexoMarket.Entity.Dtos;
+using NexoMarket.Entity;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace NexoMarket.Business
