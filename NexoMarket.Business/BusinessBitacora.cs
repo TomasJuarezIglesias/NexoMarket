@@ -16,21 +16,20 @@ namespace NexoMarket.Business
             _eventoBitacoraRepository = new EventoBitacoraRepository();
         }
 
-        public async Task<bool> GuardarEventoBitacora(string descripcion_evento, int id_user)
+        public async Task GuardarEventoBitacora(string descripcion_evento, int id_user)
         {
-            var evento = new BitacoraEvento()
+            var evento = new BitacoraEventoCreateEntity()
             {
-                evento = descripcion_evento,
-                id_user = id_user,
-                fecha = DateTime.Now
+                Evento = descripcion_evento,
+                Id_user = id_user
             };
-            return await _eventoBitacoraRepository.GuardarEventoBitacora(evento);
+
+            await _eventoBitacoraRepository.GuardarEventoBitacora(evento);
         }
 
         public async Task<List<BitacoraEventoEntity>> BuscarEventosBitacora()
         {
             return await _eventoBitacoraRepository.BuscarEventosBitacora();
-
         }
     }
 }

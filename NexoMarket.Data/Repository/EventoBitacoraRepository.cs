@@ -1,6 +1,9 @@
-﻿using NexoMarket.Entity;
+﻿using NexoMarket.Data.Mapper;
+using NexoMarket.Entity;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -12,31 +15,30 @@ namespace NexoMarket.Data.Repository
         {
             using (var context = new NexoMarketEntities())
             {
-                var query = from bi in context.BitacoraEvento
-                            join u in context.Usuarios on bi.id_user equals u.Id
-                            join r in context.RolSet on u.IdRol equals r.Id_Rol
-                            select new BitacoraEventoEntity
-                            {
-                                Evento = bi.evento,
-                                Fecha = bi.fecha,
-                                Usuario = u.Username,
-                                Rol = r.Nombre
-                            };
-                query = query.OrderByDescending(x => x.Fecha);
+                var eventos = await context.BitacoraEvento
+                    .Include(b => b.Usuarios.Rol)
+                    .OrderByDescending(b => b.fecha)
+                    .ToListAsync();
 
-                return await query.ToListAsync();
+                return MapperConfig.Mapper.Map<List<BitacoraEventoEntity>>(eventos);
             }
         }
 
-        public async Task<bool> GuardarEventoBitacora(BitacoraEvento evento)
+        public async Task GuardarEventoBitacora(BitacoraEventoCreateEntity evento)
         {
-            BitacoraEvento resultado;
-            using (var context = new NexoMarketEntities())
+            try
             {
-                resultado = context.BitacoraEvento.Add(evento);
-                await context.SaveChangesAsync();
+                var entity = MapperConfig.Mapper.Map<BitacoraEvento>(evento);
+                using (var context = new NexoMarketEntities())
+                {
+                    context.BitacoraEvento.Add(entity);
+                    await context.SaveChangesAsync();
+                }
             }
-            return resultado.id != 0;
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

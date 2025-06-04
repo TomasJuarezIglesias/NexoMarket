@@ -30,12 +30,12 @@ namespace NexoMarket
 
                 var userData = JsonConvert.DeserializeObject<UserAuthEntity>(ticket.UserData);
                 MenusList = userData.AllowedMenues ?? new List<MenuEntity>();
-            }
 
-            // Validación Ruta
-            if (!url.Contains("inicio") && MenusList != null && !MenusList.Exists(m => m.Url.ToLower() == url))
-            {
-                Response.Redirect("Inicio.aspx");
+                // Validación Ruta
+                if (url != "inicio.aspx" && !MenusList.Exists(m => m.Url.ToLower() == url))
+                {
+                    Response.Redirect("Inicio.aspx");
+                }
             }
         }
 

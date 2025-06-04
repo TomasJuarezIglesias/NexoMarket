@@ -66,11 +66,14 @@
                 <nav class="nav flex-column mb-auto">
                     <a class="nav-link px-3 py-2 rounded text-white" href="/NexoMarket/Inicio.aspx">Inicio</a>
                     <%
-                        foreach (var menu in MenusList)
+                        if (MenusList != null) 
                         {
-                            %>
-                            <a class="nav-link px-3 py-2 rounded text-white" href="<%= menu.Url %>"><%= menu.Title %></a>
-                            <%
+                            foreach (var menu in MenusList)
+                            {
+                                %>
+                                <a class="nav-link px-3 py-2 rounded text-white" href="<%= menu.Url %>"><%= menu.Title %></a>
+                                <%
+                            }
                         }
                     %>
 

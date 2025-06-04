@@ -11,9 +11,12 @@ namespace NexoMarket.Data.Mapper
             CreateMap<Menu, MenuEntity>();
             CreateMap<Rol, RolEntity>();
             CreateMap<Permiso, PermisoEntity>();
+            CreateMap<BitacoraEvento, BitacoraEventoEntity>()
+                .ForMember(dest => dest.Usuario, opt => opt.MapFrom(src => src.Usuarios.Username))
+                .ForMember(dest => dest.Rol, opt => opt.MapFrom(src => src.Usuarios.Rol.Nombre));
+
+            CreateMap<BitacoraEventoCreateEntity, BitacoraEvento>();
         }
-
-
 
     }
 }
