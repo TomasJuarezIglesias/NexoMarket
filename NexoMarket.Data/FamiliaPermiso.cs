@@ -14,7 +14,7 @@ namespace NexoMarket.Data
     
     public partial class FamiliaPermiso
     {
-        public int IdFamilia { get; set; }
+        public int Id_Familia { get; set; }
         public int Id_Permiso { get; set; }
         public string Nombre { get; set; }
     

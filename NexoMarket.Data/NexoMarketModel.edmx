@@ -7,19 +7,38 @@
     <Schema Namespace="NexoMarketModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="BitacoraEvento">
           <Key>
-            <PropertyRef Name="id" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="evento" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="id_user" Type="int" Nullable="false" />
-          <Property Name="fecha" Type="datetime" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Evento" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Id_User" Type="int" Nullable="false" />
+          <Property Name="Fecha" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Categoria">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DetalleVenta">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id_Venta" Type="int" Nullable="false" />
+          <Property Name="Id_Producto" Type="int" Nullable="false" />
+          <Property Name="Cantidad" Type="int" Nullable="false" />
+          <Property Name="Precio_Unitario" Type="money" Nullable="false" />
+          <Property Name="Sub_Total" Type="money" Nullable="false" />
         </EntityType>
         <EntityType Name="FamiliaPermiso">
           <Key>
-            <PropertyRef Name="IdFamilia" />
+            <PropertyRef Name="Id_Familia" />
             <PropertyRef Name="Id_Permiso" />
           </Key>
-          <Property Name="IdFamilia" Type="int" Nullable="false" />
+          <Property Name="Id_Familia" Type="int" Nullable="false" />
           <Property Name="Id_Permiso" Type="int" Nullable="false" />
           <Property Name="Nombre" Type="nvarchar" MaxLength="50" />
         </EntityType>
@@ -28,7 +47,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="IdPermiso" Type="int" Nullable="false" />
+          <Property Name="Id_Permiso" Type="int" Nullable="false" />
           <Property Name="Title" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="Url" Type="nvarchar" MaxLength="100" Nullable="false" />
         </EntityType>
@@ -39,6 +58,17 @@
           <Property Name="Id_Permiso" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Is_Familia" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Producto">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id_Categoria" Type="int" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="50" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Precio" Type="money" Nullable="false" />
+          <Property Name="Stock" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Rol">
           <Key>
@@ -62,8 +92,19 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Username" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Password" Type="char" MaxLength="64" Nullable="false" />
-          <Property Name="IdRol" Type="int" Nullable="false" />
-          <Property Name="IsBlocked" Type="bit" />
+          <Property Name="Id_Rol" Type="int" Nullable="false" />
+          <Property Name="Is_Blocked" Type="bit" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="50" />
+          <Property Name="Apellido" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Venta">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Fecha" Type="datetime" Nullable="false" />
+          <Property Name="Total" Type="money" Nullable="false" />
+          <Property Name="Id_Usuario" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="FK_BitacoraEvento_Usuarios">
           <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="1" />
@@ -73,7 +114,31 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="BitacoraEvento">
-              <PropertyRef Name="id_user" />
+              <PropertyRef Name="Id_User" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DetalleVenta_Producto">
+          <End Role="Producto" Type="Self.Producto" Multiplicity="1" />
+          <End Role="DetalleVenta" Type="Self.DetalleVenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DetalleVenta">
+              <PropertyRef Name="Id_Producto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DetalleVenta_Venta">
+          <End Role="Venta" Type="Self.Venta" Multiplicity="1" />
+          <End Role="DetalleVenta" Type="Self.DetalleVenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Venta">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DetalleVenta">
+              <PropertyRef Name="Id_Venta" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -99,7 +164,19 @@
               <PropertyRef Name="Id_Permiso" />
             </Principal>
             <Dependent Role="Menu">
-              <PropertyRef Name="IdPermiso" />
+              <PropertyRef Name="Id_Permiso" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Producto_Categoria">
+          <End Role="Categoria" Type="Self.Categoria" Multiplicity="1" />
+          <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categoria">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Producto">
+              <PropertyRef Name="Id_Categoria" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -139,21 +216,45 @@
               <PropertyRef Name="Id_Rol" />
             </Principal>
             <Dependent Role="Usuarios">
-              <PropertyRef Name="IdRol" />
+              <PropertyRef Name="Id_Rol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Venta_Usuarios">
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="1" />
+          <End Role="Venta" Type="Self.Venta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Venta">
+              <PropertyRef Name="Id_Usuario" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="NexoMarketModelStoreContainer">
           <EntitySet Name="BitacoraEvento" EntityType="Self.BitacoraEvento" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Categoria" EntityType="Self.Categoria" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DetalleVenta" EntityType="Self.DetalleVenta" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FamiliaPermiso" EntityType="Self.FamiliaPermiso" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Menu" EntityType="Self.Menu" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Permiso" EntityType="Self.Permiso" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Producto" EntityType="Self.Producto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Rol" EntityType="Self.Rol" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Rol_Permiso" EntityType="Self.Rol_Permiso" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Usuarios" EntityType="Self.Usuarios" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Venta" EntityType="Self.Venta" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_BitacoraEvento_Usuarios" Association="Self.FK_BitacoraEvento_Usuarios">
             <End Role="Usuarios" EntitySet="Usuarios" />
             <End Role="BitacoraEvento" EntitySet="BitacoraEvento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DetalleVenta_Producto" Association="Self.FK_DetalleVenta_Producto">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="DetalleVenta" EntitySet="DetalleVenta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DetalleVenta_Venta" Association="Self.FK_DetalleVenta_Venta">
+            <End Role="Venta" EntitySet="Venta" />
+            <End Role="DetalleVenta" EntitySet="DetalleVenta" />
           </AssociationSet>
           <AssociationSet Name="FK_FamiliaPermiso_Permiso" Association="Self.FK_FamiliaPermiso_Permiso">
             <End Role="Permiso" EntitySet="Permiso" />
@@ -162,6 +263,10 @@
           <AssociationSet Name="FK_Menu_Permiso" Association="Self.FK_Menu_Permiso">
             <End Role="Permiso" EntitySet="Permiso" />
             <End Role="Menu" EntitySet="Menu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Producto_Categoria" Association="Self.FK_Producto_Categoria">
+            <End Role="Categoria" EntitySet="Categoria" />
+            <End Role="Producto" EntitySet="Producto" />
           </AssociationSet>
           <AssociationSet Name="FK_Rol_Permiso_Permiso" Association="Self.FK_Rol_Permiso_Permiso">
             <End Role="Permiso" EntitySet="Permiso" />
@@ -175,80 +280,114 @@
             <End Role="Rol" EntitySet="Rol" />
             <End Role="Usuarios" EntitySet="Usuarios" />
           </AssociationSet>
+          <AssociationSet Name="FK_Venta_Usuarios" Association="Self.FK_Venta_Usuarios">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="Venta" EntitySet="Venta" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="NexoMarketModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Usuarios">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Password" Type="String" MaxLength="64" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="IdRol" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Rol" Relationship="NexoMarketModel.FK_Usuarios_Rol1" FromRole="Usuarios" ToRole="Rol1" />
-          <NavigationProperty Name="BitacoraEvento" Relationship="NexoMarketModel.FK_BitacoraEvento_Usuarios" FromRole="Usuarios" ToRole="BitacoraEvento" />
-          <Property Name="IsBlocked" Type="Boolean" />
-        </EntityType>
         <EntityContainer Name="NexoMarketEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Usuarios" EntityType="Self.Usuarios" />
-          <EntitySet Name="Menu" EntityType="NexoMarketModel.Menu" />
           <EntitySet Name="BitacoraEvento" EntityType="NexoMarketModel.BitacoraEvento" />
-          <EntitySet Name="FamiliaPermisoSet" EntityType="NexoMarketModel.FamiliaPermiso" />
-          <EntitySet Name="PermisoSet" EntityType="NexoMarketModel.Permiso" />
-          <EntitySet Name="RolSet" EntityType="NexoMarketModel.Rol" />
-          <AssociationSet Name="FK_FamiliaPermiso_Permiso1" Association="NexoMarketModel.FK_FamiliaPermiso_Permiso1">
-            <End Role="Permiso1" EntitySet="PermisoSet" />
-            <End Role="FamiliaPermiso1" EntitySet="FamiliaPermisoSet" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Menu_Permiso1" Association="NexoMarketModel.FK_Menu_Permiso1">
-            <End Role="Permiso1" EntitySet="PermisoSet" />
-            <End Role="Menu" EntitySet="Menu" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Usuarios_Rol1" Association="NexoMarketModel.FK_Usuarios_Rol1">
-            <End Role="Rol1" EntitySet="RolSet" />
-            <End Role="Usuarios" EntitySet="Usuarios" />
-          </AssociationSet>
-          <AssociationSet Name="Rol_Permiso1" Association="NexoMarketModel.Rol_Permiso1">
-            <End Role="Permiso1" EntitySet="PermisoSet" />
-            <End Role="Rol1" EntitySet="RolSet" />
-          </AssociationSet>
+          <EntitySet Name="Categoria" EntityType="NexoMarketModel.Categoria" />
+          <EntitySet Name="DetalleVenta" EntityType="NexoMarketModel.DetalleVenta" />
+          <EntitySet Name="FamiliaPermiso" EntityType="NexoMarketModel.FamiliaPermiso" />
+          <EntitySet Name="Menu" EntityType="NexoMarketModel.Menu" />
+          <EntitySet Name="Permiso" EntityType="NexoMarketModel.Permiso" />
+          <EntitySet Name="Producto" EntityType="NexoMarketModel.Producto" />
+          <EntitySet Name="Rol" EntityType="NexoMarketModel.Rol" />
+          <EntitySet Name="Usuarios" EntityType="NexoMarketModel.Usuarios" />
+          <EntitySet Name="Venta" EntityType="NexoMarketModel.Venta" />
           <AssociationSet Name="FK_BitacoraEvento_Usuarios" Association="NexoMarketModel.FK_BitacoraEvento_Usuarios">
             <End Role="Usuarios" EntitySet="Usuarios" />
             <End Role="BitacoraEvento" EntitySet="BitacoraEvento" />
           </AssociationSet>
-          </EntityContainer>
+          <AssociationSet Name="FK_Producto_Categoria" Association="NexoMarketModel.FK_Producto_Categoria">
+            <End Role="Categoria" EntitySet="Categoria" />
+            <End Role="Producto" EntitySet="Producto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DetalleVenta_Producto" Association="NexoMarketModel.FK_DetalleVenta_Producto">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="DetalleVenta" EntitySet="DetalleVenta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DetalleVenta_Venta" Association="NexoMarketModel.FK_DetalleVenta_Venta">
+            <End Role="Venta" EntitySet="Venta" />
+            <End Role="DetalleVenta" EntitySet="DetalleVenta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FamiliaPermiso_Permiso" Association="NexoMarketModel.FK_FamiliaPermiso_Permiso">
+            <End Role="Permiso" EntitySet="Permiso" />
+            <End Role="FamiliaPermiso" EntitySet="FamiliaPermiso" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Menu_Permiso" Association="NexoMarketModel.FK_Menu_Permiso">
+            <End Role="Permiso" EntitySet="Permiso" />
+            <End Role="Menu" EntitySet="Menu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuarios_Rol" Association="NexoMarketModel.FK_Usuarios_Rol">
+            <End Role="Rol" EntitySet="Rol" />
+            <End Role="Usuarios" EntitySet="Usuarios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Venta_Usuarios" Association="NexoMarketModel.FK_Venta_Usuarios">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="Venta" EntitySet="Venta" />
+          </AssociationSet>
+          <AssociationSet Name="Rol_Permiso" Association="NexoMarketModel.Rol_Permiso">
+            <End Role="Permiso" EntitySet="Permiso" />
+            <End Role="Rol" EntitySet="Rol" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="BitacoraEvento">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Evento" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Id_User" Type="Int32" Nullable="false" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Usuarios" Relationship="NexoMarketModel.FK_BitacoraEvento_Usuarios" FromRole="BitacoraEvento" ToRole="Usuarios" />
+        </EntityType>
+        <EntityType Name="Categoria">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Producto" Relationship="NexoMarketModel.FK_Producto_Categoria" FromRole="Categoria" ToRole="Producto" />
+        </EntityType>
+        <EntityType Name="DetalleVenta">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id_Venta" Type="Int32" Nullable="false" />
+          <Property Name="Id_Producto" Type="Int32" Nullable="false" />
+          <Property Name="Cantidad" Type="Int32" Nullable="false" />
+          <Property Name="Precio_Unitario" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Sub_Total" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <NavigationProperty Name="Producto" Relationship="NexoMarketModel.FK_DetalleVenta_Producto" FromRole="DetalleVenta" ToRole="Producto" />
+          <NavigationProperty Name="Venta" Relationship="NexoMarketModel.FK_DetalleVenta_Venta" FromRole="DetalleVenta" ToRole="Venta" />
+        </EntityType>
+        <EntityType Name="FamiliaPermiso">
+          <Key>
+            <PropertyRef Name="Id_Familia" />
+            <PropertyRef Name="Id_Permiso" />
+          </Key>
+          <Property Name="Id_Familia" Type="Int32" Nullable="false" />
+          <Property Name="Id_Permiso" Type="Int32" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Permiso" Relationship="NexoMarketModel.FK_FamiliaPermiso_Permiso" FromRole="FamiliaPermiso" ToRole="Permiso" />
+        </EntityType>
         <EntityType Name="Menu">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id_Permiso" Type="Int32" Nullable="false" />
           <Property Name="Title" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="Url" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="IdPermiso" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Permiso" Relationship="NexoMarketModel.FK_Menu_Permiso1" FromRole="Menu" ToRole="Permiso1" />
-        </EntityType>
-        <EntityType Name="BitacoraEvento">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="evento" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="id_user" Type="Int32" Nullable="false" />
-          <Property Name="fecha" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Usuarios" Relationship="NexoMarketModel.FK_BitacoraEvento_Usuarios" FromRole="BitacoraEvento" ToRole="Usuarios" />
-        </EntityType>
-        <EntityType Name="FamiliaPermiso">
-          <Key>
-            <PropertyRef Name="IdFamilia" />
-            <PropertyRef Name="Id_Permiso" />
-          </Key>
-          <Property Name="IdFamilia" Type="Int32" Nullable="false" />
-          <Property Name="Id_Permiso" Type="Int32" Nullable="false" />
-          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Permiso" Relationship="NexoMarketModel.FK_FamiliaPermiso_Permiso1" FromRole="FamiliaPermiso1" ToRole="Permiso1" />
+          <NavigationProperty Name="Permiso" Relationship="NexoMarketModel.FK_Menu_Permiso" FromRole="Menu" ToRole="Permiso" />
         </EntityType>
         <EntityType Name="Permiso">
           <Key>
@@ -257,9 +396,22 @@
           <Property Name="Id_Permiso" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Is_Familia" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="FamiliaPermiso" Relationship="NexoMarketModel.FK_FamiliaPermiso_Permiso1" FromRole="Permiso1" ToRole="FamiliaPermiso1" />
-          <NavigationProperty Name="Menu" Relationship="NexoMarketModel.FK_Menu_Permiso1" FromRole="Permiso1" ToRole="Menu" />
-          <NavigationProperty Name="Rol" Relationship="NexoMarketModel.Rol_Permiso1" FromRole="Permiso1" ToRole="Rol1" />
+          <NavigationProperty Name="FamiliaPermiso" Relationship="NexoMarketModel.FK_FamiliaPermiso_Permiso" FromRole="Permiso" ToRole="FamiliaPermiso" />
+          <NavigationProperty Name="Menu" Relationship="NexoMarketModel.FK_Menu_Permiso" FromRole="Permiso" ToRole="Menu" />
+          <NavigationProperty Name="Rol" Relationship="NexoMarketModel.Rol_Permiso" FromRole="Permiso" ToRole="Rol" />
+        </EntityType>
+        <EntityType Name="Producto">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id_Categoria" Type="Int32" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Precio" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Stock" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Categoria" Relationship="NexoMarketModel.FK_Producto_Categoria" FromRole="Producto" ToRole="Categoria" />
+          <NavigationProperty Name="DetalleVenta" Relationship="NexoMarketModel.FK_DetalleVenta_Producto" FromRole="Producto" ToRole="DetalleVenta" />
         </EntityType>
         <EntityType Name="Rol">
           <Key>
@@ -267,51 +419,35 @@
           </Key>
           <Property Name="Id_Rol" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Usuarios" Relationship="NexoMarketModel.FK_Usuarios_Rol1" FromRole="Rol1" ToRole="Usuarios" />
-          <NavigationProperty Name="Permiso" Relationship="NexoMarketModel.Rol_Permiso1" FromRole="Rol1" ToRole="Permiso1" />
+          <NavigationProperty Name="Usuarios" Relationship="NexoMarketModel.FK_Usuarios_Rol" FromRole="Rol" ToRole="Usuarios" />
+          <NavigationProperty Name="Permiso" Relationship="NexoMarketModel.Rol_Permiso" FromRole="Rol" ToRole="Permiso" />
         </EntityType>
-        <Association Name="FK_FamiliaPermiso_Permiso1">
-          <End Type="NexoMarketModel.Permiso" Role="Permiso1" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="NexoMarketModel.FamiliaPermiso" Role="FamiliaPermiso1" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Permiso1">
-              <PropertyRef Name="Id_Permiso" />
-            </Principal>
-            <Dependent Role="FamiliaPermiso1">
-              <PropertyRef Name="Id_Permiso" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Menu_Permiso1">
-          <End Type="NexoMarketModel.Permiso" Role="Permiso1" Multiplicity="1" />
-          <End Type="NexoMarketModel.Menu" Role="Menu" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Permiso1">
-              <PropertyRef Name="Id_Permiso" />
-            </Principal>
-            <Dependent Role="Menu">
-              <PropertyRef Name="IdPermiso" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Usuarios_Rol1">
-          <End Type="NexoMarketModel.Rol" Role="Rol1" Multiplicity="1" />
-          <End Type="NexoMarketModel.Usuarios" Role="Usuarios" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Rol1">
-              <PropertyRef Name="Id_Rol" />
-            </Principal>
-            <Dependent Role="Usuarios">
-              <PropertyRef Name="IdRol" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="Rol_Permiso1">
-          <End Type="NexoMarketModel.Permiso" Role="Permiso1" Multiplicity="*" />
-          <End Type="NexoMarketModel.Rol" Role="Rol1" Multiplicity="*" />
-        </Association>
+        <EntityType Name="Usuarios">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="64" FixedLength="true" Unicode="false" />
+          <Property Name="Id_Rol" Type="Int32" Nullable="false" />
+          <Property Name="Is_Blocked" Type="Boolean" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="BitacoraEvento" Relationship="NexoMarketModel.FK_BitacoraEvento_Usuarios" FromRole="Usuarios" ToRole="BitacoraEvento" />
+          <NavigationProperty Name="Rol" Relationship="NexoMarketModel.FK_Usuarios_Rol" FromRole="Usuarios" ToRole="Rol" />
+          <NavigationProperty Name="Venta" Relationship="NexoMarketModel.FK_Venta_Usuarios" FromRole="Usuarios" ToRole="Venta" />
+        </EntityType>
+        <EntityType Name="Venta">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Total" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Id_Usuario" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="DetalleVenta" Relationship="NexoMarketModel.FK_DetalleVenta_Venta" FromRole="Venta" ToRole="DetalleVenta" />
+          <NavigationProperty Name="Usuarios" Relationship="NexoMarketModel.FK_Venta_Usuarios" FromRole="Venta" ToRole="Usuarios" />
+        </EntityType>
         <Association Name="FK_BitacoraEvento_Usuarios">
           <End Type="NexoMarketModel.Usuarios" Role="Usuarios" Multiplicity="1" />
           <End Type="NexoMarketModel.BitacoraEvento" Role="BitacoraEvento" Multiplicity="*" />
@@ -320,9 +456,99 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="BitacoraEvento">
-              <PropertyRef Name="id_user" />
+              <PropertyRef Name="Id_User" />
             </Dependent>
           </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Producto_Categoria">
+          <End Type="NexoMarketModel.Categoria" Role="Categoria" Multiplicity="1" />
+          <End Type="NexoMarketModel.Producto" Role="Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categoria">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Producto">
+              <PropertyRef Name="Id_Categoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DetalleVenta_Producto">
+          <End Type="NexoMarketModel.Producto" Role="Producto" Multiplicity="1" />
+          <End Type="NexoMarketModel.DetalleVenta" Role="DetalleVenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DetalleVenta">
+              <PropertyRef Name="Id_Producto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DetalleVenta_Venta">
+          <End Type="NexoMarketModel.Venta" Role="Venta" Multiplicity="1" />
+          <End Type="NexoMarketModel.DetalleVenta" Role="DetalleVenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Venta">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DetalleVenta">
+              <PropertyRef Name="Id_Venta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FamiliaPermiso_Permiso">
+          <End Type="NexoMarketModel.Permiso" Role="Permiso" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="NexoMarketModel.FamiliaPermiso" Role="FamiliaPermiso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Permiso">
+              <PropertyRef Name="Id_Permiso" />
+            </Principal>
+            <Dependent Role="FamiliaPermiso">
+              <PropertyRef Name="Id_Permiso" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Menu_Permiso">
+          <End Type="NexoMarketModel.Permiso" Role="Permiso" Multiplicity="1" />
+          <End Type="NexoMarketModel.Menu" Role="Menu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Permiso">
+              <PropertyRef Name="Id_Permiso" />
+            </Principal>
+            <Dependent Role="Menu">
+              <PropertyRef Name="Id_Permiso" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuarios_Rol">
+          <End Type="NexoMarketModel.Rol" Role="Rol" Multiplicity="1" />
+          <End Type="NexoMarketModel.Usuarios" Role="Usuarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rol">
+              <PropertyRef Name="Id_Rol" />
+            </Principal>
+            <Dependent Role="Usuarios">
+              <PropertyRef Name="Id_Rol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Venta_Usuarios">
+          <End Type="NexoMarketModel.Usuarios" Role="Usuarios" Multiplicity="1" />
+          <End Type="NexoMarketModel.Venta" Role="Venta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Venta">
+              <PropertyRef Name="Id_Usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Rol_Permiso">
+          <End Type="NexoMarketModel.Permiso" Role="Permiso" Multiplicity="*" />
+          <End Type="NexoMarketModel.Rol" Role="Rol" Multiplicity="*" />
         </Association>
         </Schema>
     </edmx:ConceptualModels>
@@ -330,47 +556,57 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="NexoMarketModelStoreContainer" CdmEntityContainer="NexoMarketEntities">
-          <EntitySetMapping Name="Usuarios">
-            <EntityTypeMapping TypeName="NexoMarketModel.Usuarios">
-              <MappingFragment StoreEntitySet="Usuarios">
-                <ScalarProperty Name="IsBlocked" ColumnName="IsBlocked" />
-                <ScalarProperty Name="IdRol" ColumnName="IdRol" />
+          <EntitySetMapping Name="BitacoraEvento">
+            <EntityTypeMapping TypeName="NexoMarketModel.BitacoraEvento">
+              <MappingFragment StoreEntitySet="BitacoraEvento">
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="Id_User" ColumnName="Id_User" />
+                <ScalarProperty Name="Evento" ColumnName="Evento" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Username" ColumnName="Username" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Categoria">
+            <EntityTypeMapping TypeName="NexoMarketModel.Categoria">
+              <MappingFragment StoreEntitySet="Categoria">
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DetalleVenta">
+            <EntityTypeMapping TypeName="NexoMarketModel.DetalleVenta">
+              <MappingFragment StoreEntitySet="DetalleVenta">
+                <ScalarProperty Name="Sub_Total" ColumnName="Sub_Total" />
+                <ScalarProperty Name="Precio_Unitario" ColumnName="Precio_Unitario" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="Id_Producto" ColumnName="Id_Producto" />
+                <ScalarProperty Name="Id_Venta" ColumnName="Id_Venta" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FamiliaPermiso">
+            <EntityTypeMapping TypeName="NexoMarketModel.FamiliaPermiso">
+              <MappingFragment StoreEntitySet="FamiliaPermiso">
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Id_Permiso" ColumnName="Id_Permiso" />
+                <ScalarProperty Name="Id_Familia" ColumnName="Id_Familia" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Menu">
             <EntityTypeMapping TypeName="NexoMarketModel.Menu">
               <MappingFragment StoreEntitySet="Menu">
-                <ScalarProperty Name="IdPermiso" ColumnName="IdPermiso" />
                 <ScalarProperty Name="Url" ColumnName="Url" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Id_Permiso" ColumnName="Id_Permiso" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="BitacoraEvento">
-            <EntityTypeMapping TypeName="NexoMarketModel.BitacoraEvento">
-              <MappingFragment StoreEntitySet="BitacoraEvento">
-                <ScalarProperty Name="fecha" ColumnName="fecha" />
-                <ScalarProperty Name="id_user" ColumnName="id_user" />
-                <ScalarProperty Name="evento" ColumnName="evento" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="FamiliaPermisoSet">
-            <EntityTypeMapping TypeName="NexoMarketModel.FamiliaPermiso">
-              <MappingFragment StoreEntitySet="FamiliaPermiso">
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="Id_Permiso" ColumnName="Id_Permiso" />
-                <ScalarProperty Name="IdFamilia" ColumnName="IdFamilia" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="PermisoSet">
+          <EntitySetMapping Name="Permiso">
             <EntityTypeMapping TypeName="NexoMarketModel.Permiso">
               <MappingFragment StoreEntitySet="Permiso">
                 <ScalarProperty Name="Is_Familia" ColumnName="Is_Familia" />
@@ -379,7 +615,19 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="RolSet">
+          <EntitySetMapping Name="Producto">
+            <EntityTypeMapping TypeName="NexoMarketModel.Producto">
+              <MappingFragment StoreEntitySet="Producto">
+                <ScalarProperty Name="Stock" ColumnName="Stock" />
+                <ScalarProperty Name="Precio" ColumnName="Precio" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Id_Categoria" ColumnName="Id_Categoria" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rol">
             <EntityTypeMapping TypeName="NexoMarketModel.Rol">
               <MappingFragment StoreEntitySet="Rol">
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
@@ -387,15 +635,38 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="Rol_Permiso1" TypeName="NexoMarketModel.Rol_Permiso1" StoreEntitySet="Rol_Permiso">
-            <EndProperty Name="Rol1">
+          <EntitySetMapping Name="Usuarios">
+            <EntityTypeMapping TypeName="NexoMarketModel.Usuarios">
+              <MappingFragment StoreEntitySet="Usuarios">
+                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Is_Blocked" ColumnName="Is_Blocked" />
+                <ScalarProperty Name="Id_Rol" ColumnName="Id_Rol" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Venta">
+            <EntityTypeMapping TypeName="NexoMarketModel.Venta">
+              <MappingFragment StoreEntitySet="Venta">
+                <ScalarProperty Name="Id_Usuario" ColumnName="Id_Usuario" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="Rol_Permiso" TypeName="NexoMarketModel.Rol_Permiso" StoreEntitySet="Rol_Permiso">
+            <EndProperty Name="Rol">
               <ScalarProperty Name="Id_Rol" ColumnName="Id_Rol" />
             </EndProperty>
-            <EndProperty Name="Permiso1">
+            <EndProperty Name="Permiso">
               <ScalarProperty Name="Id_Permiso" ColumnName="Id_Permiso" />
             </EndProperty>
           </AssociationSetMapping>
-          </EntityContainerMapping>
+        </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

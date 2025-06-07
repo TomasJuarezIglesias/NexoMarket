@@ -59,6 +59,12 @@
     <Compile Include="BitacoraEvento.cs">
       <DependentUpon>NexoMarketModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Categoria.cs">
+      <DependentUpon>NexoMarketModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DetalleVenta.cs">
+      <DependentUpon>NexoMarketModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="FamiliaPermiso.cs">
       <DependentUpon>NexoMarketModel.tt</DependentUpon>
     </Compile>
@@ -85,6 +91,9 @@
     <Compile Include="Permiso.cs">
       <DependentUpon>NexoMarketModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Producto.cs">
+      <DependentUpon>NexoMarketModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\EventoBitacoraRepository.cs" />
     <Compile Include="Repository\MenuRepository.cs" />
@@ -93,6 +102,9 @@
       <DependentUpon>NexoMarketModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Usuarios.cs">
+      <DependentUpon>NexoMarketModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Venta.cs">
       <DependentUpon>NexoMarketModel.tt</DependentUpon>
     </Compile>
   </ItemGroup>

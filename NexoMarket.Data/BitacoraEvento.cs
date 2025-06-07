@@ -14,10 +14,10 @@ namespace NexoMarket.Data
     
     public partial class BitacoraEvento
     {
-        public int id { get; set; }
-        public string evento { get; set; }
-        public int id_user { get; set; }
-        public System.DateTime fecha { get; set; }
+        public int Id { get; set; }
+        public string Evento { get; set; }
+        public int Id_User { get; set; }
+        public System.DateTime Fecha { get; set; }
     
         public virtual Usuarios Usuarios { get; set; }
     }

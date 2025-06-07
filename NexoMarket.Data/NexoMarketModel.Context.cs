@@ -25,11 +25,15 @@ namespace NexoMarket.Data
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Usuarios> Usuarios { get; set; }
-        public virtual DbSet<Menu> Menu { get; set; }
         public virtual DbSet<BitacoraEvento> BitacoraEvento { get; set; }
-        public virtual DbSet<FamiliaPermiso> FamiliaPermisoSet { get; set; }
-        public virtual DbSet<Permiso> PermisoSet { get; set; }
-        public virtual DbSet<Rol> RolSet { get; set; }
+        public virtual DbSet<Categoria> Categoria { get; set; }
+        public virtual DbSet<DetalleVenta> DetalleVenta { get; set; }
+        public virtual DbSet<FamiliaPermiso> FamiliaPermiso { get; set; }
+        public virtual DbSet<Menu> Menu { get; set; }
+        public virtual DbSet<Permiso> Permiso { get; set; }
+        public virtual DbSet<Producto> Producto { get; set; }
+        public virtual DbSet<Rol> Rol { get; set; }
+        public virtual DbSet<Usuarios> Usuarios { get; set; }
+        public virtual DbSet<Venta> Venta { get; set; }
     }
 }

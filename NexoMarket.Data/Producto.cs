@@ -12,27 +12,23 @@ namespace NexoMarket.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class Usuarios
+    public partial class Producto
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Usuarios()
+        public Producto()
         {
-            this.BitacoraEvento = new HashSet<BitacoraEvento>();
-            this.Venta = new HashSet<Venta>();
+            this.DetalleVenta = new HashSet<DetalleVenta>();
         }
     
         public int Id { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
-        public int Id_Rol { get; set; }
-        public Nullable<bool> Is_Blocked { get; set; }
+        public int Id_Categoria { get; set; }
         public string Nombre { get; set; }
-        public string Apellido { get; set; }
+        public string Descripcion { get; set; }
+        public decimal Precio { get; set; }
+        public int Stock { get; set; }
     
+        public virtual Categoria Categoria { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<BitacoraEvento> BitacoraEvento { get; set; }
-        public virtual Rol Rol { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Venta> Venta { get; set; }
+        public virtual ICollection<DetalleVenta> DetalleVenta { get; set; }
     }
 }

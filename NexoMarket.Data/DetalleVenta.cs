@@ -12,13 +12,16 @@ namespace NexoMarket.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class Menu
+    public partial class DetalleVenta
     {
         public int Id { get; set; }
-        public int Id_Permiso { get; set; }
-        public string Title { get; set; }
-        public string Url { get; set; }
+        public int Id_Venta { get; set; }
+        public int Id_Producto { get; set; }
+        public int Cantidad { get; set; }
+        public decimal Precio_Unitario { get; set; }
+        public decimal Sub_Total { get; set; }
     
-        public virtual Permiso Permiso { get; set; }
+        public virtual Producto Producto { get; set; }
+        public virtual Venta Venta { get; set; }
     }
 }

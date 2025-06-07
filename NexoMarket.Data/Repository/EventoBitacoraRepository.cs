@@ -17,7 +17,7 @@ namespace NexoMarket.Data.Repository
             {
                 var eventos = await context.BitacoraEvento
                     .Include(b => b.Usuarios.Rol)
-                    .OrderByDescending(b => b.fecha)
+                    .OrderByDescending(b => b.Fecha)
                     .ToListAsync();
 
                 return MapperConfig.Mapper.Map<List<BitacoraEventoEntity>>(eventos);

@@ -30,7 +30,7 @@ namespace NexoMarket.Data.Repository
             using (var context = new NexoMarketEntities())
             {
                 var user = await context.Usuarios.FirstAsync(u => u.Username == username);
-                user.IsBlocked = true;
+                user.Is_Blocked = true;
                 await context.SaveChangesAsync();
             }
         }
