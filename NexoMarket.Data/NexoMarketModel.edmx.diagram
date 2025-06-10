@@ -24,6 +24,7 @@
         <AssociationConnector Association="NexoMarketModel.FK_Usuarios_Rol" />
         <AssociationConnector Association="NexoMarketModel.FK_Venta_Usuarios" />
         <AssociationConnector Association="NexoMarketModel.Rol_Permiso" />
+        <EntityTypeShape EntityType="NexoMarketModel.sysdiagrams" Width="1.5" PointX="7.375" PointY="7.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

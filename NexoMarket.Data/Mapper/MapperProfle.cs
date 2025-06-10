@@ -17,6 +17,7 @@ namespace NexoMarket.Data.Mapper
 
             CreateMap<BitacoraEventoCreateEntity, BitacoraEvento>();
             CreateMap<UserCreateEntity, Usuarios>();
+            CreateMap<ProductoEntity, Producto>().ReverseMap();
         }
 
     }

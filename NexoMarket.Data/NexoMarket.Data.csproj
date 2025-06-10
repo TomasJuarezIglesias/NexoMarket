@@ -97,8 +97,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\EventoBitacoraRepository.cs" />
     <Compile Include="Repository\MenuRepository.cs" />
+    <Compile Include="Repository\ProductoRepository.cs" />
     <Compile Include="Repository\UserRepository.cs" />
     <Compile Include="Rol.cs">
+      <DependentUpon>NexoMarketModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sysdiagrams.cs">
       <DependentUpon>NexoMarketModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Usuarios.cs">

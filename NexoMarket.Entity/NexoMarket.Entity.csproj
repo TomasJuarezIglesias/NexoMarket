@@ -45,6 +45,7 @@
     <Compile Include="BitacoraEventoEntity.cs" />
     <Compile Include="MenuEntity.cs" />
     <Compile Include="PermisoEntity.cs" />
+    <Compile Include="ProductoEntity.cs" />
     <Compile Include="RolEntity.cs" />
     <Compile Include="UserCreateEntity.cs" />
     <Compile Include="UserEntity.cs" />

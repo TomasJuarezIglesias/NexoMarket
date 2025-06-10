@@ -35,5 +35,6 @@ namespace NexoMarket.Data
         public virtual DbSet<Rol> Rol { get; set; }
         public virtual DbSet<Usuarios> Usuarios { get; set; }
         public virtual DbSet<Venta> Venta { get; set; }
+        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
     }
 }

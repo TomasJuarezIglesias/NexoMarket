@@ -38,7 +38,7 @@ namespace NexoMarket
                 MenusList = userData.AllowedMenues ?? new List<MenuEntity>();
 
                 // Validación Ruta
-                if (url != "inicio.aspx" && !MenusList.Exists(m => m.Url.Replace(".aspx","").ToLower() == url))
+                if ((url != "inicio.aspx" && url != "inicio") && !MenusList.Exists(m => m.Url.Replace(".aspx","").ToLower() == url))
                 {
                     Response.Redirect("Inicio.aspx");
                 }
