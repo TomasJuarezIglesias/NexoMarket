@@ -1,5 +1,6 @@
 ﻿using NexoMarket.Data.Mapper;
 using NexoMarket.Entity;
+using System;
 using System.Data.Entity;
 using System.Threading.Tasks;
 
@@ -32,6 +33,17 @@ namespace NexoMarket.Data.Repository
                 var user = await context.Usuarios.FirstAsync(u => u.Username == username);
                 user.Is_Blocked = true;
                 await context.SaveChangesAsync();
+            }
+        }
+
+        public async Task<bool> CreateUser(UserCreateEntity user)
+        {
+            using (var context = new NexoMarketEntities())
+            {
+                var usuario = MapperConfig.Mapper.Map<Usuarios>(user);
+                context.Usuarios.Add(usuario); 
+                await context.SaveChangesAsync(); 
+                return true;
             }
         }
     }

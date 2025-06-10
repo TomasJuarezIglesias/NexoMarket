@@ -36,6 +36,10 @@ namespace NexoMarket.Business
             return  new BusinessResponse<UserEntity>( data : user, mensaje: "Usuario Logueado", ok: true);
         }
 
+        public async Task<bool> CreateUser(UserCreateEntity user)
+        {
+            return await _userRepository.CreateUser(user);
+        }
 
         public async Task BlockUser(string username)
         {
