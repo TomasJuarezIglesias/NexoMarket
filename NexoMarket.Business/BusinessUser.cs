@@ -38,6 +38,7 @@ namespace NexoMarket.Business
 
         public async Task<bool> CreateUser(UserCreateEntity user)
         {
+            user.Password = CryptoManager.EncryptString(user.Password);
             return await _userRepository.CreateUser(user);
         }
 
