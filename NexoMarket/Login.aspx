@@ -56,7 +56,7 @@
                     <!-- Usuario -->
                     <div class="mb-3">
                         <label for="usuario-register" class="form-label">Nombre de Usuario</label>
-                        <asp:TextBox ID="usuario_register" runat="server" CssClass="form-control" placeholder="Ej. lucas123" />
+                        <asp:TextBox ID="usuario_register" runat="server" CssClass="form-control" placeholder="Ej. Juan123" />
                         <asp:RequiredFieldValidator ID="rfvUsuario" runat="server" ControlToValidate="usuario_register"
                             ErrorMessage="El nombre de usuario es obligatorio." CssClass="text-danger" Display="Dynamic" ValidationGroup="RegisterGroup" />
                     </div>
@@ -64,7 +64,7 @@
                     <!-- Nombre -->
                     <div class="mb-3">
                         <label for="nombre-register" class="form-label">Nombre</label>
-                        <asp:TextBox ID="nombre_register" runat="server" CssClass="form-control" placeholder="Ej. Lucas" />
+                        <asp:TextBox ID="nombre_register" runat="server" CssClass="form-control" placeholder="Ej. Juan" />
                         <asp:RequiredFieldValidator ID="rfvNombre" runat="server" ControlToValidate="nombre_register"
                             ErrorMessage="El nombre es obligatorio." CssClass="text-danger" Display="Dynamic" ValidationGroup="RegisterGroup" />
                     </div>
@@ -72,7 +72,7 @@
                     <!-- Apellido -->
                     <div class="mb-3">
                         <label for="apellido-register" class="form-label">Apellido</label>
-                        <asp:TextBox ID="apellido_register" runat="server" CssClass="form-control" placeholder="Ej. Antiñolo" />
+                        <asp:TextBox ID="apellido_register" runat="server" CssClass="form-control" placeholder="Ej. Perez" />
                         <asp:RequiredFieldValidator ID="rfvApellido" runat="server" ControlToValidate="apellido_register"
                             ErrorMessage="El apellido es obligatorio." CssClass="text-danger" Display="Dynamic" ValidationGroup="RegisterGroup" />
                     </div>
