@@ -33,6 +33,15 @@
           <Property Name="Precio_Unitario" Type="money" Nullable="false" />
           <Property Name="Sub_Total" Type="money" Nullable="false" />
         </EntityType>
+        <EntityType Name="DigitoVerificadorVertical">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TableName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ColumnName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="DVV" Type="char" MaxLength="64" Nullable="false" />
+        </EntityType>
         <EntityType Name="FamiliaPermiso">
           <Key>
             <PropertyRef Name="Id_Familia" />
@@ -69,6 +78,8 @@
           <Property Name="Descripcion" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="Precio" Type="money" Nullable="false" />
           <Property Name="Stock" Type="int" Nullable="false" />
+          <Property Name="Imagen" Type="varbinary(max)" />
+          <Property Name="DVH" Type="char" MaxLength="64" />
         </EntityType>
         <EntityType Name="Rol">
           <Key>
@@ -93,9 +104,10 @@
           <Property Name="Username" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Password" Type="char" MaxLength="64" Nullable="false" />
           <Property Name="Id_Rol" Type="int" Nullable="false" />
-          <Property Name="Is_Blocked" Type="bit" />
+          <Property Name="Is_Blocked" Type="bit" Nullable="false" />
           <Property Name="Nombre" Type="nvarchar" MaxLength="50" />
           <Property Name="Apellido" Type="nvarchar" MaxLength="50" />
+          <Property Name="DVH" Type="char" MaxLength="64" />
         </EntityType>
         <EntityType Name="Venta">
           <Key>
@@ -107,7 +119,9 @@
           <Property Name="Id_Usuario" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="FK_BitacoraEvento_Usuarios">
-          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="1" />
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="BitacoraEvento" Type="Self.BitacoraEvento" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Usuarios">
@@ -236,6 +250,7 @@
           <EntitySet Name="BitacoraEvento" EntityType="Self.BitacoraEvento" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Categoria" EntityType="Self.Categoria" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DetalleVenta" EntityType="Self.DetalleVenta" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DigitoVerificadorVertical" EntityType="Self.DigitoVerificadorVertical" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FamiliaPermiso" EntityType="Self.FamiliaPermiso" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Menu" EntityType="Self.Menu" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Permiso" EntityType="Self.Permiso" Schema="dbo" store:Type="Tables" />
@@ -293,6 +308,7 @@
           <EntitySet Name="BitacoraEvento" EntityType="NexoMarketModel.BitacoraEvento" />
           <EntitySet Name="Categoria" EntityType="NexoMarketModel.Categoria" />
           <EntitySet Name="DetalleVenta" EntityType="NexoMarketModel.DetalleVenta" />
+          <EntitySet Name="DigitoVerificadorVertical" EntityType="NexoMarketModel.DigitoVerificadorVertical" />
           <EntitySet Name="FamiliaPermiso" EntityType="NexoMarketModel.FamiliaPermiso" />
           <EntitySet Name="Menu" EntityType="NexoMarketModel.Menu" />
           <EntitySet Name="Permiso" EntityType="NexoMarketModel.Permiso" />
@@ -369,6 +385,15 @@
           <NavigationProperty Name="Producto" Relationship="NexoMarketModel.FK_DetalleVenta_Producto" FromRole="DetalleVenta" ToRole="Producto" />
           <NavigationProperty Name="Venta" Relationship="NexoMarketModel.FK_DetalleVenta_Venta" FromRole="DetalleVenta" ToRole="Venta" />
         </EntityType>
+        <EntityType Name="DigitoVerificadorVertical">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TableName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ColumnName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DVV" Type="String" Nullable="false" MaxLength="64" FixedLength="true" Unicode="false" />
+        </EntityType>
         <EntityType Name="FamiliaPermiso">
           <Key>
             <PropertyRef Name="Id_Familia" />
@@ -410,6 +435,8 @@
           <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Precio" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="Stock" Type="Int32" Nullable="false" />
+          <Property Name="Imagen" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="DVH" Type="String" MaxLength="64" FixedLength="true" Unicode="false" />
           <NavigationProperty Name="Categoria" Relationship="NexoMarketModel.FK_Producto_Categoria" FromRole="Producto" ToRole="Categoria" />
           <NavigationProperty Name="DetalleVenta" Relationship="NexoMarketModel.FK_DetalleVenta_Producto" FromRole="Producto" ToRole="DetalleVenta" />
         </EntityType>
@@ -430,9 +457,10 @@
           <Property Name="Username" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Password" Type="String" Nullable="false" MaxLength="64" FixedLength="true" Unicode="false" />
           <Property Name="Id_Rol" Type="Int32" Nullable="false" />
-          <Property Name="Is_Blocked" Type="Boolean" />
+          <Property Name="Is_Blocked" Type="Boolean" Nullable="false" />
           <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DVH" Type="String" MaxLength="64" FixedLength="true" Unicode="false" />
           <NavigationProperty Name="BitacoraEvento" Relationship="NexoMarketModel.FK_BitacoraEvento_Usuarios" FromRole="Usuarios" ToRole="BitacoraEvento" />
           <NavigationProperty Name="Rol" Relationship="NexoMarketModel.FK_Usuarios_Rol" FromRole="Usuarios" ToRole="Rol" />
           <NavigationProperty Name="Venta" Relationship="NexoMarketModel.FK_Venta_Usuarios" FromRole="Usuarios" ToRole="Venta" />
@@ -449,7 +477,9 @@
           <NavigationProperty Name="Usuarios" Relationship="NexoMarketModel.FK_Venta_Usuarios" FromRole="Venta" ToRole="Usuarios" />
         </EntityType>
         <Association Name="FK_BitacoraEvento_Usuarios">
-          <End Type="NexoMarketModel.Usuarios" Role="Usuarios" Multiplicity="1" />
+          <End Type="NexoMarketModel.Usuarios" Role="Usuarios" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Type="NexoMarketModel.BitacoraEvento" Role="BitacoraEvento" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Usuarios">
@@ -587,6 +617,16 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="DigitoVerificadorVertical">
+            <EntityTypeMapping TypeName="NexoMarketModel.DigitoVerificadorVertical">
+              <MappingFragment StoreEntitySet="DigitoVerificadorVertical">
+                <ScalarProperty Name="DVV" ColumnName="DVV" />
+                <ScalarProperty Name="ColumnName" ColumnName="ColumnName" />
+                <ScalarProperty Name="TableName" ColumnName="TableName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="FamiliaPermiso">
             <EntityTypeMapping TypeName="NexoMarketModel.FamiliaPermiso">
               <MappingFragment StoreEntitySet="FamiliaPermiso">
@@ -618,6 +658,8 @@
           <EntitySetMapping Name="Producto">
             <EntityTypeMapping TypeName="NexoMarketModel.Producto">
               <MappingFragment StoreEntitySet="Producto">
+                <ScalarProperty Name="DVH" ColumnName="DVH" />
+                <ScalarProperty Name="Imagen" ColumnName="Imagen" />
                 <ScalarProperty Name="Stock" ColumnName="Stock" />
                 <ScalarProperty Name="Precio" ColumnName="Precio" />
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
@@ -638,6 +680,7 @@
           <EntitySetMapping Name="Usuarios">
             <EntityTypeMapping TypeName="NexoMarketModel.Usuarios">
               <MappingFragment StoreEntitySet="Usuarios">
+                <ScalarProperty Name="DVH" ColumnName="DVH" />
                 <ScalarProperty Name="Apellido" ColumnName="Apellido" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="Is_Blocked" ColumnName="Is_Blocked" />

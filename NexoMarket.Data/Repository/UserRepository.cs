@@ -1,5 +1,7 @@
 ﻿using NexoMarket.Data.Mapper;
 using NexoMarket.Entity;
+using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity;
 using System.Threading.Tasks;
 
@@ -11,7 +13,7 @@ namespace NexoMarket.Data.Repository
         {
             using (var context = new NexoMarketEntities())
             {
-                var user = await context.Usuarios.FirstOrDefaultAsync(u => u.Username == username && u.Password == password );
+                var user = await context.Usuarios.FirstOrDefaultAsync(u => u.Username == username && u.Password == password);
 
                 return MapperConfig.Mapper.Map<UserEntity>(user);
             }
@@ -31,6 +33,31 @@ namespace NexoMarket.Data.Repository
             {
                 var user = await context.Usuarios.FirstAsync(u => u.Username == username);
                 user.Is_Blocked = true;
+                await context.SaveChangesAsync();
+            }
+        }
+
+        public async Task<List<UserDvhEntity>> GetAll()
+        {
+            using (var context = new NexoMarketEntities())
+            {
+                var users = await context.Usuarios.ToListAsync();
+
+                return MapperConfig.Mapper.Map<List<UserDvhEntity>>(users);
+            }
+        }
+
+        public async Task SaveRange(List<UserDvhEntity> userList)
+        {
+            using (var context = new NexoMarketEntities())
+            {
+                var userDbList = MapperConfig.Mapper.Map<List<Usuarios>>(userList);
+
+                foreach (var userDb in userDbList)
+                {
+                    context.Entry(userDb).State = EntityState.Modified;
+                }
+
                 await context.SaveChangesAsync();
             }
         }

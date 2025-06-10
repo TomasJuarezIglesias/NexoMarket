@@ -16,6 +16,11 @@ namespace NexoMarket.Data.Mapper
                 .ForMember(dest => dest.Rol, opt => opt.MapFrom(src => src.Usuarios.Rol.Nombre));
 
             CreateMap<BitacoraEventoCreateEntity, BitacoraEvento>();
+
+            CreateMap<DigitoVerificadorVerticalEntity, DigitoVerificadorVertical>().ReverseMap();
+
+            CreateMap<ProductDvhEntity, Producto>().ReverseMap();
+            CreateMap<UserDvhEntity, Usuarios>().ReverseMap();
         }
 
     }

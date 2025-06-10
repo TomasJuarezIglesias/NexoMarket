@@ -28,6 +28,7 @@ namespace NexoMarket.Data
         public virtual DbSet<BitacoraEvento> BitacoraEvento { get; set; }
         public virtual DbSet<Categoria> Categoria { get; set; }
         public virtual DbSet<DetalleVenta> DetalleVenta { get; set; }
+        public virtual DbSet<DigitoVerificadorVertical> DigitoVerificadorVertical { get; set; }
         public virtual DbSet<FamiliaPermiso> FamiliaPermiso { get; set; }
         public virtual DbSet<Menu> Menu { get; set; }
         public virtual DbSet<Permiso> Permiso { get; set; }

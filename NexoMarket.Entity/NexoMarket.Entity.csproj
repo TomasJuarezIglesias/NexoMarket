@@ -43,9 +43,13 @@
   <ItemGroup>
     <Compile Include="BitacoraEventoCreateEntity.cs" />
     <Compile Include="BitacoraEventoEntity.cs" />
+    <Compile Include="DbInconsistencyErrorEntity.cs" />
+    <Compile Include="DigitoVerificadorVerticalEntity.cs" />
     <Compile Include="MenuEntity.cs" />
     <Compile Include="PermisoEntity.cs" />
+    <Compile Include="ProductDvhEntity.cs" />
     <Compile Include="RolEntity.cs" />
+    <Compile Include="UserDvhEntity.cs" />
     <Compile Include="UserEntity.cs" />
     <Compile Include="BusinessResponse.cs" />
     <Compile Include="UserAuthEntity.cs" />

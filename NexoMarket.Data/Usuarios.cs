@@ -25,9 +25,10 @@ namespace NexoMarket.Data
         public string Username { get; set; }
         public string Password { get; set; }
         public int Id_Rol { get; set; }
-        public Nullable<bool> Is_Blocked { get; set; }
+        public bool Is_Blocked { get; set; }
         public string Nombre { get; set; }
         public string Apellido { get; set; }
+        public string DVH { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BitacoraEvento> BitacoraEvento { get; set; }

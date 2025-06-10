@@ -4,17 +4,18 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="1ac9c60fd3df4ef2bb64a2996437dc69" Name="Diagram1" ZoomLevel="86">
-        <EntityTypeShape EntityType="NexoMarketModel.BitacoraEvento" Width="1.5" PointX="5" PointY="1.5" />
-        <EntityTypeShape EntityType="NexoMarketModel.Categoria" Width="1.5" PointX="12.375" PointY="1" />
-        <EntityTypeShape EntityType="NexoMarketModel.DetalleVenta" Width="1.5" PointX="9.5" PointY="4.375" />
-        <EntityTypeShape EntityType="NexoMarketModel.FamiliaPermiso" Width="1.5" PointX="0.5" PointY="7.125" />
-        <EntityTypeShape EntityType="NexoMarketModel.Menu" Width="1.5" PointX="0.5" PointY="1.625" />
-        <EntityTypeShape EntityType="NexoMarketModel.Permiso" Width="1.5" PointX="0.5" PointY="4.125" />
-        <EntityTypeShape EntityType="NexoMarketModel.Producto" Width="1.5" PointX="9.625" PointY="1.125" />
-        <EntityTypeShape EntityType="NexoMarketModel.Rol" Width="1.5" PointX="2.75" PointY="4.375" />
-        <EntityTypeShape EntityType="NexoMarketModel.Usuarios" Width="1.5" PointX="5" PointY="4.25" />
-        <EntityTypeShape EntityType="NexoMarketModel.Venta" Width="1.5" PointX="7.25" PointY="4.5" />
+      <Diagram DiagramId="1ac9c60fd3df4ef2bb64a2996437dc69" Name="Diagram1" ZoomLevel="53">
+        <EntityTypeShape EntityType="NexoMarketModel.BitacoraEvento" Width="1.5" PointX="7.5" PointY="1.5" />
+        <EntityTypeShape EntityType="NexoMarketModel.Categoria" Width="1.5" PointX="5.25" PointY="8.5" />
+        <EntityTypeShape EntityType="NexoMarketModel.DetalleVenta" Width="1.5" PointX="9.75" PointY="4.125" />
+        <EntityTypeShape EntityType="NexoMarketModel.DigitoVerificadorVertical" Width="1.5" PointX="9.75" PointY="0.75" />
+        <EntityTypeShape EntityType="NexoMarketModel.FamiliaPermiso" Width="1.5" PointX="3" PointY="9.875" />
+        <EntityTypeShape EntityType="NexoMarketModel.Menu" Width="1.5" PointX="3" PointY="7.25" />
+        <EntityTypeShape EntityType="NexoMarketModel.Permiso" Width="1.5" PointX="0.75" PointY="5.5" />
+        <EntityTypeShape EntityType="NexoMarketModel.Producto" Width="1.5" PointX="7.5" PointY="7.875" />
+        <EntityTypeShape EntityType="NexoMarketModel.Rol" Width="1.5" PointX="3" PointY="3.125" />
+        <EntityTypeShape EntityType="NexoMarketModel.Usuarios" Width="1.5" PointX="5.25" PointY="2.375" />
+        <EntityTypeShape EntityType="NexoMarketModel.Venta" Width="1.5" PointX="7.5" PointY="4.25" />
         <AssociationConnector Association="NexoMarketModel.FK_BitacoraEvento_Usuarios" />
         <AssociationConnector Association="NexoMarketModel.FK_Producto_Categoria" />
         <AssociationConnector Association="NexoMarketModel.FK_DetalleVenta_Producto" />

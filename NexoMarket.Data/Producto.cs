@@ -26,6 +26,8 @@ namespace NexoMarket.Data
         public string Descripcion { get; set; }
         public decimal Precio { get; set; }
         public int Stock { get; set; }
+        public byte[] Imagen { get; set; }
+        public string DVH { get; set; }
     
         public virtual Categoria Categoria { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

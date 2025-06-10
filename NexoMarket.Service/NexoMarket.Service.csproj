@@ -42,7 +42,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CryptoManager.cs" />
+    <Compile Include="DigitoVerificadorService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NexoMarket.Entity\NexoMarket.Entity.csproj">
+      <Project>{24ddd4ba-0df4-4b3d-8572-bc8abb39b5a2}</Project>
+      <Name>NexoMarket.Entity</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
