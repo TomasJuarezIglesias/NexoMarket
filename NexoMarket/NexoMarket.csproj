@@ -129,6 +129,7 @@
     <Content Include="NexoMarket\Inicio.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Login.aspx" />
+    <Content Include="NexoMarket\Producto.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -194,6 +195,13 @@
     </Compile>
     <Compile Include="Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="NexoMarket\Producto.aspx.cs">
+      <DependentUpon>Producto.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="NexoMarket\Producto.aspx.designer.cs">
+      <DependentUpon>Producto.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Site.Master.cs">
@@ -263,7 +271,7 @@
       <Name>NexoMarket.Business</Name>
     </ProjectReference>
     <ProjectReference Include="..\NexoMarket.Data\NexoMarket.Data.csproj">
-      <Project>{C43141A8-201B-4A48-B3A2-76DCBEB5AE82}</Project>
+      <Project>{c43141a8-201b-4a48-b3a2-76dcbeb5ae82}</Project>
       <Name>NexoMarket.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\NexoMarket.Entity\NexoMarket.Entity.csproj">

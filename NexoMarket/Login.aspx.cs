@@ -31,6 +31,13 @@ namespace NexoMarket.NexoMarket
             {
                 Response.Redirect("~/NexoMarket/Inicio.aspx");
             }
+            if (IsPostBack)
+    {
+        if (LabelErrorRegister.Visible)
+        {
+            ScriptManager.RegisterStartupScript(this, GetType(), "abrirModal", "$('#registroModal').modal('show');", true);
+        }
+    }
         }
 
         protected async void btnLogin_Click(object sender, EventArgs e)
@@ -138,6 +145,36 @@ namespace NexoMarket.NexoMarket
             await _businessBitacora.GuardarEventoBitacora("Inicio de Sesion", response.Data.Id);
 
             Response.Redirect("~/NexoMarket/Inicio.aspx");
+        }
+
+        protected async void btn_registrarse(object sender, EventArgs e)
+        {
+            if (password_register.Text != repassword_register.Text)
+            {
+                LabelErrorRegister.Text = "Las contraseñas no coinciden";
+                LabelErrorRegister.Visible = true;
+                return;
+            }
+
+            UserCreateEntity user = new UserCreateEntity()
+            {
+                Id_Rol = 2, //Siempre Cliente
+                Nombre = nombre_register.Text,
+                Apellido = apellido_register.Text,
+                Username = usuario_register.Text,
+                Password = password_register.Text,
+            };
+            bool resultado = await _businessUser.CreateUser(user);
+            if (resultado)
+            {
+                ScriptManager.RegisterStartupScript(this, GetType(), "alertifyRegistro", "alertify.success('¡Usuario Registrado!');", true);
+                usuario_register.Text = "";
+                nombre_register.Text = "";
+                apellido_register.Text = "";
+                password_register.Text = "";
+                repassword_register.Text = "";
+                return;
+            }
         }
     }
 }

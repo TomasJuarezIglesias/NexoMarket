@@ -44,6 +44,7 @@
     <Compile Include="BusinessBitacora.cs" />
     <Compile Include="BusinessDigitoVerificador.cs" />
     <Compile Include="BusinessMenu.cs" />
+    <Compile Include="BusinessProducto.cs" />
     <Compile Include="BusinessUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
