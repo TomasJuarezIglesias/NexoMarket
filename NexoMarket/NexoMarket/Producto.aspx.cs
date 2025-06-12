@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.UI;
+using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
 
 namespace NexoMarket.NexoMarket
 {
@@ -45,5 +47,23 @@ namespace NexoMarket.NexoMarket
                 Response.End();
             }
         }
+
+        protected void RepeaterProductos_ItemCommand(object source, RepeaterCommandEventArgs e)
+        {
+            if (e.CommandName == "Agregar")
+            {
+                string nombreProducto = e.CommandArgument.ToString();
+
+                // Buscamos el control cantidad dentro del item
+                var cantidadControl = (HtmlInputGenericControl)e.Item.FindControl("Cantidad");
+                
+                int cantidad = int.Parse(cantidadControl.Value);
+               cantidadControl.Value = "1";
+                // Acá va tu lógica
+                ScriptManager.RegisterStartupScript(this, GetType(), "alertifyRegistro",
+                    $"alertify.success('Agregado {cantidad} unidad/es de {nombreProducto}');", true);
+            }
+        }
+
     }
 }

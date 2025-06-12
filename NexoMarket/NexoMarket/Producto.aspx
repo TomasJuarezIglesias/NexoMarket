@@ -34,6 +34,7 @@
             color: green;
             font-size: 1.1em;
             margin-top: 5px;
+            margin-bottom: 5px;
         }
 
         .producto-descripcion {
@@ -45,7 +46,7 @@
     <h1 style="text-align:center" class="mb-4">Nexo Market</h1>
     <div class="producto-grid">
         
-        <asp:Repeater ID="RepeaterProductos" runat="server">
+        <asp:Repeater ID="RepeaterProductos" runat="server" OnItemCommand="RepeaterProductos_ItemCommand">
 
             <ItemTemplate>
                 <div class="producto-card">
@@ -53,8 +54,12 @@
                     <div class="producto-nombre"><%# Eval("Nombre") %></div>
                     <div class="producto-descripcion"><%# Eval("Descripcion") %></div>
                     <div class="producto-precio">$<%# Eval("Precio", "{0:N2}") %></div>
-                    <div>Stock: <%# Eval("Stock") %></div>
-                    <asp:Button ID="BtnAgregar" runat="server" Text="Agregar" CssClass="btn btn-primary" />
+                    <div class="producto-precio">
+                        <input type="number" id="Cantidad" runat="server" min="1" max="10" value="1" class="form-control" style="width: 60px; display: inline-block;" />
+                    </div>
+                    <asp:Button ID="BtnAgregar" runat="server" Text="Agregar" CssClass="btn btn-primary"
+                        CommandName="Agregar"
+                        CommandArgument='<%# Eval("Nombre") %>' />
                 </div>
             </ItemTemplate>
         </asp:Repeater>

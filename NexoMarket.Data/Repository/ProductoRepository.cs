@@ -16,7 +16,7 @@ namespace NexoMarket.Data.Repository
         {
             using (var context = new NexoMarketEntities())
             {
-                var productos = await context.Producto.ToListAsync();
+                var productos = await context.Producto.OrderBy(x => x.Id_Categoria).ToListAsync();
 
                 return MapperConfig.Mapper.Map<List<ProductoEntity>>(productos);
             }
