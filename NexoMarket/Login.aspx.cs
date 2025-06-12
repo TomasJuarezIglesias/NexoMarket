@@ -98,20 +98,19 @@ namespace NexoMarket.NexoMarket
             // Limpio los intentos almacenados
             Session.Remove("Intentos");
 
-
             var validationResponse = await _businessDigitoVerificador.Verificar();
 
             if (!validationResponse.Ok)
             {
                 if (response.Data.Rol.Nombre != "Web Master")
                 {
+                    ScriptManager.RegisterStartupScript(this, GetType(), "alertifyRegistro", "alertify.alert('Sistema no disponible', 'El sistema no se encuentra disponible en este momento. Por favor, contacte al administrador para más información.');", true);
                     return;
                 }
 
                 // Hacer modal para que muestre una grilla con los errores y que le permita recomponer el dv o restaurar la db
                 return;
             }
-
 
             var allowedMenues = _businessMenu.GetMenusByUser(response.Data.Id);
 
