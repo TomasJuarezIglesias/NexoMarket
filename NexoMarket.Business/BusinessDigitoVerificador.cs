@@ -26,17 +26,16 @@ namespace NexoMarket.Business
 
         public async Task Restaurar()
         {
-            // TODO: Hacer metodo reutilizable para calculo y guardado de DVH
-            var productList = await _productoRepository.GetAll();
-            productList = DigitoVerificadorService<ProductDvhEntity>.CalcularDVH(productList);
-            await _productoRepository.SaveRange(productList);
+            var productListCalculated = await _productoRepository.GetAll();
+            productListCalculated = DigitoVerificadorService<ProductDvhEntity>.CalcularDVH(productListCalculated);
+            await _productoRepository.SaveRange(productListCalculated);
 
-            var usuariosList = await _userRepository.GetAll();
-            usuariosList = DigitoVerificadorService<UserDvhEntity>.CalcularDVH(usuariosList);
-            await _userRepository.SaveRange(usuariosList);
+            var usuariosListCalculated = await _userRepository.GetAll();
+            usuariosListCalculated = DigitoVerificadorService<UserDvhEntity>.CalcularDVH(usuariosListCalculated);
+            await _userRepository.SaveRange(usuariosListCalculated);
 
-            var dvvCalculated = await GetDvvCalculated(productList, usuariosList);
-            await _digitoVerificadorVerticalRepository.SaveRange(dvvCalculated);
+            var dvvListCalculated = await GetDvvCalculated(productListCalculated, usuariosListCalculated);
+            await _digitoVerificadorVerticalRepository.SaveRange(dvvListCalculated);
         }
 
         public async Task<BusinessResponse<List<DbInconsistencyErrorEntity>>> Verificar()
@@ -45,49 +44,27 @@ namespace NexoMarket.Business
 
             // Obtengo digitos verificadores de db
             var dvvListDb = await _digitoVerificadorVerticalRepository.GetAll();
-            var usersList = await _userRepository.GetAll();
             var productList = await _productoRepository.GetAll();
+            var usersList = await _userRepository.GetAll();
 
             // Genero nuevamente los digitos verificadores
             var productListCalculated = DigitoVerificadorService<ProductDvhEntity>.CalcularDVH(productList);
             var usersListCalculated = DigitoVerificadorService<UserDvhEntity>.CalcularDVH(usersList);
-            var dvvCalculated = await GetDvvCalculated(productListCalculated, usersListCalculated);
+            var dvvListCalculated = await GetDvvCalculated(productListCalculated, usersListCalculated);
 
+            foreach (var dvv in dvvListDb)
+            {
+                var dvvCalculated = dvvListCalculated.FirstOrDefault(d => d.Id == dvv.Id);
 
-            //// Validación Digitos verificadores
-            //foreach (var dgvGenerated in digitosVerticalesGenerated)
-            //{
-            //    var dgvDb = digitosVerticales.FirstOrDefault(d => d.Id == dgvGenerated.Id);
+                // Veifico a nivel general para mejor performance
+                if (dvv.DVV == dvvCalculated.DVV)
+                    continue;
 
-            //    if (dgvDb.DVV != dgvGenerated.DVV)
-            //    {
-            //        var newError = new DbInconsistencyErrorEntity(dgvDb.TableName, dgvDb.ColumnName, "");
-            //        errorList.Add(newError);
-            //    }
-            //}
-
-            //// Validación digito verificadores horizontales
-            //foreach (var productGenerated in productListGenerated)
-            //{
-            //    var productDb = productList.FirstOrDefault(p => p.Id == productGenerated.Id);
-
-            //    if (productDb.DVH != productGenerated.DVH)
-            //    {
-                    
-            //    }
-            //}
-
-            //// Validación digito verificadores horizontales
-            //foreach (var userGenerated in usersListGenerated)
-            //{
-            //    var userDb = usersList.FirstOrDefault(u => u.Id == userGenerated.Id);
-
-            //    if (userDb.DVH != userGenerated.DVH)
-            //    {
-            //        // Error
-            //    }
-            //}
-
+                if (dvv.TableName == "Producto")
+                    errorList.AddRange(DigitoVerificadorService<ProductDvhEntity>.FindErrors(productList, productListCalculated, dvv.TableName));
+                else
+                    errorList.AddRange(DigitoVerificadorService<UserDvhEntity>.FindErrors(usersList, usersListCalculated, dvv.TableName));
+            }
 
             return new BusinessResponse<List<DbInconsistencyErrorEntity>>(errorList, ok: errorList.Count == 0);
         }
