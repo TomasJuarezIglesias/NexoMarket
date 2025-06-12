@@ -1,10 +1,12 @@
 ﻿using Newtonsoft.Json;
 using NexoMarket.Business;
+using NexoMarket.Data.Repository;
 using NexoMarket.Entity;
 using System;
 using System.Collections.Generic;
 using System.Web;
 using System.Web.Security;
+using System.Web.UI;
 
 namespace NexoMarket.NexoMarket
 {
@@ -13,12 +15,14 @@ namespace NexoMarket.NexoMarket
         private readonly BusinessUser _businessUser;
         private readonly BusinessBitacora _businessBitacora;
         private readonly BusinessMenu _businessMenu;
+        private readonly BusinessDigitoVerificador _businessDigitoVerificador;
 
         public Login()
         {
             _businessUser = new BusinessUser();
             _businessBitacora = new BusinessBitacora();
             _businessMenu = new BusinessMenu();
+            _businessDigitoVerificador = new BusinessDigitoVerificador();
         }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -86,6 +90,21 @@ namespace NexoMarket.NexoMarket
 
             // Limpio los intentos almacenados
             Session.Remove("Intentos");
+
+
+            var validationResponse = await _businessDigitoVerificador.Verificar();
+
+            if (!validationResponse.Ok)
+            {
+                if (response.Data.Rol.Nombre != "Web Master")
+                {
+                    return;
+                }
+
+                // Hacer modal para que muestre una grilla con los errores y que le permita recomponer el dv o restaurar la db
+                return;
+            }
+
 
             var allowedMenues = _businessMenu.GetMenusByUser(response.Data.Id);
 
