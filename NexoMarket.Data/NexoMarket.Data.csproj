@@ -65,7 +65,7 @@
     <Compile Include="DetalleVenta.cs">
       <DependentUpon>NexoMarketModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DigitoVerificadorVertical.cs">
+    <Compile Include="DVV.cs">
       <DependentUpon>NexoMarketModel.tt</DependentUpon>
     </Compile>
     <Compile Include="FamiliaPermiso.cs">

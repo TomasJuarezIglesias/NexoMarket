@@ -24,15 +24,6 @@ namespace NexoMarket.Business
             _digitoVerificadorVerticalRepository = new DigitoVerificadorVerticalRepository();
         }
 
-        public BusinessResponse<List<DbInconsistencyErrorEntity>> Verificar()
-        {
-            var errorList = new List<DbInconsistencyErrorEntity>();
-
-
-
-            return new BusinessResponse<List<DbInconsistencyErrorEntity>>(errorList, ok: errorList.Count == 0);
-        }
-
         public async Task Restaurar()
         {
             // TODO: Hacer metodo reutilizable para calculo y guardado de DVH
@@ -44,13 +35,78 @@ namespace NexoMarket.Business
             usuariosList = DigitoVerificadorService<UserDvhEntity>.CalcularDVH(usuariosList);
             await _userRepository.SaveRange(usuariosList);
 
+            var dvvCalculated = await GetDvvCalculated(productList, usuariosList);
+            await _digitoVerificadorVerticalRepository.SaveRange(dvvCalculated);
+        }
+
+        public async Task<BusinessResponse<List<DbInconsistencyErrorEntity>>> Verificar()
+        {
+            var errorList = new List<DbInconsistencyErrorEntity>();
+
+            // Obtengo digitos verificadores de db
+            var dvvListDb = await _digitoVerificadorVerticalRepository.GetAll();
+            var usersList = await _userRepository.GetAll();
+            var productList = await _productoRepository.GetAll();
+
+            // Genero nuevamente los digitos verificadores
+            var productListCalculated = DigitoVerificadorService<ProductDvhEntity>.CalcularDVH(productList);
+            var usersListCalculated = DigitoVerificadorService<UserDvhEntity>.CalcularDVH(usersList);
+            var dvvCalculated = await GetDvvCalculated(productListCalculated, usersListCalculated);
+
+
+            //// Validación Digitos verificadores
+            //foreach (var dgvGenerated in digitosVerticalesGenerated)
+            //{
+            //    var dgvDb = digitosVerticales.FirstOrDefault(d => d.Id == dgvGenerated.Id);
+
+            //    if (dgvDb.DVV != dgvGenerated.DVV)
+            //    {
+            //        var newError = new DbInconsistencyErrorEntity(dgvDb.TableName, dgvDb.ColumnName, "");
+            //        errorList.Add(newError);
+            //    }
+            //}
+
+            //// Validación digito verificadores horizontales
+            //foreach (var productGenerated in productListGenerated)
+            //{
+            //    var productDb = productList.FirstOrDefault(p => p.Id == productGenerated.Id);
+
+            //    if (productDb.DVH != productGenerated.DVH)
+            //    {
+                    
+            //    }
+            //}
+
+            //// Validación digito verificadores horizontales
+            //foreach (var userGenerated in usersListGenerated)
+            //{
+            //    var userDb = usersList.FirstOrDefault(u => u.Id == userGenerated.Id);
+
+            //    if (userDb.DVH != userGenerated.DVH)
+            //    {
+            //        // Error
+            //    }
+            //}
+
+
+            return new BusinessResponse<List<DbInconsistencyErrorEntity>>(errorList, ok: errorList.Count == 0);
+        }
+
+
+        private async Task<List<DigitoVerificadorVerticalEntity>> GetDvvCalculated(List<ProductDvhEntity> productDvhEntities, List<UserDvhEntity> userDvhEntities)
+        {
             var digitosVerticalesList = await _digitoVerificadorVerticalRepository.GetAll();
 
-            var digitosUpdated = new List<DigitoVerificadorVerticalEntity>();
-            digitosUpdated.AddRange(DigitoVerificadorService<ProductDvhEntity>.CalcularDVV(productList, "Producto", digitosVerticalesList));
-            digitosUpdated.AddRange(DigitoVerificadorService<UserDvhEntity>.CalcularDVV(usuariosList, "Usuarios", digitosVerticalesList)); 
+            var dvvProducto = digitosVerticalesList.FirstOrDefault(p => p.TableName == "Producto");
+            var dvvUser = digitosVerticalesList.FirstOrDefault(u => u.TableName == "Usuarios");
 
-            await _digitoVerificadorVerticalRepository.SaveRange(digitosUpdated);
+            var digitosUpdated = new List<DigitoVerificadorVerticalEntity>
+            {
+                DigitoVerificadorService<ProductDvhEntity>.CalcularDVV(productDvhEntities, dvvProducto),
+                DigitoVerificadorService<UserDvhEntity>.CalcularDVV(userDvhEntities, dvvUser)
+            };
+
+            return digitosUpdated;
         }
     }
 }

@@ -12,11 +12,10 @@ namespace NexoMarket.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class DigitoVerificadorVertical
+    public partial class DVV
     {
         public int Id { get; set; }
         public string TableName { get; set; }
-        public string ColumnName { get; set; }
-        public string DVV { get; set; }
+        public string DVV1 { get; set; }
     }
 }

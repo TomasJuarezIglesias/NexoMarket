@@ -17,7 +17,9 @@ namespace NexoMarket.Data.Mapper
 
             CreateMap<BitacoraEventoCreateEntity, BitacoraEvento>();
 
-            CreateMap<DigitoVerificadorVerticalEntity, DigitoVerificadorVertical>().ReverseMap();
+            CreateMap<DigitoVerificadorVerticalEntity, DVV>()
+                .ForMember(dest => dest.DVV1, opt => opt.MapFrom(src => src.DVV))
+                .ReverseMap();
 
             CreateMap<ProductDvhEntity, Producto>().ReverseMap();
             CreateMap<UserDvhEntity, Usuarios>().ReverseMap();

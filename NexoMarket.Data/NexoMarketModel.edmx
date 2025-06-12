@@ -33,13 +33,12 @@
           <Property Name="Precio_Unitario" Type="money" Nullable="false" />
           <Property Name="Sub_Total" Type="money" Nullable="false" />
         </EntityType>
-        <EntityType Name="DigitoVerificadorVertical">
+        <EntityType Name="DVV">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TableName" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="ColumnName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="DVV" Type="char" MaxLength="64" Nullable="false" />
         </EntityType>
         <EntityType Name="FamiliaPermiso">
@@ -80,6 +79,12 @@
           <Property Name="Stock" Type="int" Nullable="false" />
           <Property Name="Imagen" Type="varbinary(max)" />
           <Property Name="DVH" Type="char" MaxLength="64" />
+          <Property Name="DVH_Id_Categoria" Type="char" MaxLength="64" />
+          <Property Name="DVH_Nombre" Type="char" MaxLength="64" />
+          <Property Name="DVH_Descripcion" Type="char" MaxLength="64" />
+          <Property Name="DVH_Precio" Type="char" MaxLength="64" />
+          <Property Name="DVH_Stock" Type="char" MaxLength="64" />
+          <Property Name="DVH_Imagen" Type="char" MaxLength="64" />
         </EntityType>
         <EntityType Name="Rol">
           <Key>
@@ -107,6 +112,12 @@
           <Property Name="Is_Blocked" Type="bit" Nullable="false" />
           <Property Name="Nombre" Type="nvarchar" MaxLength="50" />
           <Property Name="Apellido" Type="nvarchar" MaxLength="50" />
+          <Property Name="DVH_Username" Type="char" MaxLength="64" />
+          <Property Name="DVH_Password" Type="char" MaxLength="64" />
+          <Property Name="DVH_Id_Rol" Type="char" MaxLength="64" />
+          <Property Name="DVH_Is_Blocked" Type="char" MaxLength="64" />
+          <Property Name="DVH_Nombre" Type="char" MaxLength="64" />
+          <Property Name="DVH_Apellido" Type="char" MaxLength="64" />
           <Property Name="DVH" Type="char" MaxLength="64" />
         </EntityType>
         <EntityType Name="Venta">
@@ -250,7 +261,7 @@
           <EntitySet Name="BitacoraEvento" EntityType="Self.BitacoraEvento" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Categoria" EntityType="Self.Categoria" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DetalleVenta" EntityType="Self.DetalleVenta" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="DigitoVerificadorVertical" EntityType="Self.DigitoVerificadorVertical" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DVV" EntityType="Self.DVV" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FamiliaPermiso" EntityType="Self.FamiliaPermiso" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Menu" EntityType="Self.Menu" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Permiso" EntityType="Self.Permiso" Schema="dbo" store:Type="Tables" />
@@ -308,7 +319,7 @@
           <EntitySet Name="BitacoraEvento" EntityType="NexoMarketModel.BitacoraEvento" />
           <EntitySet Name="Categoria" EntityType="NexoMarketModel.Categoria" />
           <EntitySet Name="DetalleVenta" EntityType="NexoMarketModel.DetalleVenta" />
-          <EntitySet Name="DigitoVerificadorVertical" EntityType="NexoMarketModel.DigitoVerificadorVertical" />
+          <EntitySet Name="DVV" EntityType="NexoMarketModel.DVV" />
           <EntitySet Name="FamiliaPermiso" EntityType="NexoMarketModel.FamiliaPermiso" />
           <EntitySet Name="Menu" EntityType="NexoMarketModel.Menu" />
           <EntitySet Name="Permiso" EntityType="NexoMarketModel.Permiso" />
@@ -385,14 +396,13 @@
           <NavigationProperty Name="Producto" Relationship="NexoMarketModel.FK_DetalleVenta_Producto" FromRole="DetalleVenta" ToRole="Producto" />
           <NavigationProperty Name="Venta" Relationship="NexoMarketModel.FK_DetalleVenta_Venta" FromRole="DetalleVenta" ToRole="Venta" />
         </EntityType>
-        <EntityType Name="DigitoVerificadorVertical">
+        <EntityType Name="DVV">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TableName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ColumnName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="DVV" Type="String" Nullable="false" MaxLength="64" FixedLength="true" Unicode="false" />
+          <Property Name="DVV1" Type="String" Nullable="false" MaxLength="64" FixedLength="true" Unicode="false" />
         </EntityType>
         <EntityType Name="FamiliaPermiso">
           <Key>
@@ -437,6 +447,12 @@
           <Property Name="Stock" Type="Int32" Nullable="false" />
           <Property Name="Imagen" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="DVH" Type="String" MaxLength="64" FixedLength="true" Unicode="false" />
+          <Property Name="DVH_Id_Categoria" Type="String" MaxLength="64" FixedLength="true" Unicode="false" />
+          <Property Name="DVH_Nombre" Type="String" MaxLength="64" FixedLength="true" Unicode="false" />
+          <Property Name="DVH_Descripcion" Type="String" MaxLength="64" FixedLength="true" Unicode="false" />
+          <Property Name="DVH_Precio" Type="String" MaxLength="64" FixedLength="true" Unicode="false" />
+          <Property Name="DVH_Stock" Type="String" MaxLength="64" FixedLength="true" Unicode="false" />
+          <Property Name="DVH_Imagen" Type="String" MaxLength="64" FixedLength="true" Unicode="false" />
           <NavigationProperty Name="Categoria" Relationship="NexoMarketModel.FK_Producto_Categoria" FromRole="Producto" ToRole="Categoria" />
           <NavigationProperty Name="DetalleVenta" Relationship="NexoMarketModel.FK_DetalleVenta_Producto" FromRole="Producto" ToRole="DetalleVenta" />
         </EntityType>
@@ -460,6 +476,12 @@
           <Property Name="Is_Blocked" Type="Boolean" Nullable="false" />
           <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DVH_Username" Type="String" MaxLength="64" FixedLength="true" Unicode="false" />
+          <Property Name="DVH_Password" Type="String" MaxLength="64" FixedLength="true" Unicode="false" />
+          <Property Name="DVH_Id_Rol" Type="String" MaxLength="64" FixedLength="true" Unicode="false" />
+          <Property Name="DVH_Is_Blocked" Type="String" MaxLength="64" FixedLength="true" Unicode="false" />
+          <Property Name="DVH_Nombre" Type="String" MaxLength="64" FixedLength="true" Unicode="false" />
+          <Property Name="DVH_Apellido" Type="String" MaxLength="64" FixedLength="true" Unicode="false" />
           <Property Name="DVH" Type="String" MaxLength="64" FixedLength="true" Unicode="false" />
           <NavigationProperty Name="BitacoraEvento" Relationship="NexoMarketModel.FK_BitacoraEvento_Usuarios" FromRole="Usuarios" ToRole="BitacoraEvento" />
           <NavigationProperty Name="Rol" Relationship="NexoMarketModel.FK_Usuarios_Rol" FromRole="Usuarios" ToRole="Rol" />
@@ -617,11 +639,10 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="DigitoVerificadorVertical">
-            <EntityTypeMapping TypeName="NexoMarketModel.DigitoVerificadorVertical">
-              <MappingFragment StoreEntitySet="DigitoVerificadorVertical">
-                <ScalarProperty Name="DVV" ColumnName="DVV" />
-                <ScalarProperty Name="ColumnName" ColumnName="ColumnName" />
+          <EntitySetMapping Name="DVV">
+            <EntityTypeMapping TypeName="NexoMarketModel.DVV">
+              <MappingFragment StoreEntitySet="DVV">
+                <ScalarProperty Name="DVV1" ColumnName="DVV" />
                 <ScalarProperty Name="TableName" ColumnName="TableName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
@@ -658,6 +679,12 @@
           <EntitySetMapping Name="Producto">
             <EntityTypeMapping TypeName="NexoMarketModel.Producto">
               <MappingFragment StoreEntitySet="Producto">
+                <ScalarProperty Name="DVH_Imagen" ColumnName="DVH_Imagen" />
+                <ScalarProperty Name="DVH_Stock" ColumnName="DVH_Stock" />
+                <ScalarProperty Name="DVH_Precio" ColumnName="DVH_Precio" />
+                <ScalarProperty Name="DVH_Descripcion" ColumnName="DVH_Descripcion" />
+                <ScalarProperty Name="DVH_Nombre" ColumnName="DVH_Nombre" />
+                <ScalarProperty Name="DVH_Id_Categoria" ColumnName="DVH_Id_Categoria" />
                 <ScalarProperty Name="DVH" ColumnName="DVH" />
                 <ScalarProperty Name="Imagen" ColumnName="Imagen" />
                 <ScalarProperty Name="Stock" ColumnName="Stock" />
@@ -681,6 +708,12 @@
             <EntityTypeMapping TypeName="NexoMarketModel.Usuarios">
               <MappingFragment StoreEntitySet="Usuarios">
                 <ScalarProperty Name="DVH" ColumnName="DVH" />
+                <ScalarProperty Name="DVH_Apellido" ColumnName="DVH_Apellido" />
+                <ScalarProperty Name="DVH_Nombre" ColumnName="DVH_Nombre" />
+                <ScalarProperty Name="DVH_Is_Blocked" ColumnName="DVH_Is_Blocked" />
+                <ScalarProperty Name="DVH_Id_Rol" ColumnName="DVH_Id_Rol" />
+                <ScalarProperty Name="DVH_Password" ColumnName="DVH_Password" />
+                <ScalarProperty Name="DVH_Username" ColumnName="DVH_Username" />
                 <ScalarProperty Name="Apellido" ColumnName="Apellido" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="Is_Blocked" ColumnName="Is_Blocked" />

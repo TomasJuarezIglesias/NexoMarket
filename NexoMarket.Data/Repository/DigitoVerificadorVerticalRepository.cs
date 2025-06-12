@@ -18,13 +18,13 @@ namespace NexoMarket.Data.Repository
         {
             using (var context = new NexoMarketEntities())
             {
-                var digitoVerificadorDbList = MapperConfig.Mapper.Map<List<DigitoVerificadorVertical>>(digitoVerificadorList);
+                var digitoVerificadorDbList = MapperConfig.Mapper.Map<List<DVV>>(digitoVerificadorList);
 
                 var nuevos = digitoVerificadorDbList.Where(x => x.Id == 0).ToList();
                 var existentes = digitoVerificadorDbList.Where(x => x.Id != 0).ToList();
 
                 if (nuevos.Any())
-                    context.DigitoVerificadorVertical.AddRange(nuevos);
+                    context.DVV.AddRange(nuevos);
 
                 foreach (var item in existentes)
                     context.Entry(item).State = EntityState.Modified;
@@ -37,7 +37,7 @@ namespace NexoMarket.Data.Repository
         {
             using (var context = new NexoMarketEntities())
             {
-                var digitosList = await context.DigitoVerificadorVertical.ToListAsync();
+                var digitosList = await context.DVV.ToListAsync();
 
                 return MapperConfig.Mapper.Map<List<DigitoVerificadorVerticalEntity>>(digitosList);
             }

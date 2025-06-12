@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 
 namespace NexoMarket.Service
 {
-    public class DigitoVerificadorService<T> where T : class
+    public class DigitoVerificadorService<T> where T : class, new()
     {
-        public static List<DigitoVerificadorVerticalEntity> CalcularDVV(List<T> entities, string tableName, List<DigitoVerificadorVerticalEntity> existentes)
+        public static DigitoVerificadorVerticalEntity CalcularDVV(List<T> entities, DigitoVerificadorVerticalEntity dvvEntity)
         {
-            var result = new List<DigitoVerificadorVerticalEntity>();
-
             var props = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance)
                 .Where(p => Type.GetTypeCode(Nullable.GetUnderlyingType(p.PropertyType) ?? p.PropertyType) != TypeCode.Object);
+
+            var sbDvv = new StringBuilder();
 
             foreach (var prop in props)
             {
@@ -30,47 +30,86 @@ namespace NexoMarket.Service
 
                 var dvv = CryptoManager.EncryptString(sb.ToString());
 
-                var existente = existentes.FirstOrDefault(x =>
-                    x.TableName == tableName && x.ColumnName == prop.Name);
-
-                result.Add(new DigitoVerificadorVerticalEntity
-                {
-                    Id = existente?.Id ?? 0,
-                    TableName = tableName,
-                    ColumnName = prop.Name,
-                    DVV = dvv
-                });
+                sbDvv.Append(dvv);
             }
 
-            return result;
-        }
+            var tableDvv = CryptoManager.EncryptString(sbDvv.ToString());
 
+            return new DigitoVerificadorVerticalEntity
+            {
+                Id = dvvEntity.Id,
+                TableName = dvvEntity.TableName,
+                DVV = tableDvv
+            };
+        }
 
         public static List<T> CalcularDVH(List<T> entityList)
         {
+            var entityListWithDvh = new List<T>();
+
             foreach (var entity in entityList)
             {
-                var props = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance)
-                    .Where(p => p.Name != "DVH")
-                    .Where(p => Type.GetTypeCode(Nullable.GetUnderlyingType(p.PropertyType) ?? p.PropertyType) != TypeCode.Object);
-
-                var sb = new StringBuilder();
-
-                foreach (var prop in props)
-                {
-                    var value = prop.GetValue(entity)?.ToString() ?? string.Empty;
-                    sb.Append(value);
-                }
-
-                var dvhProp = typeof(T).GetProperty("DVH");
-                if (dvhProp != null && dvhProp.CanWrite)
-                {
-                    dvhProp.SetValue(entity, CryptoManager.EncryptString(sb.ToString()));
-                }
+                entityListWithDvh.Add(CalcularDVH(entity));
             }
 
-            return entityList;
+            return entityListWithDvh;
         }
+
+        public static T CalcularDVH(T entity)
+        {
+            var clonedEntity = new T();
+            var props = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                .Where(p => p.CanRead && p.CanWrite)
+                .ToList();
+
+            var sbParciales = new StringBuilder();
+
+            foreach (var prop in props)
+            {
+                if (prop.Name.StartsWith("DVH_"))
+                    continue;
+
+                var value = prop.GetValue(entity);
+                prop.SetValue(clonedEntity, value); // Copia todos los valores
+
+                // Saltear DVH, DVH_<>, y Id
+                if (prop.Name == "DVH" || prop.Name == "Id")
+                    continue;
+
+                // Calcular DVH_<Prop> si existe esa propiedad
+                var dvhPropName = $"DVH_{prop.Name}";
+                var dvhProp = props.FirstOrDefault(p => p.Name == dvhPropName && p.CanWrite);
+                if (dvhProp != null)
+                {
+                    string stringValue;
+
+                    if (value is byte[] byteArray)
+                    {
+                        stringValue = Convert.ToBase64String(byteArray); // Codificamos correctamente
+                    }
+                    else
+                    {
+                        stringValue = value?.ToString() ?? string.Empty;
+                    }
+
+                    var dvhValue = CryptoManager.EncryptString(stringValue);
+                    dvhProp.SetValue(clonedEntity, dvhValue);
+                    sbParciales.Append(dvhValue);
+                }
+
+            }
+
+            // Finalmente setear el DVH completo usando los parciales
+            var dvhFinalProp = typeof(T).GetProperty("DVH");
+            if (dvhFinalProp != null && dvhFinalProp.CanWrite)
+            {
+                dvhFinalProp.SetValue(clonedEntity, CryptoManager.EncryptString(sbParciales.ToString()));
+            }
+
+            return clonedEntity;
+        }
+
+
 
     }
 }
