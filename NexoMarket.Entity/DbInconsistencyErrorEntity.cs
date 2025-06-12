@@ -8,15 +8,15 @@ namespace NexoMarket.Entity
 {
     public class DbInconsistencyErrorEntity
     {
-        public string Table { get; set; }
-        public string Column { get; set; }
-        public string Fact { get; set; }
+        public string Tabla { get; set; }
+        public string Columna { get; set; }
+        public string Dato { get; set; }
 
         public DbInconsistencyErrorEntity(string table, string column, string fact)
         {
-            Table = table;
-            Column = column;
-            Fact = fact;
+            Tabla = table;
+            Columna = column;
+            Dato = fact;
         }
     }
 }

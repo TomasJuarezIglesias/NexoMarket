@@ -23,7 +23,7 @@ namespace NexoMarket.Business
             _digitoVerificadorVerticalRepository = new DigitoVerificadorVerticalRepository();
         }
 
-        public async Task Restaurar()
+        public async Task Recomponer()
         {
             var productListCalculated = await _productoRepository.GetAll();
             productListCalculated = DigitoVerificadorService<ProductDvhEntity>.CalcularDVH(productListCalculated);

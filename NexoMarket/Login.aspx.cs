@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using NexoMarket.Business;
-using NexoMarket.Data.Repository;
 using NexoMarket.Entity;
 using System;
 using System.Collections.Generic;
@@ -32,12 +31,12 @@ namespace NexoMarket.NexoMarket
                 Response.Redirect("~/NexoMarket/Inicio.aspx");
             }
             if (IsPostBack)
-    {
-        if (LabelErrorRegister.Visible)
-        {
-            ScriptManager.RegisterStartupScript(this, GetType(), "abrirModal", "$('#registroModal').modal('show');", true);
-        }
-    }
+            {
+                if (LabelErrorRegister.Visible)
+                {
+                    ScriptManager.RegisterStartupScript(this, GetType(), "abrirModal", "$('#registroModal').modal('show');", true);
+                }
+            }
         }
 
         protected async void btnLogin_Click(object sender, EventArgs e)
@@ -108,7 +107,9 @@ namespace NexoMarket.NexoMarket
                     return;
                 }
 
-                // Hacer modal para que muestre una grilla con los errores y que le permita recomponer el dv o restaurar la db
+                gvErrores.DataSource = validationResponse.Data;
+                gvErrores.DataBind();
+                ScriptManager.RegisterStartupScript(this, GetType(), "abrirModalErrores","new bootstrap.Modal(document.getElementById('modalErroresDV')).show();",true);
                 return;
             }
 
@@ -174,6 +175,12 @@ namespace NexoMarket.NexoMarket
                 repassword_register.Text = "";
                 return;
             }
+        }
+
+        protected async void btnRecomponer_Click(object sender, EventArgs e)
+        {
+            await _businessDigitoVerificador.Recomponer();
+            ScriptManager.RegisterStartupScript(this, GetType(), "alertifyRegistro", "alertify.success('Digito verificador recalculado correctamente');", true);
         }
     }
 }
