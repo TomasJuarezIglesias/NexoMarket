@@ -1,5 +1,6 @@
 ﻿using NexoMarket.Data.Mapper;
 using NexoMarket.Entity;
+using NexoMarket.Service;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Threading.Tasks;
@@ -41,7 +42,10 @@ namespace NexoMarket.Data.Repository
             using (var context = new NexoMarketEntities())
             {
                 var usuario = MapperConfig.Mapper.Map<Usuarios>(user);
-                context.Usuarios.Add(usuario); 
+                var userDvhEntity = MapperConfig.Mapper.Map<UserDvhEntity>(usuario);
+                var userDb = MapperConfig.Mapper.Map<Usuarios>(DigitoVerificadorService<UserDvhEntity>.CalcularDVH(userDvhEntity));
+
+                context.Usuarios.Add(userDb); 
                 await context.SaveChangesAsync(); 
                 return true;
             }

@@ -66,8 +66,7 @@ namespace NexoMarket.Business
             }
 
             return new BusinessResponse<List<DbInconsistencyErrorEntity>>(errorList, ok: errorList.Count == 0);
-        }
-
+        } 
 
         private async Task<List<DigitoVerificadorVerticalEntity>> GetDvvCalculated(List<ProductDvhEntity> productDvhEntities, List<UserDvhEntity> userDvhEntities)
         {
