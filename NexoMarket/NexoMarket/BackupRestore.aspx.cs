@@ -47,14 +47,16 @@ namespace NexoMarket.NexoMarket
             // Validación inicial
             if (!fileUploadRestore.HasFile)
             {
-
+                ScriptManager.RegisterStartupScript(this, GetType(), "alertifyRegistro", "alertify.error('Debe seleccionar un archivo');", true);
                 return;
             }
 
             // Validar extensión .bak
             string extension = Path.GetExtension(fileUploadRestore.FileName).ToLower();
+
             if (extension != ".bak")
             {
+                ScriptManager.RegisterStartupScript(this, GetType(), "alertifyRegistro", "alertify.error('El archivo debe ser .bak');", true);
                 return;
             }
 
@@ -77,12 +79,12 @@ namespace NexoMarket.NexoMarket
 
                 // Eliminar el archivo temporal
                 File.Delete(fullPath);
+                ScriptManager.RegisterStartupScript(this, GetType(), "alertifyRegistro", "alertify.success('Restore realizado correctamente');", true);
             }
             catch (Exception ex)
             {
-                // Error
+                ScriptManager.RegisterStartupScript(this, GetType(), "alertifyRegistro", "alertify.error('Ha ocurrido un error');", true);
             }
         }
-
     }
 }

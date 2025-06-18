@@ -36,7 +36,7 @@
                             <label class="form-label">Seleccionar archivo .bak</label>
                             <asp:FileUpload ID="fileUploadRestore" runat="server" CssClass="form-control" />
                         </div>
-                        <asp:Button ID="btnRestore" runat="server" CssClass="btn btn-primary w-100" Text="Restaurar Backup" OnClick="btnRestore_Click" />
+                        <asp:Button ID="btnRestore" runat="server" CssClass="btn btn-primary w-100" Text="Restaurar Backup" OnClick="btnRestore_Click"/>
                     </div>
                 </div>
             </div>

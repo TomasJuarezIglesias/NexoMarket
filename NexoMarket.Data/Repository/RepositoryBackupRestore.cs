@@ -51,6 +51,5 @@ namespace NexoMarket.Data.Repository
             }
         }
 
-
     }
 }
