@@ -113,29 +113,50 @@
     <div class="modal fade" id="modalErroresDV" tabindex="-1" aria-labelledby="erroresModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content shadow rounded-4">
+
+                <!-- Encabezado del modal -->
                 <div class="modal-header bg-danger text-white rounded-top-4">
                     <h4 class="modal-title w-100 text-center" id="erroresModalLabel">⚠️ Vulneración en la base de datos</h4>
                 </div>
+
+                <!-- Cuerpo del modal -->
                 <div class="modal-body px-4 py-3">
                     <p class="text-center text-muted mb-4">
                         Se han detectado inconsistencias en los registros. A continuación se detallan:
                     </p>
+
+                    <!-- Tabla de errores -->
                     <asp:GridView ID="gvErrores" runat="server" CssClass="table table-bordered table-hover text-center" />
+
+                    <!-- Selector de archivo .bak -->
+                    <div class="w-100 d-flex flex-column align-items-center mt-4">
+                        <label class="form-label fw-semibold mb-2">
+                            Seleccionar archivo <span class="text-danger fw-bold">.bak</span> para restaurar
+                        </label>
+                        <div class="d-flex align-items-center">
+                            <asp:FileUpload ID="fileRestore" runat="server" CssClass="form-control text-center" />
+                        </div>
+                    </div>
+
                 </div>
 
+                <!-- Pie del modal con botones -->
                 <div class="modal-footer justify-content-center border-0 pb-4 gap-3 flex-wrap">
                     <div class="d-grid" style="min-width: 240px;">
                         <asp:Button ID="btnRecomponer" runat="server" Text="Recomponer DV"
-                            CssClass="btn btn-danger btn-lg w-100 shadow-sm rounded-pill" OnClick="btnRecomponer_Click" />
+                            CssClass="btn btn-danger btn-lg w-100 shadow-sm rounded-pill"
+                            OnClick="btnRecomponer_Click" />
                     </div>
                     <div class="d-grid" style="min-width: 240px;">
                         <asp:Button ID="btnRestaurar" runat="server" Text="Restaurar Base"
-                            CssClass="btn btn-outline-danger btn-lg w-100 shadow-sm rounded-pill" />
+                            CssClass="btn btn-outline-danger btn-lg w-100 shadow-sm rounded-pill"
+                            OnClick="btnRestaurar_Click" />
                     </div>
                 </div>
 
             </div>
         </div>
     </div>
+
 
 </asp:Content>

@@ -3,6 +3,7 @@ using NexoMarket.Business;
 using NexoMarket.Entity;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Web;
 using System.Web.Security;
 using System.Web.UI;
@@ -15,6 +16,7 @@ namespace NexoMarket.NexoMarket
         private readonly BusinessBitacora _businessBitacora;
         private readonly BusinessMenu _businessMenu;
         private readonly BusinessDigitoVerificador _businessDigitoVerificador;
+        private readonly BackupRestoreBussiness _backupRestoreBussiness;
 
         public Login()
         {
@@ -22,6 +24,7 @@ namespace NexoMarket.NexoMarket
             _businessBitacora = new BusinessBitacora();
             _businessMenu = new BusinessMenu();
             _businessDigitoVerificador = new BusinessDigitoVerificador();
+            _backupRestoreBussiness = new BackupRestoreBussiness();
         }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -109,7 +112,7 @@ namespace NexoMarket.NexoMarket
 
                 gvErrores.DataSource = validationResponse.Data;
                 gvErrores.DataBind();
-                ScriptManager.RegisterStartupScript(this, GetType(), "abrirModalErrores","new bootstrap.Modal(document.getElementById('modalErroresDV')).show();",true);
+                ScriptManager.RegisterStartupScript(this, GetType(), "abrirModalErrores", "new bootstrap.Modal(document.getElementById('modalErroresDV')).show();", true);
                 return;
             }
 
@@ -181,6 +184,51 @@ namespace NexoMarket.NexoMarket
         {
             await _businessDigitoVerificador.Recomponer();
             ScriptManager.RegisterStartupScript(this, GetType(), "alertifyRegistro", "alertify.success('Digito verificador recalculado correctamente');", true);
+        }
+
+        protected void btnRestaurar_Click(object sender, EventArgs e)
+        {
+            // Validación inicial
+            if (!fileRestore.HasFile)
+            {
+                ScriptManager.RegisterStartupScript(this, GetType(), "alertifyRegistro", "alertify.error('Debe seleccionar un archivo');", true);
+                return;
+            }
+
+            // Validar extensión .bak
+            string extension = Path.GetExtension(fileRestore.FileName).ToLower();
+
+            if (extension != ".bak")
+            {
+                ScriptManager.RegisterStartupScript(this, GetType(), "alertifyRegistro", "alertify.error('El archivo debe ser .bak');", true);
+                return;
+            }
+
+            try
+            {
+                // Ruta donde se guarda temporalmente
+                string backupFolder = @"C:\SQLBackups\";
+
+                // Crear la carpeta si no existe
+                if (!Directory.Exists(backupFolder))
+                    Directory.CreateDirectory(backupFolder);
+
+                // Guardar archivo en esa ruta
+                string fileName = Path.GetFileName(fileRestore.FileName);
+                string fullPath = Path.Combine(backupFolder, fileName);
+                fileRestore.SaveAs(fullPath);
+
+                // Ejecutar el restore
+                _backupRestoreBussiness.Restore(fullPath);
+
+                // Eliminar el archivo temporal
+                File.Delete(fullPath);
+                ScriptManager.RegisterStartupScript(this, GetType(), "alertifyRegistro", "alertify.success('Restore realizado correctamente');", true);
+            }
+            catch (Exception ex)
+            {
+                ScriptManager.RegisterStartupScript(this, GetType(), "alertifyRegistro", "alertify.error('Ha ocurrido un error');", true);
+            }
         }
     }
 }
