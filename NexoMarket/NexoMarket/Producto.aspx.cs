@@ -61,9 +61,8 @@ namespace NexoMarket.NexoMarket
                cantidadControl.Value = "1";
                 // Acá va tu lógica
                 ScriptManager.RegisterStartupScript(this, GetType(), "alertifyRegistro",
-                    $"alertify.success('Agregado {cantidad} unidad/es de {nombreProducto}');", true);
+                    $"showSuccess('Agregado {cantidad} unidad/es de {nombreProducto}');", true);
             }
         }
-
     }
 }

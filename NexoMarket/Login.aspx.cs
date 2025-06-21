@@ -167,7 +167,7 @@ namespace NexoMarket.NexoMarket
             bool resultado = await _businessUser.CreateUser(user);
             if (resultado)
             {
-                ScriptManager.RegisterStartupScript(this, GetType(), "alertifyRegistro", "alertify.success('¡Usuario Registrado!');", true);
+                ScriptManager.RegisterStartupScript(this, GetType(), "alertifyRegistro", "showSuccess('¡Usuario Registrado!');", true);
                 usuario_register.Text = "";
                 nombre_register.Text = "";
                 apellido_register.Text = "";
@@ -180,7 +180,7 @@ namespace NexoMarket.NexoMarket
         protected async void btnRecomponer_Click(object sender, EventArgs e)
         {
             await _businessDigitoVerificador.Recomponer();
-            ScriptManager.RegisterStartupScript(this, GetType(), "alertifyRegistro", "alertify.success('Digito verificador recalculado correctamente');", true);
+            ScriptManager.RegisterStartupScript(this, GetType(), "alertifyRegistro", "showSuccess('Digito verificador recalculado correctamente');", true);
         }
     }
 }
