@@ -79,14 +79,16 @@
 
                 <!-- Menú de navegación -->
                 <nav class="nav flex-column mb-auto">
-                    <a class="nav-link px-3 py-2 rounded text-white" href="/NexoMarket/Inicio.aspx">Inicio</a>
+                    <a class="nav-link px-3 py-2 rounded text-white <% if (Request.RawUrl.Contains("Inicio.aspx")) { %> active-nav <% } %>" href="/NexoMarket/Inicio.aspx">Inicio</a>
                     <%
                         if (MenusList != null) 
                         {
                             foreach (var menu in MenusList)
                             {
+                                string isActive = Request.RawUrl.Contains(menu.Url) ? "active-nav" : "";
+
                                 %>
-                                <a class="nav-link px-3 py-2 rounded text-white" href="<%= menu.Url %>"><%= menu.Title %></a>
+                                <a class="nav-link px-3 py-2 rounded text-white <%= isActive %>" href="<%= menu.Url %>"><%= menu.Title %></a>
                                 <%
                             }
                         }
@@ -117,6 +119,11 @@
 
 <%--Estilos que no son tomados por el site.css--%>
 <style>
+    .active-nav {
+        background-color: #062750;
+        font-weight: bold;
+    }
+
     /* Header */
     .alertify .ajs-dialog .ajs-header {
         background-color: #0d6efd !important;
