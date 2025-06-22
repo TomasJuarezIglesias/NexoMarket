@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 
 namespace NexoMarket.Business
 {
-    public class BusinessProducto
+    public class ProductoBusiness
     {
         private readonly ProductoRepository _productoRepository;
 
-        public BusinessProducto()
+        public ProductoBusiness()
         {
             _productoRepository = new ProductoRepository();
             

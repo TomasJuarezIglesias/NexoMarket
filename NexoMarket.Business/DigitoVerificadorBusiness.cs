@@ -10,13 +10,13 @@ using System.Threading.Tasks;
 
 namespace NexoMarket.Business
 {
-    public class BusinessDigitoVerificador
+    public class DigitoVerificadorBusiness
     {
         private readonly UserRepository _userRepository;
         private readonly ProductoRepository _productoRepository;
         private readonly DigitoVerificadorVerticalRepository _digitoVerificadorVerticalRepository;
 
-        public BusinessDigitoVerificador()
+        public DigitoVerificadorBusiness()
         {
             _userRepository = new UserRepository();
             _productoRepository = new ProductoRepository();

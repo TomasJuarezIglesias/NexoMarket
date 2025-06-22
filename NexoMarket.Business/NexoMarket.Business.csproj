@@ -41,12 +41,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BackupRestoreBussiness.cs" />
-    <Compile Include="BusinessBitacora.cs" />
-    <Compile Include="BusinessDigitoVerificador.cs" />
-    <Compile Include="BusinessMenu.cs" />
-    <Compile Include="BusinessProducto.cs" />
-    <Compile Include="BusinessUser.cs" />
+    <Compile Include="BackupRestoreBusiness.cs" />
+    <Compile Include="BitacoraBusiness.cs" />
+    <Compile Include="DigitoVerificadorBusiness.cs" />
+    <Compile Include="MenuBusiness.cs" />
+    <Compile Include="ProductoBusiness.cs" />
+    <Compile Include="UserBusiness.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

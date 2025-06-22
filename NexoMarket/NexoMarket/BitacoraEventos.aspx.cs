@@ -11,11 +11,11 @@ namespace NexoMarket.Forms
 {
     public partial class BitacoraEventos : System.Web.UI.Page
     {
-        private readonly BusinessBitacora _businessBitacora;
+        private readonly BitacoraBusiness _businessBitacora;
 
         public BitacoraEventos()
         {
-            _businessBitacora = new BusinessBitacora();
+            _businessBitacora = new BitacoraBusiness();
         }
 
         protected void Page_Load(object sender, EventArgs e)

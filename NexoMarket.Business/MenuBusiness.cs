@@ -4,10 +4,10 @@ using System.Collections.Generic;
 
 namespace NexoMarket.Business
 {
-    public class BusinessMenu
+    public class MenuBusiness
     {
         private readonly MenuRepository _menuRepository;
-        public BusinessMenu()
+        public MenuBusiness()
         {
             _menuRepository = new MenuRepository();
         }

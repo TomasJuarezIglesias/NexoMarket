@@ -13,12 +13,12 @@ namespace NexoMarket
     public partial class SiteMaster : MasterPage
     {
         public List<MenuEntity> MenusList;
-        private readonly BusinessBitacora _businessBitacora;
+        private readonly BitacoraBusiness _businessBitacora;
 
         public SiteMaster()
         {
             MenusList = new List<MenuEntity>();
-            _businessBitacora = new BusinessBitacora();
+            _businessBitacora = new BitacoraBusiness();
         }
 
 

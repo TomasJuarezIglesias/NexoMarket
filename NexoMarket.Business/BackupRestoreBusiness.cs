@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace NexoMarket.Business
 {
-    public class BackupRestoreBussiness
+    public class BackupRestoreBusiness
     {
         private readonly RepositoryBackupRestore _repositoryBackupRestore;
-        public BackupRestoreBussiness()
+        public BackupRestoreBusiness()
         {
             _repositoryBackupRestore = new RepositoryBackupRestore();
         }

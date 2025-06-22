@@ -23,7 +23,7 @@ namespace NexoMarket.NexoMarket
         {
             try
             {
-                var business = new BusinessProducto();
+                var business = new ProductoBusiness();
                 var productos = await business.BuscarProductos();
 
                 var productosConBase64 = productos.Select(p => new

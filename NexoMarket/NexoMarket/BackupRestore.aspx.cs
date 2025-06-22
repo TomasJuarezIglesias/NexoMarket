@@ -11,10 +11,10 @@ namespace NexoMarket.NexoMarket
 {
     public partial class BackupRestore : System.Web.UI.Page
     {
-        private readonly BackupRestoreBussiness _backupRestorebusiness;
+        private readonly BackupRestoreBusiness _backupRestorebusiness;
         public BackupRestore()
         {
-            _backupRestorebusiness = new BackupRestoreBussiness();
+            _backupRestorebusiness = new BackupRestoreBusiness();
         }
 
         protected void Page_Load(object sender, EventArgs e)

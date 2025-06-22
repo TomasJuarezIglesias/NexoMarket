@@ -12,19 +12,19 @@ namespace NexoMarket.NexoMarket
 {
     public partial class Login : System.Web.UI.Page
     {
-        private readonly BusinessUser _businessUser;
-        private readonly BusinessBitacora _businessBitacora;
-        private readonly BusinessMenu _businessMenu;
-        private readonly BusinessDigitoVerificador _businessDigitoVerificador;
-        private readonly BackupRestoreBussiness _backupRestoreBussiness;
+        private readonly UserBusiness _businessUser;
+        private readonly BitacoraBusiness _businessBitacora;
+        private readonly MenuBusiness _businessMenu;
+        private readonly DigitoVerificadorBusiness _businessDigitoVerificador;
+        private readonly BackupRestoreBusiness _backupRestoreBussiness;
 
         public Login()
         {
-            _businessUser = new BusinessUser();
-            _businessBitacora = new BusinessBitacora();
-            _businessMenu = new BusinessMenu();
-            _businessDigitoVerificador = new BusinessDigitoVerificador();
-            _backupRestoreBussiness = new BackupRestoreBussiness();
+            _businessUser = new UserBusiness();
+            _businessBitacora = new BitacoraBusiness();
+            _businessMenu = new MenuBusiness();
+            _businessDigitoVerificador = new DigitoVerificadorBusiness();
+            _backupRestoreBussiness = new BackupRestoreBusiness();
         }
 
         protected void Page_Load(object sender, EventArgs e)

@@ -21,7 +21,7 @@
                         <i class="fas fa-database me-2"></i> Realizar Backup
                     </div>
                     <div class="card-body d-flex flex-column align-items-center">
-                        <asp:Button ID="btnBackup" runat="server" CssClass="btn btn-primary w-100 fw-semibold py-2" Text="Generar Backup" OnClick="btnBackup_Click" />
+                        <asp:Button ID="btnBackup" runat="server" CssClass="btn btn-primary w-100 fw-semibold py-2" Text="Generar" OnClick="btnBackup_Click" />
                     </div>
                 </div>
 
@@ -35,7 +35,7 @@
                             <label class="form-label fw-semibold">Seleccionar archivo <code>.bak</code></label>
                             <asp:FileUpload ID="fileUploadRestore" runat="server" CssClass="form-control" />
                         </div>
-                        <asp:Button ID="btnRestore" runat="server" CssClass="btn btn-primary w-100 fw-semibold py-2" Text="Restaurar Backup" OnClick="btnRestore_Click" />
+                        <asp:Button ID="btnRestore" runat="server" CssClass="btn btn-primary w-100 fw-semibold py-2" Text="Restaurar" OnClick="btnRestore_Click" />
                     </div>
                 </div>
 

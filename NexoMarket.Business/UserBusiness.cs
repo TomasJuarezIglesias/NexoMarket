@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace NexoMarket.Business
 {
-    public class BusinessUser
+    public class UserBusiness
     {
         private readonly UserRepository _userRepository;
         private readonly DigitoVerificadorVerticalRepository _digitoVerificadorVerticalRepository;
 
-        public BusinessUser()
+        public UserBusiness()
         {
             _userRepository = new UserRepository();
             _digitoVerificadorVerticalRepository = new DigitoVerificadorVerticalRepository();

@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace NexoMarket.Business
 {
-    public class BusinessBitacora
+    public class BitacoraBusiness
     {
         private readonly EventoBitacoraRepository _eventoBitacoraRepository;
 
-        public BusinessBitacora()
+        public BitacoraBusiness()
         {
             _eventoBitacoraRepository = new EventoBitacoraRepository();
         }
