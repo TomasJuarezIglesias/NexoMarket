@@ -28,7 +28,7 @@
     <script src="<%= ResolveUrl("~/Scripts/bootstrap.bundle.min.js") %>"></script>
 
     <!-- Ícono -->
-    <link href="<%= ResolveUrl("~/favicon.ico") %>" rel="shortcut icon" type="image/x-icon" />
+    <link href="<%= ResolveUrl("~/Assets/WebIcon/favicon.ico") %>" rel="shortcut icon" type="image/x-icon" />
 
     <!-- Tu CSS personalizado -->
     <link href="<%= ResolveUrl("/Content/Site.css") %>" rel="stylesheet" />
