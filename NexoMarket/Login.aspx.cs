@@ -4,6 +4,7 @@ using NexoMarket.Entity;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Security;
 using System.Web.UI;
@@ -146,9 +147,11 @@ namespace NexoMarket.NexoMarket
             Response.Cookies.Add(authCookie);
 
             await _businessBitacora.GuardarEventoBitacora("Inicio de Sesion", response.Data.Id);
+            ScriptManager.RegisterStartupScript(this, GetType(), "limpiarStorage", "localStorage.removeItem('modalRegistroPendiente');", true);
 
             Response.Redirect("~/NexoMarket/Inicio.aspx");
         }
+
 
         protected async void btn_registrarse(object sender, EventArgs e)
         {
@@ -156,6 +159,18 @@ namespace NexoMarket.NexoMarket
             {
                 LabelErrorRegister.Text = "Las contraseñas no coinciden";
                 LabelErrorRegister.Visible = true;
+                return;
+            }
+
+            if (!Regex.IsMatch(password_register.Text, @"^(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z\d]).{8,}$"))
+            {
+                LabelErrorRegister.Text = "Las contraseñas deben tener al menos 8 caracteres, 1 mayúscula, 1 número y 1 carácter especial.";
+                LabelErrorRegister.Visible = true;
+                //Registra en LS que hubo un error para volver a mostrar el modal frente al refrescar
+                ScriptManager.RegisterStartupScript(this, GetType(), "abrirModal", @"
+                    localStorage.setItem('modalRegistroPendiente', 'true');
+                    $('#registroModal').modal('show');
+                ", true);
                 return;
             }
 
@@ -167,9 +182,12 @@ namespace NexoMarket.NexoMarket
                 Username = usuario_register.Text,
                 Password = password_register.Text,
             };
+
             bool resultado = await _businessUser.CreateUser(user);
             if (resultado)
             {
+                ScriptManager.RegisterStartupScript(this, GetType(), "limpiarStorage", "localStorage.removeItem('modalRegistroPendiente');", true);
+
                 ScriptManager.RegisterStartupScript(this, GetType(), "alertifyRegistro", "showSuccess('¡Usuario Registrado!');", true);
                 usuario_register.Text = "";
                 nombre_register.Text = "";

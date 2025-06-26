@@ -158,5 +158,14 @@
         </div>
     </div>
 
+    <script>
+    window.addEventListener('load', () => {
+        if (localStorage.getItem('modalRegistroPendiente') === 'true') {
+            localStorage.removeItem('modalRegistroPendiente');
+            $('#registroModal').modal('show');
+        }
+    });
+    </script>
+
 
 </asp:Content>
