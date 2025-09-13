@@ -6,6 +6,7 @@ using System.Web.Script.Services;
 using System.Web.Security;
 using System.Web.Services;
 using System.Web.UI;
+using System.Web.UI.WebControls;
 
 namespace NexoMarket.Forms
 {
@@ -26,8 +27,14 @@ namespace NexoMarket.Forms
 
             string title = $"Bienvenido {user.Username}";
             string message = $"Tu rol en el sistema es: {user.Rol}";
-
+            Session["User"] = user.Rol;
             ScriptManager.RegisterStartupScript(this, GetType(), "alertifyRegistro", $"alertify.alert('{title}', '{message}');", true);         
+        }
+
+        protected void AdRotatorPromo_AdCreated(object sender, AdCreatedEventArgs e)
+        {
+            // Pone el texto visible en un atributo del <a>
+            e.AdProperties["data-text"] = e.AlternateText;
         }
     }
 }
