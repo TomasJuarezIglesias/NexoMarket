@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Carrito" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Carrito.aspx.cs" Inherits="NexoMarket.NexoMarket.Carrito" %>
+﻿<%@ Page Async="true" Title="Carrito" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Carrito.aspx.cs" Inherits="NexoMarket.NexoMarket.Carrito" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <div class="d-flex flex-column" style="height: calc(100vh - 60px);">
@@ -34,10 +34,16 @@
                             <div class="d-flex align-items-center mb-2">
                                 <span class="fw-bold text-success me-3">
                                     $<%# Eval("Producto.Precio", "{0:N2}") %></span><label class="me-2">Cantidad:</label>
-                                <asp:TextBox ID="txtCantidad" runat="server"
-                                    Text='<%# Eval("Cantidad") %>'
-                                    CssClass="form-control text-center"
-                                    Style="width: 60px;" Enabled="False" />
+
+                                <input type="number"
+                                    id="txtCantidad" 
+                                    runat="server"
+                                    class="form-control text-center"
+                                    style="width: 70px;"
+                                    value='<%# Eval("Cantidad") %>'
+                                    min="1"
+                                    max="99"
+                                    readonly="readonly" />
                             </div>
 
                             <p class="fw-bold mb-0">
@@ -48,15 +54,22 @@
 
                         <!-- Botones -->
                         <div class="ms-3 d-flex flex-column gap-2">
-                            <asp:Button ID="btnActualizar" runat="server" Text="Actualizar"  
+                            <asp:Button ID="btnEditar" runat="server" Text="Actualizar"
                                 CssClass="btn btn-outline-primary btn-sm"
-                                CommandName="Actualizar" 
-                                CommandArgument='<%# Eval("Producto.Id") %>' 
+                                CommandName="Editar"
+                                CommandArgument='<%# Eval("Producto.Id") %>'
                                 UseSubmitBehavior="False" />
-                            <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" 
+
+                            <asp:Button ID="btnGuardar" runat="server" Text="Guardar"
+                                CssClass="btn btn-success btn-sm"
+                                CommandName="Guardar"
+                                CommandArgument='<%# Eval("Producto.Id") %>'
+                                UseSubmitBehavior="False" Visible="false" />
+
+                            <asp:Button ID="btnEliminar" runat="server" Text="Eliminar"
                                 CssClass="btn btn-danger btn-sm"
-                                CommandName="Eliminar" 
-                                CommandArgument='<%# Eval("Producto.Id") %>' 
+                                CommandName="Eliminar"
+                                CommandArgument='<%# Eval("Producto.Id") %>'
                                 UseSubmitBehavior="False" />
                         </div>
                     </div>

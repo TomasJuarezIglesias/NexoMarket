@@ -54,6 +54,20 @@ namespace NexoMarket.Business
             _xmlService.SaveXml(_fileName, products);
         }
 
+        public void UpdateQuantity(int productId, int quantity)
+        {
+            var products = GetProductsFromCart();
+
+            var productFound = products.FirstOrDefault(p => p.Product.Id == productId);
+
+            if (productFound is null)
+                return;
+
+            productFound.Cantidad = quantity;
+
+            _xmlService.SaveXml(_fileName, products);
+        }
+
         public void RemoveFromCart(int productId)
         {
             var products = GetProductsFromCart();

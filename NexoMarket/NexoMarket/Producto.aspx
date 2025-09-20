@@ -101,7 +101,7 @@
                             <div class="producto-descripcion"><%# Eval("Descripcion") %></div>
                             <div class="producto-precio">$<%# Eval("Precio", "{0:N2}") %></div>
                             <div class="producto-cantidad">
-                                <input type="number" id="Cantidad" runat="server" min="1" max="10" value="1" class="form-control d-inline-block" />
+                                <input type="number" id="Cantidad" runat="server" min="1" max="30" value="1" class="form-control d-inline-block" />
                             </div>
                             <div class="producto-boton">
                                 <asp:Button ID="BtnAgregar" runat="server" Text="Agregar" CssClass="btn btn-primary btn-sm w-100"

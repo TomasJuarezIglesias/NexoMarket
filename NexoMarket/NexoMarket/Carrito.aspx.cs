@@ -68,27 +68,58 @@ namespace NexoMarket.NexoMarket
             }
         }
 
-        protected void RepeaterProductos_ItemCommand(object source, RepeaterCommandEventArgs e)
+        protected async void RepeaterProductos_ItemCommand(object source, RepeaterCommandEventArgs e)
         {
             if (!int.TryParse(e.CommandArgument.ToString(), out int idProducto))
             {
-                ScriptManager.RegisterStartupScript(this, GetType(), "alertifyRegistro", $"showError('No se encontro el producto');", true);
+                ScriptManager.RegisterStartupScript(this, GetType(), "alertifyRegistro", $"showError('No se encontró el producto');", true);
                 return;
             }
 
-
-            if (e.CommandName == "Actualizar")
+            if (e.CommandName == "Editar")
             {
+                var txtCantidad = (HtmlInputGenericControl)e.Item.FindControl("txtCantidad");
+                var btnEditar = (Button)e.Item.FindControl("btnEditar");
+                var btnGuardar = (Button)e.Item.FindControl("btnGuardar");
 
+                txtCantidad.Attributes.Remove("readonly");
+                btnEditar.Visible = false;
+                btnGuardar.Visible = true;
 
+                return;
+            }
+            else if (e.CommandName == "Guardar")
+            {
+                var txtCantidad = (HtmlInputGenericControl)e.Item.FindControl("txtCantidad");
+                if (!int.TryParse(txtCantidad.Value, out int nuevaCantidad) || nuevaCantidad <= 0)
+                {
+                    ScriptManager.RegisterStartupScript(this, GetType(), "alertifyRegistro", $"showError('La cantidad debe ser mayor a 0');", true);
+                    return;
+                }
 
+                if (nuevaCantidad > 99)
+                {
+                    ScriptManager.RegisterStartupScript(this, GetType(), "alertifyRegistro", $"showError('La cantidad debe ser menor a 30');", true);
+                    return;
+                }
+
+                bool hasStock = await _productoBusiness.HasStock(idProducto, nuevaCantidad);
+
+                if (!hasStock)
+                {
+                    ScriptManager.RegisterStartupScript(this, GetType(), "alertifyRegistro", $"showError('No Hay Stock');", true);
+                    return;
+                }
+
+                _productoBusiness.UpdateQuantity(idProducto, nuevaCantidad);
+
+                ScriptManager.RegisterStartupScript(this, GetType(), "alertifyRegistro", $"showSuccess('Cantidad actualizada');", true);
             }
             else if (e.CommandName == "Eliminar")
             {
                 _productoBusiness.RemoveFromCart(idProducto);
                 ScriptManager.RegisterStartupScript(this, GetType(), "alertifyRegistro", $"showSuccess('Producto eliminado correctamente');", true);
             }
-
 
             CargarCarrito();
         }
