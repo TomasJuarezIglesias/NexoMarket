@@ -1,4 +1,5 @@
-﻿using NexoMarket.Data.Repository;
+﻿using NexoMarket.Data;
+using NexoMarket.Data.Repository;
 using NexoMarket.Entity;
 using NexoMarket.Service;
 using System.Collections.Generic;
@@ -51,6 +52,18 @@ namespace NexoMarket.Business
                 productFound.Cantidad += quantity;
 
             _xmlService.SaveXml(_fileName, products);
+        }
+
+        public void RemoveFromCart(int productId)
+        {
+            var products = GetProductsFromCart();
+
+            var productFound = products.FirstOrDefault(p => p.Product.Id == productId);
+            if (productFound != null)
+            {
+                products.Remove(productFound);
+                _xmlService.SaveXml(_fileName, products);
+            }
         }
 
         public List<ProductoCarritoEntity> GetProductsFromCart()
