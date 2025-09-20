@@ -166,6 +166,7 @@
     <Content Include="Scripts\WebForms\WebUIValidation.js" />
     <Content Include="Site.Master" />
     <Content Include="Utils\AnunciosRotator.xml" />
+    <Content Include="Utils\FotoBlanca.png" />
     <Content Include="Utils\Oferta.png" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config" />

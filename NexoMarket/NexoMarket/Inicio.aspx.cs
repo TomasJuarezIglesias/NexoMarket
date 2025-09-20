@@ -31,10 +31,6 @@ namespace NexoMarket.Forms
             ScriptManager.RegisterStartupScript(this, GetType(), "alertifyRegistro", $"alertify.alert('{title}', '{message}');", true);         
         }
 
-        protected void AdRotatorPromo_AdCreated(object sender, AdCreatedEventArgs e)
-        {
-            // Pone el texto visible en un atributo del <a>
-            e.AdProperties["data-text"] = e.AlternateText;
-        }
+
     }
 }

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Advertisements>
   <Ad>
-	  <ImageUrl>~/utils/Oferta.png</ImageUrl>
+	  <ImageUrl>~/Utils/3.png</ImageUrl>
 	  <NavigateUrl>../NexoMarket/Producto.aspx</NavigateUrl>
     <AlternateText>2×1 en cortes de carne seleccionados</AlternateText>
 	  <ToolTip> 2x1 en cortes de carne seleccionados</ToolTip>
@@ -9,7 +9,7 @@
     <Keyword>supermercado</Keyword>
   </Ad>
   <Ad>
-	  <ImageUrl>~/utils/Oferta.png</ImageUrl>
+	  <ImageUrl>~/Utils/2.png</ImageUrl>
     <NavigateUrl>../NexoMarket/Producto.aspx</NavigateUrl>
     <AlternateText>30% OFF en lácteos</AlternateText>
 	 <Text> 30% OFF en lácteos</Text>
@@ -17,7 +17,7 @@
     <Keyword>supermercado</Keyword>
   </Ad>
   <Ad>
-    <ImageUrl>~/utils/Oferta.png</ImageUrl>
+	  <ImageUrl>~/Utils/1.png</ImageUrl>
 	  <NavigateUrl>../NexoMarket/Producto.aspx</NavigateUrl>
     <AlternateText>3×2 en limpieza del hogar</AlternateText>
 	  <ToolTip> 3x2 en limpieza del hogar </ToolTip>

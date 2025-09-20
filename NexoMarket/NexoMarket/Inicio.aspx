@@ -15,14 +15,6 @@
             box-shadow: 0 6px 20px rgba(0,0,0,.15);
         }
 
-        
-
-                .ad-container img {
-                    height: 100%;
-                    width: 50%; /* imagen solo en la izquierda */
-                    object-fit: cover; /* recorta sin deformar */
-                    display: block;
-                }
 
                 .ad-container a {
     position: relative;
@@ -46,13 +38,15 @@
 .ad-container a{
   position:relative; display:block; height:100%; width:100%; text-align:left;
 }
+.ad-container img{
+    width: 100%;     /* ocupa todo el ancho del padre */
+  height: 100%;    /* mantiene la proporción original */
+  display: block;  
+}
 .ad-container a::after{
   content: attr(data-text);
   position:absolute; right:20px; top:50%; transform:translateY(-50%);
   font-size:1.2rem; font-weight:700; color:#333;
-}
-.ad-container img{
-  height:100%; width:50%; object-fit:cover; display:block;
 }
 
     </style>
@@ -67,9 +61,7 @@
             CssClass="adrotator"
             AdvertisementFile="~/Utils/AnunciosRotator.xml"
             KeywordFilter="supermercado" 
-            target ="_blank"
-                OnAdCreated="AdRotatorPromo_AdCreated"/>
-            
+            target ="_blank"/>
            </div>
         </div>
 <% } %>
