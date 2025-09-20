@@ -10,7 +10,7 @@ namespace NexoMarket.Data.Repository
 {
     public class ProductoRepository
     {
-        public async Task<List<ProductoEntity>> BuscarEventosBitacora()
+        public async Task<List<ProductoEntity>> GetAll()
         {
             using (var context = new NexoMarketEntities())
             {
@@ -19,7 +19,32 @@ namespace NexoMarket.Data.Repository
             }
         }
 
-        public async Task<List<ProductDvhEntity>> GetAll()
+        public async Task<ProductoEntity> GetById(int productId)
+        {
+            using (var context = new NexoMarketEntities())
+            {
+                var producto = await context.Producto.FirstOrDefaultAsync(p => p.Id == productId);
+
+                if (producto is null) return null;
+
+                return MapperConfig.Mapper.Map<ProductoEntity>(producto);
+            }
+        }
+
+        public async Task<bool> HasEnoughStockAsync(int productId, int quantityRequired)
+        {
+            using (var context = new NexoMarketEntities())
+            {
+                var product = await context.Producto.FirstOrDefaultAsync(p => p.Id == productId);
+
+                if (product == null) return false;
+
+                return product.Stock >= quantityRequired;
+            }
+        }
+        
+
+        public async Task<List<ProductDvhEntity>> GetAllWithDvh()
         {
             using (var context = new NexoMarketEntities())
             {
@@ -28,6 +53,7 @@ namespace NexoMarket.Data.Repository
                 return MapperConfig.Mapper.Map<List<ProductDvhEntity>>(productos);
             }
         }
+
 
         public async Task SaveRange(List<ProductDvhEntity> productList)
         {

@@ -25,7 +25,7 @@ namespace NexoMarket.Business
 
         public async Task Recomponer()
         {
-            var productListCalculated = await _productoRepository.GetAll();
+            var productListCalculated = await _productoRepository.GetAllWithDvh();
             productListCalculated = DigitoVerificadorService<ProductDvhEntity>.CalcularDVH(productListCalculated);
             await _productoRepository.SaveRange(productListCalculated);
 
@@ -43,7 +43,7 @@ namespace NexoMarket.Business
 
             // Obtengo digitos verificadores de db
             var dvvListDb = await _digitoVerificadorVerticalRepository.GetAll();
-            var productList = await _productoRepository.GetAll();
+            var productList = await _productoRepository.GetAllWithDvh();
             var usersList = await _userRepository.GetAll();
 
             // Genero nuevamente los digitos verificadores

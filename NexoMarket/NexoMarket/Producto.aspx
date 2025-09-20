@@ -106,11 +106,10 @@
                             <div class="producto-boton">
                                 <asp:Button ID="BtnAgregar" runat="server" Text="Agregar" CssClass="btn btn-primary btn-sm w-100"
                                     CommandName="Agregar"
-                                    CommandArgument='<%# Eval("Nombre") %>' />
+                                    CommandArgument='<%# Eval("Id") %>' />
                             </div>
                         </div>
                     </ItemTemplate>
-
                 </asp:Repeater>
             </div>
         </div>

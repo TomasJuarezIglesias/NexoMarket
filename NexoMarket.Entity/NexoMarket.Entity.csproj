@@ -48,6 +48,7 @@
     <Compile Include="MenuEntity.cs" />
     <Compile Include="PermisoEntity.cs" />
     <Compile Include="ProductDvhEntity.cs" />
+    <Compile Include="ProductoCarritoEntity.cs" />
     <Compile Include="ProductoEntity.cs" />
     <Compile Include="RolEntity.cs" />
     <Compile Include="UserDvhEntity.cs" />
