@@ -80,11 +80,18 @@ namespace NexoMarket.NexoMarket
             {
                 var txtCantidad = (HtmlInputGenericControl)e.Item.FindControl("txtCantidad");
                 var btnEditar = (Button)e.Item.FindControl("btnEditar");
+                var btnEliminar = (Button)e.Item.FindControl("btnEliminar");
+
                 var btnGuardar = (Button)e.Item.FindControl("btnGuardar");
+                var btnCancelar = (Button)e.Item.FindControl("btnCancelar");
 
                 txtCantidad.Attributes.Remove("readonly");
+
                 btnEditar.Visible = false;
+                btnEliminar.Visible = false;
+
                 btnGuardar.Visible = true;
+                btnCancelar.Visible = true;
 
                 return;
             }
@@ -124,9 +131,10 @@ namespace NexoMarket.NexoMarket
             CargarCarrito();
         }
 
-        protected void btnFinalizarCompra_Click(object sender, EventArgs e)
+        protected void btnContinuar_Click(object sender, EventArgs e)
         {
-
+            // Redireccion a siguiente pagina para planificar entrega y despues hacer confirmación de pedido
+            // En la confirmación antes de ir a hacer los cambios a la db, se tiene que checkear la disponibilidad de stock
         }
 
         protected void btnVaciarCarrito_Click(object sender, EventArgs e)

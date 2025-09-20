@@ -60,17 +60,24 @@
                                 CommandArgument='<%# Eval("Producto.Id") %>'
                                 UseSubmitBehavior="False" />
 
-                            <asp:Button ID="btnGuardar" runat="server" Text="Guardar"
-                                CssClass="btn btn-success btn-sm"
-                                CommandName="Guardar"
-                                CommandArgument='<%# Eval("Producto.Id") %>'
-                                UseSubmitBehavior="False" Visible="false" />
 
                             <asp:Button ID="btnEliminar" runat="server" Text="Eliminar"
                                 CssClass="btn btn-danger btn-sm"
                                 CommandName="Eliminar"
                                 CommandArgument='<%# Eval("Producto.Id") %>'
                                 UseSubmitBehavior="False" />
+
+                            <asp:Button ID="btnGuardar" runat="server" Text="Guardar"
+                                CssClass="btn btn-success btn-sm"
+                                CommandName="Guardar"
+                                CommandArgument='<%# Eval("Producto.Id") %>'
+                                UseSubmitBehavior="False" Visible="false" />
+
+                            <asp:Button ID="btnCancelar" runat="server" Text="Cancelar"
+                                CssClass="btn btn-secondary btn-sm"
+                                CommandName="Cancelar"
+                                CommandArgument='<%# Eval("Producto.Id") %>'
+                                UseSubmitBehavior="False" Visible="false" />
                         </div>
                     </div>
                 </ItemTemplate>
@@ -93,9 +100,9 @@
                         UseSubmitBehavior="False"
                         OnClick="btnVaciarCarrito_Click"
                         OnClientClick="confirmVaciarCarrito(); return false;" />
-                    <asp:Button ID="btnFinalizarCompra" runat="server" Text="Finalizar pedido" 
+                    <asp:Button ID="btnContinuar" runat="server" Text="Continuar" 
                         CssClass="btn btn-success btn-lg" 
-                        UseSubmitBehavior="False" OnClick="btnFinalizarCompra_Click" />
+                        UseSubmitBehavior="False" OnClick="btnContinuar_Click" />
                 </div>
             </div>
         </asp:Panel>
