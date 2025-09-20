@@ -70,5 +70,10 @@ namespace NexoMarket.Business
         {
             return _xmlService.LoadXml<List<ProductoCarritoEntity>>(_fileName) ?? new List<ProductoCarritoEntity>();
         }
+
+        public void EmptyCart()
+        {
+            _xmlService.DeleteXml(_fileName);
+        }
     }
 }

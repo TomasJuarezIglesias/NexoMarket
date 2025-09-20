@@ -32,9 +32,8 @@
                             <p class="text-muted mb-2"><%# Eval("Producto.Descripcion") %></p>
 
                             <div class="d-flex align-items-center mb-2">
-                                <span class="fw-bold text-success me-3">$<%# Eval("Producto.Precio", "{0:N2}") %>
-                                </span>
-                                <label class="me-2">Cantidad:</label>
+                                <span class="fw-bold text-success me-3">
+                                    $<%# Eval("Producto.Precio", "{0:N2}") %></span><label class="me-2">Cantidad:</label>
                                 <asp:TextBox ID="txtCantidad" runat="server"
                                     Text='<%# Eval("Cantidad") %>'
                                     CssClass="form-control text-center"
@@ -43,17 +42,22 @@
 
                             <p class="fw-bold mb-0">
                                 Subtotal: 
-                    <span class="text-primary">$<%# (Convert.ToDecimal(Eval("Producto.Precio")) * Convert.ToInt32(Eval("Cantidad"))).ToString("N2") %>
-                    </span>
-                            </p>
+                                <span class="text-primary">
+                                    $<%# (Convert.ToDecimal(Eval("Producto.Precio")) * Convert.ToInt32(Eval("Cantidad"))).ToString("N2") %></span></p>
                         </div>
 
                         <!-- Botones -->
                         <div class="ms-3 d-flex flex-column gap-2">
-                            <asp:Button ID="btnActualizar" runat="server" Text="Actualizar"  CssClass="btn btn-outline-primary btn-sm"
-                                CommandName="Actualizar" CommandArgument='<%# Eval("Producto.Id") %>' UseSubmitBehavior="False" />
-                            <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" CssClass="btn btn-danger btn-sm"
-                                CommandName="Eliminar" CommandArgument='<%# Eval("Producto.Id") %>' UseSubmitBehavior="False" />
+                            <asp:Button ID="btnActualizar" runat="server" Text="Actualizar"  
+                                CssClass="btn btn-outline-primary btn-sm"
+                                CommandName="Actualizar" 
+                                CommandArgument='<%# Eval("Producto.Id") %>' 
+                                UseSubmitBehavior="False" />
+                            <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" 
+                                CssClass="btn btn-danger btn-sm"
+                                CommandName="Eliminar" 
+                                CommandArgument='<%# Eval("Producto.Id") %>' 
+                                UseSubmitBehavior="False" />
                         </div>
                     </div>
                 </ItemTemplate>
@@ -64,10 +68,43 @@
             </asp:Repeater>
         </div>
 
-        <!-- Total -->
-        <asp:Panel ID="pnlTotal" runat="server" CssClass="d-flex justify-content-end align-items-center mt-4" Visible="false">
-            <h4 class="me-4">Total: <span class="text-success">$<asp:Label ID="lblTotal" runat="server" /></span></h4>
-            <asp:Button ID="btnFinalizarCompra" runat="server" Text="Finalizar Compra" CssClass="btn btn-primary btn-lg" UseSubmitBehavior="False" />
+        <!-- Total y Acciones -->
+        <asp:Panel ID="pnlTotal" runat="server" CssClass="bg-light border-top shadow-sm p-3 mt-3" Visible="false">
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+                <h4 class="mb-0">
+                    Total: <span class="text-success">$<asp:Label ID="lblTotal" runat="server" /></span>
+                </h4>
+                <div class="d-flex gap-2">
+                    <asp:Button ID="btnVaciarCarrito" runat="server" Text="Vaciar carrito"
+                        CssClass="btn btn-outline-danger btn-lg"
+                        UseSubmitBehavior="False"
+                        OnClick="btnVaciarCarrito_Click"
+                        OnClientClick="confirmVaciarCarrito(); return false;" />
+                    <asp:Button ID="btnFinalizarCompra" runat="server" Text="Finalizar pedido" 
+                        CssClass="btn btn-success btn-lg" 
+                        UseSubmitBehavior="False" OnClick="btnFinalizarCompra_Click" />
+                </div>
+            </div>
         </asp:Panel>
     </div>
+
+    <script>
+        function confirmVaciarCarrito() {
+            alertify.confirm(
+                'Vaciar carrito',
+                '¿Estás seguro de que querés eliminar todos los productos del carrito?',
+                function () {
+                    // Si confirma, postback al botón real
+                    __doPostBack('<%= btnVaciarCarrito.UniqueID %>', '');
+                },
+                () => { }
+            ).set('labels', { ok: 'Sí, vaciar', cancel: 'Cancelar' })
+                .set('closable', false)
+                .set('transition', 'pulse')
+                .set('reverseButtons', true)
+                .set('defaultFocus', 'cancel');
+        }
+
+    </script>
+
 </asp:Content>

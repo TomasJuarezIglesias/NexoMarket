@@ -106,7 +106,7 @@
                             <div class="producto-boton">
                                 <asp:Button ID="BtnAgregar" runat="server" Text="Agregar" CssClass="btn btn-primary btn-sm w-100"
                                     CommandName="Agregar"
-                                    CommandArgument='<%# Eval("Id") %>' />
+                                    CommandArgument='<%# Eval("Id") %>' UseSubmitBehavior="False" />
                             </div>
                         </div>
                     </ItemTemplate>

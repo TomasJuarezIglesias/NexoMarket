@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using NexoMarket.Business;
 using NexoMarket.Entity;
+using NexoMarket.Service;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -149,6 +150,10 @@ namespace NexoMarket.NexoMarket
             await _businessBitacora.GuardarEventoBitacora("Inicio de Sesion", response.Data.Id);
             ScriptManager.RegisterStartupScript(this, GetType(), "limpiarStorage", "localStorage.removeItem('modalRegistroPendiente');", true);
 
+            // Limpieza data usada en xmls para usuarios
+            XmlService xmlService = new XmlService();
+            xmlService.DeleteAllXml();
+
             Response.Redirect("~/NexoMarket/Inicio.aspx");
         }
 
@@ -243,7 +248,7 @@ namespace NexoMarket.NexoMarket
                 File.Delete(fullPath);
                 ScriptManager.RegisterStartupScript(this, GetType(), "alertifyRegistro", "alertify.success('Restore realizado correctamente');", true);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 ScriptManager.RegisterStartupScript(this, GetType(), "alertifyRegistro", "alertify.error('Ha ocurrido un error');", true);
             }

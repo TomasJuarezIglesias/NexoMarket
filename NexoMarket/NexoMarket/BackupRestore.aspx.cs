@@ -81,7 +81,7 @@ namespace NexoMarket.NexoMarket
                 File.Delete(fullPath);
                 ScriptManager.RegisterStartupScript(this, GetType(), "alertifyRegistro", "alertify.success('Restore realizado correctamente');", true);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 ScriptManager.RegisterStartupScript(this, GetType(), "alertifyRegistro", "alertify.error('Ha ocurrido un error');", true);
             }

@@ -183,4 +183,21 @@
         font-size: 18px;
         flex-shrink: 0;
     }
+
+    .alertify .ajs-ok {
+        background-color: #dc3545 !important;
+        color: #fff !important;
+        border: none !important;
+        border-radius: 6px;
+        padding: 6px 14px;
+    }
+
+    .alertify .ajs-cancel {
+        background-color: #6c757d !important;
+        color: #fff !important;
+        border: none !important;
+        border-radius: 6px;
+        padding: 6px 14px;
+    }
+
 </style>

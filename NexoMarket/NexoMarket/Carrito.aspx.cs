@@ -92,5 +92,17 @@ namespace NexoMarket.NexoMarket
 
             CargarCarrito();
         }
+
+        protected void btnFinalizarCompra_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void btnVaciarCarrito_Click(object sender, EventArgs e)
+        {
+            _productoBusiness.EmptyCart();
+            CargarCarrito();
+            ScriptManager.RegisterStartupScript(this, GetType(), "alertifyRegistro", $"showSuccess('Carrito vaciado correctamente');", true);
+        }
     }
 }

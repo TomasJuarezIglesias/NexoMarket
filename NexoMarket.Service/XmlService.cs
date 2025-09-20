@@ -6,28 +6,36 @@ namespace NexoMarket.Service
 {
     public class XmlService
     {
+        private const string folder = "/Xml";
+
         /// <summary>
         /// Serializa un objeto a XML y lo guarda en el path indicado.
         /// Si el archivo existe, lo sobrescribe.
         /// </summary>
         public void SaveXml<T>(string filePath, T data)
         {
-            filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, filePath);
+            string directoryPath = AppDomain.CurrentDomain.BaseDirectory + folder;
 
-            if (string.IsNullOrWhiteSpace(filePath))
+            if (!Directory.Exists(directoryPath))
+            {
+                Directory.CreateDirectory(directoryPath);
+            }
+
+            string fullPath = Path.Combine(directoryPath, filePath);
+
+            if (string.IsNullOrWhiteSpace(fullPath))
                 throw new ArgumentException("El path no puede ser vacío.", nameof(filePath));
 
             try
             {
                 var serializer = new XmlSerializer(typeof(T));
-                using (var writer = new StreamWriter(filePath, false))
+                using (var writer = new StreamWriter(fullPath, false))
                 {
                     serializer.Serialize(writer, data);
                 }
             }
             catch (Exception ex)
             {
-                // Podés loguear acá con tu ZeBoxLog u otro logger
                 throw new InvalidOperationException("Error al guardar el archivo XML.", ex);
             }
         }
@@ -37,7 +45,7 @@ namespace NexoMarket.Service
         /// </summary>
         public T LoadXml<T>(string filePath) where T : class
         {
-            filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, filePath);
+            filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory + folder, filePath);
 
             if (string.IsNullOrWhiteSpace(filePath))
                 throw new ArgumentException("El path no puede ser vacío.", nameof(filePath));
@@ -60,9 +68,52 @@ namespace NexoMarket.Service
             }
             catch (Exception ex)
             {
-                // Podés decidir: devolver null en lugar de excepción
-                // return null;
-                throw new InvalidOperationException("Error al leer el archivo XML.", ex);
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Elimina un archivo XML puntual.
+        /// </summary>
+        public void DeleteXml(string filePath)
+        {
+            filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory + folder, filePath);
+
+            if (string.IsNullOrWhiteSpace(filePath))
+                throw new ArgumentException("El path no puede ser vacío.", nameof(filePath));
+
+            try
+            {
+                if (File.Exists(filePath))
+                {
+                    File.Delete(filePath);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException($"Error al eliminar el archivo XML: {filePath}", ex);
+            }
+        }
+
+        /// <summary>
+        /// Elimina todos los archivos con extensión .xml en el directorio base de la aplicación.
+        /// </summary>
+        public void DeleteAllXml()
+        {
+            string baseDir = AppDomain.CurrentDomain.BaseDirectory + folder;
+
+            try
+            {
+                var xmlFiles = Directory.GetFiles(baseDir, "*.xml", SearchOption.TopDirectoryOnly);
+
+                foreach (var file in xmlFiles)
+                {
+                    File.Delete(file);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("Error al eliminar todos los archivos XML.", ex);
             }
         }
     }
