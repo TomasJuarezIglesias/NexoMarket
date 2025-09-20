@@ -1,52 +1,73 @@
 ﻿<%@ Page Title="Carrito" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Carrito.aspx.cs" Inherits="NexoMarket.NexoMarket.Carrito" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <div class="container mt-4">
+    <div class="d-flex flex-column" style="height: calc(100vh - 60px);">
 
         <!-- Mensaje si no hay productos -->
-        <asp:Panel ID="pnlVacio" runat="server" Visible="true" CssClass="text-center mt-5">
+        <asp:Panel ID="pnlVacio" runat="server" Visible="false" CssClass="text-center mt-5">
             <h4 class="text-muted">Tu carrito está vacío 🛒</h4>
             <p>Agregá productos desde el listado para comenzar tu compra.</p>
         </asp:Panel>
 
-        <!-- Listado de productos en el carrito -->
-        <asp:Repeater ID="rptCarrito" runat="server">
-            <HeaderTemplate>
-                <div class="row justify-content-center">
-            </HeaderTemplate>
+        <!-- Listado de productos -->
+        <div class="flex-grow-1 overflow-auto pe-2">
+            <asp:Repeater ID="RepeaterProductos" runat="server" OnItemCommand="RepeaterProductos_ItemCommand">
+                <HeaderTemplate>
+                    <div class="d-flex flex-column gap-3">
+                </HeaderTemplate>
 
-            <ItemTemplate>
-                <div class="col-md-6 col-lg-4 mb-4">
-                    <div class="card shadow-sm h-100">
-                        <img src='<%# Eval("ImagenUrl") %>' class="card-img-top" alt="Producto" style="height:200px; object-fit:contain;" />
-                        <div class="card-body d-flex flex-column">
-                            <h5 class="card-title"><%# Eval("Nombre") %></h5>
-                            <p class="card-text text-muted"><%# Eval("Descripcion") %></p>
-                            <p class="fw-bold text-success">$<%# Eval("Precio") %></p>
+                <ItemTemplate>
+                    <div class="card shadow-sm p-3 d-flex flex-row align-items-center">
+                        <!-- Imagen -->
+                        <div style="width: 120px;" class="me-3 text-center">
+                            <img src='<%# Eval("Producto.ImagenBase64") %>'
+                                alt="Producto"
+                                class="img-fluid rounded"
+                                style="max-height: 100px; object-fit: contain;" />
+                        </div>
+
+                        <!-- Datos del producto -->
+                        <div class="flex-grow-1">
+                            <h5 class="mb-1 fw-bold"><%# Eval("Producto.Nombre") %></h5>
+                            <p class="text-muted mb-2"><%# Eval("Producto.Descripcion") %></p>
 
                             <div class="d-flex align-items-center mb-2">
+                                <span class="fw-bold text-success me-3">$<%# Eval("Producto.Precio", "{0:N2}") %>
+                                </span>
                                 <label class="me-2">Cantidad:</label>
-                                <asp:TextBox ID="txtCantidad" runat="server" Text='<%# Eval("Cantidad") %>' CssClass="form-control text-center" style="width:60px;" />
+                                <asp:TextBox ID="txtCantidad" runat="server"
+                                    Text='<%# Eval("Cantidad") %>'
+                                    CssClass="form-control text-center"
+                                    Style="width: 60px;" Enabled="False" />
                             </div>
 
-                            <div class="mt-auto d-flex justify-content-between">
-                                <asp:Button ID="btnActualizar" runat="server" Text="Actualizar" CommandName="Actualizar" CommandArgument='<%# Eval("Id") %>' CssClass="btn btn-outline-primary btn-sm" />
-                                <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" CommandName="Eliminar" CommandArgument='<%# Eval("Id") %>' CssClass="btn btn-danger btn-sm" />
-                            </div>
+                            <p class="fw-bold mb-0">
+                                Subtotal: 
+                    <span class="text-primary">$<%# (Convert.ToDecimal(Eval("Producto.Precio")) * Convert.ToInt32(Eval("Cantidad"))).ToString("N2") %>
+                    </span>
+                            </p>
+                        </div>
+
+                        <!-- Botones -->
+                        <div class="ms-3 d-flex flex-column gap-2">
+                            <asp:Button ID="btnActualizar" runat="server" Text="Actualizar"  CssClass="btn btn-outline-primary btn-sm"
+                                CommandName="Actualizar" CommandArgument='<%# Eval("Producto.Id") %>' UseSubmitBehavior="False" />
+                            <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" CssClass="btn btn-danger btn-sm"
+                                CommandName="Eliminar" CommandArgument='<%# Eval("Producto.Id") %>' UseSubmitBehavior="False" />
                         </div>
                     </div>
-                </div>
-            </ItemTemplate>
+                </ItemTemplate>
 
-            <FooterTemplate>
-                </div>
-            </FooterTemplate>
-        </asp:Repeater>
+                <FooterTemplate>
+                    </div>
+                </FooterTemplate>
+            </asp:Repeater>
+        </div>
 
-        <!-- Total y botón de finalizar compra -->
+        <!-- Total -->
         <asp:Panel ID="pnlTotal" runat="server" CssClass="d-flex justify-content-end align-items-center mt-4" Visible="false">
             <h4 class="me-4">Total: <span class="text-success">$<asp:Label ID="lblTotal" runat="server" /></span></h4>
-            <asp:Button ID="btnFinalizarCompra" runat="server" Text="Finalizar Compra" CssClass="btn btn-primary btn-lg" />
+            <asp:Button ID="btnFinalizarCompra" runat="server" Text="Finalizar Compra" CssClass="btn btn-primary btn-lg" UseSubmitBehavior="False" />
         </asp:Panel>
     </div>
 </asp:Content>
