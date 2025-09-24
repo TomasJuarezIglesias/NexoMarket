@@ -9,10 +9,10 @@ namespace NexoMarket.Business
 {
     public class BackupRestoreBusiness
     {
-        private readonly RepositoryBackupRestore _repositoryBackupRestore;
+        private readonly BackupRestoreRepository _repositoryBackupRestore;
         public BackupRestoreBusiness()
         {
-            _repositoryBackupRestore = new RepositoryBackupRestore();
+            _repositoryBackupRestore = new BackupRestoreRepository();
         }
 
         public string Backup()

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace NexoMarket.Data.Repository
 {
-    public class RepositoryBackupRestore
+    public class BackupRestoreRepository
     {
         public string Backup()
         {
