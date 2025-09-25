@@ -11,9 +11,10 @@ namespace NexoMarket.Forms
 {
     public partial class Inicio : System.Web.UI.Page
     {
-        protected void Page_Load(object sender, EventArgs e)
+        protected async void Page_Load(object sender, EventArgs e)
         {
             MostrarRol();
+            if(!IsPostBack) await EjecutarWebServiceAsync();
         }
         ProductoBusiness _businessProducto = new ProductoBusiness();
         public void MostrarRol()
@@ -39,9 +40,9 @@ namespace NexoMarket.Forms
             gvTopProductos.DataBind();
         }
 
-        protected async void Unnamed1_Click(object sender, EventArgs e)
-        {
-            await EjecutarWebServiceAsync();
-        }
+        //protected async void Unnamed1_Click(object sender, EventArgs e)
+        //{
+        //    await EjecutarWebServiceAsync();
+        //}
     }
 }
