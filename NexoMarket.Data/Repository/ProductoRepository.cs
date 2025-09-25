@@ -1,9 +1,11 @@
 ﻿using NexoMarket.Data.Mapper;
 using NexoMarket.Entity;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
 using System.Threading.Tasks;
 
 namespace NexoMarket.Data.Repository
@@ -42,7 +44,7 @@ namespace NexoMarket.Data.Repository
                 return product.Stock >= quantityRequired;
             }
         }
-        
+
 
         public async Task<List<ProductDvhEntity>> GetAllWithDvh()
         {
@@ -69,7 +71,42 @@ namespace NexoMarket.Data.Repository
                 await context.SaveChangesAsync();
             }
         }
+        public async Task<DataTable> GetTopProductos()
+        {
+            using (var context = new NexoMarketEntities())
+            {
+                // 1. Calcular total facturación
+                var totalFacturacion = await context.DetalleVenta.SumAsync(v => v.Sub_Total);
 
+                // 2. Armar lista con las mismas columnas que el SP
+                var topProductos = await context.DetalleVenta
+                    .GroupBy(v => new { v.Id_Producto, v.Producto.Nombre })
+                    .Select(g => new
+                    {
+                        NombreProducto = g.Key.Nombre,
+                        Monto = g.Sum(x => x.Sub_Total),
+                        Cantidad = g.Sum(x => x.Cantidad),
+                        TotalFacturacion = totalFacturacion  // mismo valor en todas las filas
+                    })
+                    .OrderByDescending(x => x.Monto)
+                    .Take(5)
+                    .ToListAsync();
+
+                // 3. Armar DataTable con las columnas del SP
+                var datosSP = new DataTable();
+                datosSP.Columns.Add("NombreProducto", typeof(string));
+                datosSP.Columns.Add("Monto", typeof(decimal));
+                datosSP.Columns.Add("Cantidad", typeof(int));
+                datosSP.Columns.Add("TotalFacturacion", typeof(decimal));
+
+                foreach (var p in topProductos)
+                {
+                    datosSP.Rows.Add(p.NombreProducto, p.Monto, p.Cantidad, p.TotalFacturacion);
+                }
+
+                return datosSP;
+            }
+        }
 
     }
 }
