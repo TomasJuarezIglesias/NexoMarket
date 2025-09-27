@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="1ac9c60fd3df4ef2bb64a2996437dc69" Name="Diagram1" ZoomLevel="46">
+      <Diagram DiagramId="1ac9c60fd3df4ef2bb64a2996437dc69" Name="Diagram1" ZoomLevel="81">
         <EntityTypeShape EntityType="NexoMarketModel.sysdiagrams" Width="1.5" PointX="7.375" PointY="7.75" />
         <EntityTypeShape EntityType="NexoMarketModel.BitacoraEvento" Width="1.5" PointX="7.5" PointY="9.75" />
         <EntityTypeShape EntityType="NexoMarketModel.Categoria" Width="1.5" PointX="5.25" PointY="3" />

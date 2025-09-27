@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Xml.Serialization;
 
 namespace NexoMarket.Service
@@ -108,7 +109,10 @@ namespace NexoMarket.Service
 
                 foreach (var file in xmlFiles)
                 {
-                    File.Delete(file);
+                    if (File.Exists(file))
+                    {
+                        File.Delete(file);
+                    }
                 }
             }
             catch (Exception ex)

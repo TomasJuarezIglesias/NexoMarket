@@ -3,6 +3,7 @@ using NexoMarket.Data.Repository;
 using NexoMarket.Entity;
 using NexoMarket.Service;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
@@ -88,6 +89,11 @@ namespace NexoMarket.Business
         public void EmptyCart()
         {
             _xmlService.DeleteXml(_fileName);
+        }
+
+        public async Task<DataTable> GetTop5()
+        {
+            return await  _productoRepository.GetTopProductos();
         }
     }
 }
