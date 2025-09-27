@@ -25,6 +25,8 @@ namespace NexoMarket.Data.Mapper
             CreateMap<UserDvhEntity, Usuarios>().ReverseMap();
             CreateMap<UserCreateEntity, Usuarios>();
             CreateMap<ProductoEntity, Producto>().ReverseMap();
+            CreateMap<VentaEntity, Venta>().ReverseMap();
+            CreateMap<DetalleVentaEntity, DetalleVenta>().ReverseMap();
         }
 
     }

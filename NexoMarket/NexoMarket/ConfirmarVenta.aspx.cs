@@ -1,48 +1,54 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Sockets;
+using System.Threading;
 using System.Web;
+using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Newtonsoft.Json;
 using NexoMarket.Business;
 using NexoMarket.Data;
+using NexoMarket.Entity;
 
 namespace NexoMarket.NexoMarket
 {
     public partial class ConfirmarVenta : System.Web.UI.Page
     {
-        ProductoBusiness _businessProducto = new ProductoBusiness();
-        protected void Page_Load(object sender, EventArgs e)
+        public ConfirmarVenta()
         {
-            var Products = _businessProducto.GetProductsFromCart();
-            decimal subtotal = 0;
-            foreach (var p in Products)
-            {
-                subtotal += p.Product.Precio * p.Cantidad;
-            }
-            lblTotal.Text = subtotal.ToString("N2");
+            
+        }
+        VentaBusiness _ventaBusiness = new Business.VentaBusiness();
+        ProductoBusiness _productoBusiness = new ProductoBusiness();
+        protected void Page_Load(object sender, EventArgs e)
+        {         
+            decimal total = _ventaBusiness.CalcularTotal();     
+            lblTotal.Text = total.ToString("N2");
         }
         
-        protected void btnConfirmar_Click(object sender, EventArgs e)
-        {                          
-            // 1) Leer campos
-            var calle = txtCalle.Text.Trim();
-            var numero = txtNumero.Text.Trim();
-            var pisoDepto = txtPisoDepto.Text.Trim();
-            var ciudad = txtCiudad.Text.Trim();
-            var cp = txtCP.Text.Trim();
-            var aclaraciones = txtAclaraciones.Text.Trim();
+        protected async void btnConfirmar_Click(object sender, EventArgs e)
+        {
+            var Venta = new VentaEntity();
+            
+            HttpCookie authCookie = HttpContext.Current.Request.Cookies[FormsAuthentication.FormsCookieName];
+            FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(authCookie.Value);
+            UserAuthEntity user = JsonConvert.DeserializeObject<UserAuthEntity>(ticket.UserData);
 
-            // 2) (Opcional) Componer dirección completa
-            var direccion = $"{calle} {numero}";
-            if (!string.IsNullOrEmpty(pisoDepto)) direccion += $" - {pisoDepto}";
-            direccion += $", {ciudad} ({cp})";
+            Venta.Fecha = DateTime.Now;
+            Venta.Total = _ventaBusiness.CalcularTotal();
+            Venta.Id_Usuario = user.Id;
+            bool response =  await _ventaBusiness.AgregarVenta(Venta);
+            if (!response)
+            {
+                ScriptManager.RegisterStartupScript(this, GetType(), "alertifyRegistro", $"showError('No se pudo registrar la compra');", true);
+                return;
+            }
 
-            // 3) Guardar en BD la venta + dirección + items del carrito
-            // TODO: tu lógica de persistencia aquí
-
-            // 4) Redirigir a "gracias" o mostrar comprobante
-            // Response.Redirect("Gracias.aspx");
+            _productoBusiness.EmptyCart();
+            Session["ShowMsgC"] = true;
+            Response.Redirect("Producto.aspx");        
         }
     }
 }

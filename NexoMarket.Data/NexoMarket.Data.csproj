@@ -104,6 +104,7 @@
     <Compile Include="Repository\ProductoRepository.cs" />
     <Compile Include="Repository\BackupRestoreRepository.cs" />
     <Compile Include="Repository\UserRepository.cs" />
+    <Compile Include="Repository\VentaRepository.cs" />
     <Compile Include="Rol.cs">
       <DependentUpon>NexoMarketModel.tt</DependentUpon>
     </Compile>

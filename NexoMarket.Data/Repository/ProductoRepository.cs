@@ -108,5 +108,14 @@ namespace NexoMarket.Data.Repository
             }
         }
 
+        public void UpdateStock(int id, int cantidad)
+        {
+            using (var context = new NexoMarketEntities())
+            {
+                context.Database.ExecuteSqlCommand(
+            "UPDATE Producto SET Stock = Stock - @p0 WHERE Id = @p1",
+            cantidad, id);
+            }
+        }
     }
 }

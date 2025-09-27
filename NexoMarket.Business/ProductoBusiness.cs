@@ -2,6 +2,7 @@
 using NexoMarket.Data.Repository;
 using NexoMarket.Entity;
 using NexoMarket.Service;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -94,6 +95,11 @@ namespace NexoMarket.Business
         public async Task<DataTable> GetTop5()
         {
             return await  _productoRepository.GetTopProductos();
+        }
+
+        public void DiscountStock(int id, int cantidad)
+        {
+            _productoRepository.UpdateStock(id, cantidad);
         }
     }
 }

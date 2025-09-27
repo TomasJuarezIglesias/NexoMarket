@@ -83,10 +83,12 @@
                 <nav class="nav flex-column mb-auto">
                     <a class="nav-link px-3 py-2 rounded text-white <% if (Request.RawUrl.Contains("Inicio.aspx")) { %> active-nav <% } %>" href="/NexoMarket/Inicio.aspx">Inicio</a>
                     <%
-                        if (MenusList != null) 
+                        if (MenusList != null)
                         {
                             foreach (var menu in MenusList)
                             {
+                                if(menu.Url == "ConfirmarVenta.aspx") 
+                                    continue;
                                 string isActive = Request.RawUrl.Contains(menu.Url) ? "active-nav" : "";
 
                                 %>
@@ -95,8 +97,6 @@
                             }
                         }
                     %>
-
-
                 </nav>
 
                 <!-- Logout -->

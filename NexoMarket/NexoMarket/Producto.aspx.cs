@@ -1,4 +1,5 @@
 ﻿using NexoMarket.Business;
+using NexoMarket.Data;
 using NexoMarket.Entity;
 using System;
 using System.Collections.Generic;
@@ -21,13 +22,19 @@ namespace NexoMarket.NexoMarket
 
 
         protected void Page_Load(object sender, EventArgs e)
-        {
+        {    
             if (!IsPostBack)
             {
                 CargarProductos();
             }
-        }
 
+            var ShowMsgC = Session["ShowMsgC"];
+            if (ShowMsgC != null)
+            {
+                ScriptManager.RegisterStartupScript(this, GetType(), "alertifyRegistro", $"showSuccess('Venta realizada correctamente');", true);
+                Session["ShowMsgC"] = null;
+            }
+        }
         private async void CargarProductos()
         {
             try

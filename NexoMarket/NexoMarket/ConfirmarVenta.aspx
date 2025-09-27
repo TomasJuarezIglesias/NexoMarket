@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ConfirmarVenta.aspx.cs" Inherits="NexoMarket.NexoMarket.ConfirmarVenta" %>
+﻿<%@ Page Async = "true" Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ConfirmarVenta.aspx.cs" Inherits="NexoMarket.NexoMarket.ConfirmarVenta" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <div class="container py-4">
         <div class="row justify-content-center">
