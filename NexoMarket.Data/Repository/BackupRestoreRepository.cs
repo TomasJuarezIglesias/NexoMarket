@@ -34,8 +34,6 @@ namespace NexoMarket.Data.Repository
                 return fullPath;
             }
         }
-
-
         public void Restore(string path)
         {
             using (var context = new NexoMarketEntities())

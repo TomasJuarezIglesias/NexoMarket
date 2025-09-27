@@ -133,6 +133,7 @@ namespace NexoMarket.NexoMarket
 
         protected void btnContinuar_Click(object sender, EventArgs e)
         {
+            Response.Redirect("~/NexoMarket/ConfirmarVenta.aspx");
             // Redireccion a siguiente pagina para planificar entrega y despues hacer confirmación de pedido
             // En la confirmación antes de ir a hacer los cambios a la db, se tiene que checkear la disponibilidad de stock
         }

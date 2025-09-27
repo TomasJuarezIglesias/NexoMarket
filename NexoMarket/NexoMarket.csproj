@@ -128,6 +128,7 @@
     <Content Include="NexoMarket\BackupRestore.aspx" />
     <Content Include="NexoMarket\BitacoraEventos.aspx" />
     <Content Include="NexoMarket\Carrito.aspx" />
+    <Content Include="NexoMarket\ConfirmarVenta.aspx" />
     <Content Include="NexoMarket\Inicio.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Login.aspx" />
@@ -197,6 +198,13 @@
     </Compile>
     <Compile Include="NexoMarket\Carrito.aspx.designer.cs">
       <DependentUpon>Carrito.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="NexoMarket\ConfirmarVenta.aspx.cs">
+      <DependentUpon>ConfirmarVenta.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="NexoMarket\ConfirmarVenta.aspx.designer.cs">
+      <DependentUpon>ConfirmarVenta.aspx</DependentUpon>
     </Compile>
     <Compile Include="NexoMarket\Inicio.aspx.cs">
       <DependentUpon>Inicio.aspx</DependentUpon>

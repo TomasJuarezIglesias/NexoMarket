@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using NexoMarket.Business;
 using NexoMarket.Entity;
+using NexoMarket.NexoMarket;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
