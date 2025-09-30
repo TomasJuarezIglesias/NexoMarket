@@ -67,6 +67,7 @@
                                         Display="Dynamic" CssClass="text-danger"
                                         ValidationGroup="confirm" />
                                 </div>
+
                             </div>
 
                             <!-- COLUMNA DERECHA -->
@@ -95,6 +96,22 @@
                                         ErrorMessage="La ciudad es obligatoria."
                                         Display="Dynamic" CssClass="text-danger"
                                         ValidationGroup="confirm" />
+                                </div>
+
+                                <div class="mt-3">
+                                    <label for="txtFechaEntrega" class="form-label">Fecha de entrega</label>
+                                    <asp:TextBox ID="txtFechaEntrega" runat="server" CssClass="form-control" TextMode="Date" />
+                                    <asp:RequiredFieldValidator ID="rfvFechaEntrega" runat="server"
+                                        ControlToValidate="txtFechaEntrega"
+                                        ErrorMessage="La fecha de entrega es obligatoria."
+                                        Display="Dynamic" CssClass="text-danger"
+                                        ValidationGroup="confirm" />
+                                    <asp:CustomValidator ID="cvFechaEntrega" runat="server"
+                                        ControlToValidate="txtFechaEntrega"
+                                        ErrorMessage="La fecha debe estar dentro de los próximos 10 días."
+                                        Display="Dynamic" CssClass="text-danger"
+                                        ValidationGroup="confirm"
+                                        ClientValidationFunction="validarFechaEntrega" />
                                 </div>
                             </div>
 
@@ -143,6 +160,25 @@
                 .set('defaultFocus', 'cancel');
 
             return false;
+        }
+
+         function validarFechaEntrega(sender, args) {
+            var fechaSeleccionada = args.Value;
+            if (!fechaSeleccionada) {
+                args.IsValid = false;
+                return;
+            }
+
+            var hoy = new Date();
+            var max = new Date();
+            max.setDate(hoy.getDate() + 10);
+
+            var seleccion = new Date(fechaSeleccionada);
+            seleccion.setHours(0, 0, 0, 0);
+            hoy.setHours(0, 0, 0, 0);
+            max.setHours(0, 0, 0, 0);
+
+            args.IsValid = (seleccion >= hoy && seleccion <= max);
         }
     </script>
 </asp:Content>
