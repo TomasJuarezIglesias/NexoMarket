@@ -53,7 +53,7 @@ namespace NexoMarket.Business
             else
                 productFound.Cantidad += quantity;
 
-            _xmlService.SaveXml(_fileName, products);
+            _xmlService.SaveXml(products);
         }
 
         public void UpdateQuantity(int productId, int quantity)
@@ -67,7 +67,7 @@ namespace NexoMarket.Business
 
             productFound.Cantidad = quantity;
 
-            _xmlService.SaveXml(_fileName, products);
+            _xmlService.SaveXml(products);
         }
 
         public void RemoveFromCart(int productId)
@@ -78,13 +78,13 @@ namespace NexoMarket.Business
             if (productFound != null)
             {
                 products.Remove(productFound);
-                _xmlService.SaveXml(_fileName, products);
+                _xmlService.SaveXml( products);
             }
         }
 
         public List<ProductoCarritoEntity> GetProductsFromCart()
         {
-            return _xmlService.LoadXml<List<ProductoCarritoEntity>>(_fileName) ?? new List<ProductoCarritoEntity>();
+            return _xmlService.LoadXml() ?? new List<ProductoCarritoEntity>();
         }
 
         public void EmptyCart()
